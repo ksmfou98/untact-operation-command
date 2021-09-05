@@ -35,7 +35,7 @@ const isIncluded = (array, id) => {
   return false;
 };
 
-const createReceiverPeerConnection = (socketID, socket, roomID) => {
+const createReceiverPeerConnection = (socketID, socket, roomId) => {
   let pc = new wrtc.RTCPeerConnection(pc_config);
 
   if (receiverPCs[socketID]) receiverPCs[socketID] = pc;
@@ -53,22 +53,22 @@ const createReceiverPeerConnection = (socketID, socket, roomID) => {
   };
 
   pc.ontrack = (e) => {
-    if (users[roomID]) {
-      if (!isIncluded(users[roomID], socketID)) {
-        users[roomID].push({
+    if (users[roomId]) {
+      if (!isIncluded(users[roomId], socketID)) {
+        users[roomId].push({
           id: socketID,
           stream: e.streams[0],
         });
       } else return;
     } else {
-      users[roomID] = [
+      users[roomId] = [
         {
           id: socketID,
           stream: e.streams[0],
         },
       ];
     }
-    socket.broadcast.to(roomID).emit("userEnter", { id: socketID });
+    socket.broadcast.to(roomId).emit("userEnter", { id: socketID });
   };
 
   return pc;
@@ -78,7 +78,7 @@ const createSenderPeerConnection = (
   receiverSocketID,
   senderSocketID,
   socket,
-  roomID
+  roomId
 ) => {
   let pc = new wrtc.RTCPeerConnection(pc_config);
 
@@ -103,7 +103,7 @@ const createSenderPeerConnection = (
     //console.log(e);
   };
 
-  const sendUser = users[roomID].filter((user) => user.id === senderSocketID);
+  const sendUser = users[roomId].filter((user) => user.id === senderSocketID);
   sendUser[0].stream.getTracks().forEach((track) => {
     pc.addTrack(track, sendUser[0].stream);
   });
@@ -111,27 +111,27 @@ const createSenderPeerConnection = (
   return pc;
 };
 
-const getOtherUsersInRoom = (socketID, roomID) => {
+const getOtherUsersInRoom = (socketID, roomId) => {
   let allUsers = [];
 
-  if (!users[roomID]) return allUsers;
+  if (!users[roomId]) return allUsers;
 
-  let len = users[roomID].length;
+  let len = users[roomId].length;
   for (let i = 0; i < len; i++) {
-    if (users[roomID][i].id === socketID) continue;
-    allUsers.push({ id: users[roomID][i].id });
+    if (users[roomId][i].id === socketID) continue;
+    allUsers.push({ id: users[roomId][i].id });
   }
 
   return allUsers;
 };
 
-const deleteUser = (socketID, roomID) => {
-  let roomUsers = users[roomID];
+const deleteUser = (socketID, roomId) => {
+  let roomUsers = users[roomId];
   if (!roomUsers) return;
   roomUsers = roomUsers.filter((user) => user.id !== socketID);
-  users[roomID] = roomUsers;
+  users[roomId] = roomUsers;
   if (roomUsers.length === 0) {
-    delete users[roomID];
+    delete users[roomId];
   }
   delete socketToRoom[socketID];
 };
@@ -167,7 +167,7 @@ const io = socketio.listen(server);
 io.sockets.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     try {
-      let allUsers = getOtherUsersInRoom(data.id, data.roomID);
+      let allUsers = getOtherUsersInRoom(data.id, data.roomId);
       io.to(data.id).emit("allUsers", { users: allUsers });
     } catch (error) {
       console.log(error);
@@ -176,11 +176,11 @@ io.sockets.on("connection", (socket) => {
 
   socket.on("senderOffer", async (data) => {
     try {
-      socketToRoom[data.senderSocketID] = data.roomID;
+      socketToRoom[data.senderSocketID] = data.roomId;
       let pc = createReceiverPeerConnection(
         data.senderSocketID,
         socket,
-        data.roomID
+        data.roomId
       );
       await pc.setRemoteDescription(data.sdp);
       let sdp = await pc.createAnswer({
@@ -188,7 +188,7 @@ io.sockets.on("connection", (socket) => {
         offerToReceiveVideo: true,
       });
       await pc.setLocalDescription(sdp);
-      socket.join(data.roomID);
+      socket.join(data.roomId);
       io.to(data.senderSocketID).emit("getSenderAnswer", { sdp });
     } catch (error) {
       console.log(error);
@@ -210,7 +210,7 @@ io.sockets.on("connection", (socket) => {
         data.receiverSocketID,
         data.senderSocketID,
         socket,
-        data.roomID
+        data.roomId
       );
       await pc.setRemoteDescription(data.sdp);
       let sdp = await pc.createAnswer({
@@ -242,13 +242,13 @@ io.sockets.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     try {
-      let roomID = socketToRoom[socket.id];
+      let roomId = socketToRoom[socket.id];
 
-      deleteUser(socket.id, roomID);
+      deleteUser(socket.id, roomId);
       closeRecevierPC(socket.id);
       closeSenderPCs(socket.id);
 
-      socket.broadcast.to(roomID).emit("userExit", { id: socket.id });
+      socket.broadcast.to(roomId).emit("userExit", { id: socket.id });
     } catch (error) {
       console.log(error);
     }
