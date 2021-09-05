@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import io from "socket.io-client";
 import { useRef } from "react";
 import { useEffect } from "react";
-import Video from "tests/Video";
+import Video from "components/meet/MeetGridItem";
 import { useParams } from "react-router";
+import MeetGrid from "components/meet/MeetGrid";
+import styled from "styled-components";
 
 interface MeetParams {
   roomId: string;
@@ -268,8 +270,8 @@ const Meet = () => {
   };
 
   return (
-    <div>
-      <video
+    <MeetPageBlock>
+      {/* <video
         style={{
           width: 240,
           height: 240,
@@ -279,12 +281,19 @@ const Meet = () => {
         muted
         ref={localVideoRef}
         autoPlay
-      ></video>
-      {users.map((user, index) => {
+      ></video> */}
+      <MeetGrid users={users} />
+      {/* {users.map((user, index) => {
         return <Video key={index} stream={user.stream} />;
-      })}
-    </div>
+      })} */}
+    </MeetPageBlock>
   );
 };
+
+const MeetPageBlock = styled.div`
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+`;
 
 export default Meet;

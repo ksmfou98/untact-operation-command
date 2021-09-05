@@ -1,6 +1,7 @@
-import Meet from "pages/Meet";
+import Meet from "pages/MeetPage";
 import React from "react";
 import { Route } from "react-router";
+import "./App.css";
 
 const App = () => {
   return (
