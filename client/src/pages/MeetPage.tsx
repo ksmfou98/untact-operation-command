@@ -130,6 +130,13 @@ const Meet = () => {
 
         localStream = stream;
 
+        // stream 정보에 내 데이터도 추가
+        const myStream = {
+          id: "myId",
+          stream,
+        };
+        setUsers(users.concat(myStream));
+
         sendPC = createSenderPeerConnection(newSocket, localStream);
         createSenderOffer(newSocket);
 

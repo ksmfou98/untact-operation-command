@@ -34,6 +34,7 @@ function MeetGrid({ users }: MeetGridProps) {
       setItemWidth(ref.current.clientWidth / divisor - 400);
       setItemHeight(ref.current.clientHeight / divisor - 200);
     }
+    console.log("users", users);
   }, [users.length]);
 
   return (

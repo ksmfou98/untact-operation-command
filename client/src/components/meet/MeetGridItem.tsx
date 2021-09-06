@@ -20,8 +20,6 @@ const MeetGridItem = ({ stream, muted, width, height }: Props) => {
   useEffect(() => {
     if (ref.current) ref.current.srcObject = stream;
     if (muted) setIsMuted(muted);
-    console.log(stream);
-    console.log(width);
   });
 
   return (
