@@ -32,7 +32,7 @@ function MeetGrid({ users }: MeetGridProps) {
   useEffect(() => {
     if (users.length === 1) {
       setItemWidth(ref.current.clientWidth / divisor - 400);
-      setItemHeight(ref.current.clientHeight / divisor - 200);
+      setItemHeight(ref.current.clientHeight / divisor - 50);
     }
     console.log("users", users);
   }, [users.length]);
@@ -55,7 +55,6 @@ const Grid = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  background: black;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;

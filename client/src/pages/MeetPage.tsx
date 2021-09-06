@@ -122,7 +122,7 @@ const Meet = () => {
         audio: true,
         video: {
           width: 240,
-          height: 240,
+          // height: 240,
         },
       })
       .then((stream) => {
@@ -301,6 +301,7 @@ const MeetPageBlock = styled.div`
   height: 100%;
   min-height: 0;
   overflow: hidden;
+  background: #212121;
 `;
 
 export default Meet;
