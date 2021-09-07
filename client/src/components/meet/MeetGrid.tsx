@@ -13,7 +13,6 @@ interface MeetGridProps {
 
 function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
   const [itemWidth, setItemWidth] = useState(0);
-  const [itemHeight, setItemHeight] = useState(0);
   const ref = useRef<any>();
 
   const divisor = useMemo(() => {
@@ -21,31 +20,26 @@ function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
   }, [users.length]);
 
   useLayoutEffect(() => {
-    const gridWidth = ref.current.clientWidth;
-    const gridHeight = ref.current.clientHeight;
-
+    const gridWidth = sidebarOpen
+      ? document.body.offsetWidth - 320
+      : document.body.offsetWidth;
     setItemWidth(gridWidth / divisor);
-    setItemHeight(gridHeight / divisor);
-  }, [divisor]);
-
-  useEffect(() => {
-    if (users.length === 1) {
-      setItemWidth(ref.current.clientWidth / divisor - 400);
-      setItemHeight(ref.current.clientHeight / divisor - 50);
-    }
-    console.log("users", users);
-  }, [users, divisor]);
+  }, [divisor, sidebarOpen]);
 
   return (
     <Grid ref={ref}>
-      {users.map((user, index) => (
-        <MeetGridItem
-          key={index}
-          stream={user.stream}
-          width={itemWidth}
-          height={itemHeight}
-        />
-      ))}
+      {users.map((user, index) => {
+        const remainder = users.length % divisor;
+        const isLastRow = index >= users.length - remainder;
+        return (
+          <MeetGridItem
+            key={index}
+            isLastRow={isLastRow}
+            stream={user.stream}
+            width={itemWidth}
+          />
+        );
+      })}
     </Grid>
   );
 }

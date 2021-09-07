@@ -16,7 +16,7 @@ const Meet = () => {
   const [socket, setSocket] = useState<SocketIOClient.Socket>();
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { roomId } = useParams<MeetParams>();
 
