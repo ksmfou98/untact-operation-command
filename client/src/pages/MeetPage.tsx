@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import io from "socket.io-client";
 import { useRef } from "react";
 import { useEffect } from "react";
-import Video from "components/meet/MeetGridItem";
 import { useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
+import MeetFooter from "components/meet/MeetFooter";
+import Sidebar from "components/meet/MeetSideBar";
 
 interface MeetParams {
   roomId: string;
@@ -14,6 +15,8 @@ interface MeetParams {
 const Meet = () => {
   const [socket, setSocket] = useState<SocketIOClient.Socket>();
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const { roomId } = useParams<MeetParams>();
 
@@ -116,6 +119,7 @@ const Meet = () => {
     );
 
     setSocket(newSocket);
+    console.log("newSocket", newSocket);
 
     navigator.mediaDevices
       .getUserMedia({
@@ -278,30 +282,35 @@ const Meet = () => {
 
   return (
     <MeetPageBlock>
-      {/* <video
-        style={{
-          width: 240,
-          height: 240,
-          margin: 5,
-          backgroundColor: "black",
-        }}
-        muted
-        ref={localVideoRef}
-        autoPlay
-      ></video> */}
-      <MeetGrid users={users} />
-      {/* {users.map((user, index) => {
-        return <Video key={index} stream={user.stream} />;
-      })} */}
+      <Wrapper>
+        <main>
+          <MeetGrid users={users} sidebarOpen={sidebarOpen} />
+        </main>
+        <Sidebar visible={sidebarOpen} />
+      </Wrapper>
+      <MeetFooter />
     </MeetPageBlock>
   );
 };
 
 const MeetPageBlock = styled.div`
   height: 100%;
-  min-height: 0;
-  overflow: hidden;
   background: #212121;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Wrapper = styled.div`
+  flex: 1;
+  width: 100%;
+  display: flex;
+  main {
+    height: 100%;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
 `;
 
 export default Meet;

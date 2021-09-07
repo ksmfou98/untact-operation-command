@@ -22,7 +22,7 @@ const MeetGridItem = ({ stream, muted, width, height }: Props) => {
   useEffect(() => {
     if (ref.current) ref.current.srcObject = stream;
     if (muted) setIsMuted(muted);
-  });
+  }, [muted, stream]);
 
   return (
     <VideoContainer

@@ -8,9 +8,10 @@ import MeetGridItem from "components/meet/MeetGridItem";
 
 interface MeetGridProps {
   users: IWebRTCUser[];
+  sidebarOpen: boolean;
 }
 
-function MeetGrid({ users }: MeetGridProps) {
+function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
   const [itemWidth, setItemWidth] = useState(0);
   const [itemHeight, setItemHeight] = useState(0);
   const ref = useRef<any>();
@@ -22,9 +23,7 @@ function MeetGrid({ users }: MeetGridProps) {
   useLayoutEffect(() => {
     const gridWidth = ref.current.clientWidth;
     const gridHeight = ref.current.clientHeight;
-    //const gridWidth = document.body.offsetWidth;
 
-    console.log("dd", divisor);
     setItemWidth(gridWidth / divisor);
     setItemHeight(gridHeight / divisor);
   }, [divisor]);
@@ -35,7 +34,7 @@ function MeetGrid({ users }: MeetGridProps) {
       setItemHeight(ref.current.clientHeight / divisor - 50);
     }
     console.log("users", users);
-  }, [users.length]);
+  }, [users, divisor]);
 
   return (
     <Grid ref={ref}>
@@ -55,9 +54,9 @@ const Grid = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  background: black;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
 `;
 
 export default MeetGrid;
