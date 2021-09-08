@@ -21,8 +21,8 @@ function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
 
   useLayoutEffect(() => {
     const gridWidth = sidebarOpen
-      ? document.body.offsetWidth - 320
-      : document.body.offsetWidth;
+      ? document.body.offsetWidth - 420
+      : document.body.offsetWidth - 100;
     setItemWidth(gridWidth / divisor);
   }, [divisor, sidebarOpen]);
 
