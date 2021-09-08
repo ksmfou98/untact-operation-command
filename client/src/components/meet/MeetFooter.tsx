@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import FooterButtonGroup from "./FooterButtonGroup";
 
 const MeetFooter = () => {
   return (
@@ -8,13 +9,7 @@ const MeetFooter = () => {
         <div className="meetId">방 제목 적는 곳</div>
       </div>
       <div className="center">
-        {/* <FooterButtonGroup
-          muted={muted}
-          videoDisabled={videoDisabled}
-          onToggleMuted={onToggleMuted}
-          onToggleVideoDisabled={onToggleVideoDisabled}
-          onHangOff={hangOff}
-        /> */}
+        <FooterButtonGroup />
       </div>
       <div className="right">
         {/* <UsersButton usersCount={sessions.length} onClick={onToggleSidebar} /> */}
