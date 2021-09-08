@@ -15,6 +15,7 @@ function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
   const [itemWidth, setItemWidth] = useState(0);
   const ref = useRef<any>();
 
+  console.log(users);
 
   const divisor = useMemo(() => {
     return Math.ceil(Math.sqrt(users.length)) || 1;

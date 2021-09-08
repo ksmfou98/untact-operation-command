@@ -134,10 +134,22 @@ const Meet = () => {
 
         localStream = stream;
 
+        // // 마이크 끄기
+        // localStream.getAudioTracks().forEach((track) => {
+        //   track.enabled = false;
+        // });
+
+        // // 카메라 끄기
+        // localStream.getVideoTracks().forEach((track) => {
+        //   track.enabled = false;
+        // });
+
         // stream 정보에 내 데이터도 추가
         const myStream = {
           id: "myId",
           stream,
+          muted: false,
+          videoOff: false,
         };
         setUsers(users.concat(myStream));
 
@@ -272,6 +284,8 @@ const Meet = () => {
         {
           id: socketID,
           stream: e.streams[0],
+          muted: false,
+          videoOff: false,
         },
       ]);
     };

@@ -13,10 +13,21 @@ const MeetGridItem = ({ stream, muted, width, isLastRow }: Props) => {
   const [isMuted, setIsMuted] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("width", width);
     if (ref.current) ref.current.srcObject = stream;
     if (muted) setIsMuted(muted);
   }, [muted, stream]);
+
+  const onVideoToggle = () => {
+    stream.getVideoTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+  };
+
+  const onAudioToggle = () => {
+    stream.getAudioTracks().forEach((track) => {
+      track.enabled = !track.enabled;
+    });
+  };
 
   return (
     <MeetGridItemBlock style={{ width }}>
