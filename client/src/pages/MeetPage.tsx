@@ -42,6 +42,7 @@ const Meet = () => {
     let newSocket = io.connect("http://localhost:8080");
     let localStream: MediaStream;
 
+
     newSocket.on("userEnter", (data: { id: string }) => {
       createReceivePC(data.id, newSocket);
     });
@@ -146,7 +147,7 @@ const Meet = () => {
 
         // stream 정보에 내 데이터도 추가
         const myStream = {
-          id: "myId",
+          id: newSocket.id,
           stream,
           muted: false,
           videoOff: false,
@@ -293,6 +294,9 @@ const Meet = () => {
     // return pc
     return pc;
   };
+
+  
+
 
   return (
     <MeetPageBlock>
