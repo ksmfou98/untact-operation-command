@@ -6,11 +6,15 @@ import IconCircleButton from "./IconCircleButton";
 interface FooterButtonGroupProps {
   muted: boolean;
   onToggleMuted: () => void;
+  videoDisabled: boolean;
+  onToggleVideoDisabled: () => void;
 }
 
 const FooterButtonGroup = ({
   muted,
   onToggleMuted,
+  videoDisabled,
+  onToggleVideoDisabled,
 }: FooterButtonGroupProps) => {
   return (
     <Group>
@@ -19,7 +23,7 @@ const FooterButtonGroup = ({
       </RedButton>
 
       <RedButton>
-        <VideocamOffIcon />
+        <VideocamOffIcon onClick={onToggleVideoDisabled} />
       </RedButton>
 
       <CallEndButton>

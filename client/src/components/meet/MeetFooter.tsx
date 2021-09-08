@@ -5,16 +5,28 @@ import FooterButtonGroup from "./FooterButtonGroup";
 interface MeetFooterProps {
   muted: boolean;
   onToggleMuted: () => void;
+  videoDisabled: boolean;
+  onToggleVideoDisabled: () => void;
 }
 
-const MeetFooter = ({ muted, onToggleMuted }: MeetFooterProps) => {
+const MeetFooter = ({
+  muted,
+  onToggleMuted,
+  videoDisabled,
+  onToggleVideoDisabled,
+}: MeetFooterProps) => {
   return (
     <MeetFooterBlock>
       <div className="left">
         <div className="meetId">방 제목 적는 곳</div>
       </div>
       <div className="center">
-        <FooterButtonGroup muted={muted} onToggleMuted={onToggleMuted} />
+        <FooterButtonGroup
+          muted={muted}
+          onToggleMuted={onToggleMuted}
+          videoDisabled={videoDisabled}
+          onToggleVideoDisabled={onToggleVideoDisabled}
+        />
       </div>
       <div className="right">
         {/* <UsersButton usersCount={sessions.length} onClick={onToggleSidebar} /> */}

@@ -301,12 +301,20 @@ const Meet = () => {
 
   const onToggleMuted = () => {
     const nextValue = !muted;
-    console.log("야호");
     setMediaState((prev) => ({ ...prev, muted: nextValue }));
 
     const audioTrack = users[0].stream.getAudioTracks()[0];
     if (!audioTrack) return;
     audioTrack.enabled = !nextValue;
+  };
+
+  const onToggleVideoDisabled = () => {
+    const nextValue = !videoDisabled;
+    setMediaState((prev) => ({ ...prev, videoDisabled: nextValue }));
+
+    const videoTrack = users[0].stream.getVideoTracks()[0];
+    if (!videoTrack) return;
+    videoTrack.enabled = !nextValue;
   };
 
   return (
@@ -317,7 +325,12 @@ const Meet = () => {
         </main>
         <Sidebar visible={sidebarOpen} />
       </Wrapper>
-      <MeetFooter muted={muted} onToggleMuted={onToggleMuted} />
+      <MeetFooter
+        muted={muted}
+        onToggleMuted={onToggleMuted}
+        videoDisabled={videoDisabled}
+        onToggleVideoDisabled={onToggleVideoDisabled}
+      />
     </MeetPageBlock>
   );
 };
