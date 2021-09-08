@@ -2,14 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import FooterButtonGroup from "./FooterButtonGroup";
 
-const MeetFooter = () => {
+interface MeetFooterProps {
+  muted: boolean;
+  onToggleMuted: () => void;
+}
+
+const MeetFooter = ({ muted, onToggleMuted }: MeetFooterProps) => {
   return (
     <MeetFooterBlock>
       <div className="left">
         <div className="meetId">방 제목 적는 곳</div>
       </div>
       <div className="center">
-        <FooterButtonGroup />
+        <FooterButtonGroup muted={muted} onToggleMuted={onToggleMuted} />
       </div>
       <div className="right">
         {/* <UsersButton usersCount={sessions.length} onClick={onToggleSidebar} /> */}

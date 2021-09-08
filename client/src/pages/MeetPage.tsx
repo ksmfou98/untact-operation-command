@@ -16,6 +16,11 @@ const Meet = () => {
   const [socket, setSocket] = useState<SocketIOClient.Socket>();
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
 
+  const [{ muted, videoDisabled }, setMediaState] = useState({
+    muted: false,
+    videoDisabled: false,
+  });
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { roomId } = useParams<MeetParams>();
@@ -41,7 +46,6 @@ const Meet = () => {
   useEffect(() => {
     let newSocket = io.connect("http://localhost:8080");
     let localStream: MediaStream;
-
 
     newSocket.on("userEnter", (data: { id: string }) => {
       createReceivePC(data.id, newSocket);
@@ -295,8 +299,15 @@ const Meet = () => {
     return pc;
   };
 
-  
+  const onToggleMuted = () => {
+    const nextValue = !muted;
+    console.log("야호");
+    setMediaState((prev) => ({ ...prev, muted: nextValue }));
 
+    const audioTrack = users[0].stream.getAudioTracks()[0];
+    if (!audioTrack) return;
+    audioTrack.enabled = !nextValue;
+  };
 
   return (
     <MeetPageBlock>
@@ -306,7 +317,7 @@ const Meet = () => {
         </main>
         <Sidebar visible={sidebarOpen} />
       </Wrapper>
-      <MeetFooter />
+      <MeetFooter muted={muted} onToggleMuted={onToggleMuted} />
     </MeetPageBlock>
   );
 };
