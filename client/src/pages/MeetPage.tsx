@@ -2,21 +2,20 @@ import React, { useState } from "react";
 import io from "socket.io-client";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
 import MeetFooter from "components/meet/MeetFooter";
-import Sidebar from "components/meet/MeetSideBar";
+import MeetSidebar from "components/meet/MeetSideBar";
 
 interface MeetParams {
   roomId: string;
 }
 
 const Meet = () => {
-  const history = useHistory();
-
   const [socket, setSocket] = useState<SocketIOClient.Socket>();
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
+  const [mySessionId, setMySessionId] = useState<string>("");
 
   const [{ muted, videoDisabled }, setMediaState] = useState({
     muted: false,
@@ -126,7 +125,6 @@ const Meet = () => {
     );
 
     setSocket(newSocket);
-    console.log("newSocket", newSocket);
 
     navigator.mediaDevices
       .getUserMedia({
@@ -140,17 +138,6 @@ const Meet = () => {
         if (localVideoRef.current) localVideoRef.current.srcObject = stream;
 
         localStream = stream;
-
-        // // 마이크 끄기
-        // localStream.getAudioTracks().forEach((track) => {
-        //   track.enabled = false;
-        // });
-
-        // // 카메라 끄기
-        // localStream.getVideoTracks().forEach((track) => {
-        //   track.enabled = false;
-        // });
-
         // stream 정보에 내 데이터도 추가
         const myStream = {
           id: newSocket.id,
@@ -159,6 +146,7 @@ const Meet = () => {
           videoOff: false,
         };
         setUsers(users.concat(myStream));
+        setMySessionId(myStream.id);
 
         sendPC = createSenderPeerConnection(newSocket, localStream);
         createSenderOffer(newSocket);
@@ -333,7 +321,12 @@ const Meet = () => {
         <main>
           <MeetGrid users={users} sidebarOpen={sidebarOpen} />
         </main>
-        <Sidebar visible={sidebarOpen} />
+        <MeetSidebar
+          visible={sidebarOpen}
+          onToggleSidebar={onToggleSidebar}
+          users={users}
+          mySessionId={mySessionId}
+        />
       </Wrapper>
       <MeetFooter
         muted={muted}

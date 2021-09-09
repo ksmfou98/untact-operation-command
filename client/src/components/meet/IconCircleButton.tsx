@@ -7,12 +7,12 @@ type IconCircleButtonProps = {
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-function IconCircleButton({
+const IconCircleButton = ({
   children,
   backgroundColor = "#37474f",
   className,
   ...rest
-}: IconCircleButtonProps) {
+}: IconCircleButtonProps) => {
   return (
     <StyledButton
       backgroundColor={backgroundColor}
@@ -22,7 +22,7 @@ function IconCircleButton({
       {children}
     </StyledButton>
   );
-}
+};
 
 const StyledButton = styled.button<{ backgroundColor: string }>`
   background: ${(props) => props.backgroundColor};

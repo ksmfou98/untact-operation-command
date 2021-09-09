@@ -1,31 +1,39 @@
 import React from "react";
 import { CloseIcon } from "assets/icons";
 import styled, { css } from "styled-components";
+import UserItem from "./UserItem";
 
-interface SidebarProps {
+interface MeetSidebarProps {
   visible: boolean;
+  onToggleSidebar: () => void;
+  users: IWebRTCUser[];
+  mySessionId: string;
 }
 
-const Sidebar = ({ visible }: SidebarProps) => {
+const MeetSidebar = ({
+  visible,
+  onToggleSidebar,
+  users,
+  mySessionId,
+}: MeetSidebarProps) => {
   return (
     <Aside visible={visible}>
       <div className="content">
         <header>
           <h3>Users</h3>
-          <button>
+          <button onClick={onToggleSidebar}>
             <CloseIcon />
           </button>
         </header>
         <div className="users">
           <div className="scroll">
-            {/* {sessions.map((s) => (
+            {users.map((user, index) => (
               <UserItem
-                key={s.id}
-                displayName={s.user.displayName}
-                isMySelf={s.id === mySessionId}
-                muted={s.state.muted}
+                key={index}
+                userName={user.id} // TODO: user.id 를 나중에 user.name 으로 변경
+                isMySelf={user.id === mySessionId}
               />
-            ))} */}
+            ))}
           </div>
         </div>
       </div>
@@ -94,4 +102,4 @@ const Aside = styled.aside<{ visible: boolean }>`
   }
 `;
 
-export default Sidebar;
+export default MeetSidebar;
