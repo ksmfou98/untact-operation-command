@@ -1,4 +1,10 @@
-import { CallEndIcon, MicOffIcon, VideocamOffIcon } from "assets/icons";
+import {
+  CallEndIcon,
+  MicIcon,
+  MicOffIcon,
+  VideocamIcon,
+  VideocamOffIcon,
+} from "assets/icons";
 import React from "react";
 import styled from "styled-components";
 import IconCircleButton from "./IconCircleButton";
@@ -8,6 +14,7 @@ interface FooterButtonGroupProps {
   onToggleMuted: () => void;
   videoDisabled: boolean;
   onToggleVideoDisabled: () => void;
+  onHangOff: () => void;
 }
 
 const FooterButtonGroup = ({
@@ -15,18 +22,29 @@ const FooterButtonGroup = ({
   onToggleMuted,
   videoDisabled,
   onToggleVideoDisabled,
+  onHangOff,
 }: FooterButtonGroupProps) => {
   return (
     <Group>
-      <RedButton>
-        <MicOffIcon onClick={onToggleMuted} />
-      </RedButton>
-
-      <RedButton>
-        <VideocamOffIcon onClick={onToggleVideoDisabled} />
-      </RedButton>
-
-      <CallEndButton>
+      {muted ? (
+        <RedButton onClick={onToggleMuted}>
+          <MicOffIcon />
+        </RedButton>
+      ) : (
+        <IconCircleButton onClick={onToggleMuted}>
+          <MicIcon />
+        </IconCircleButton>
+      )}
+      {videoDisabled ? (
+        <RedButton onClick={onToggleVideoDisabled}>
+          <VideocamOffIcon />
+        </RedButton>
+      ) : (
+        <IconCircleButton onClick={onToggleVideoDisabled}>
+          <VideocamIcon />
+        </IconCircleButton>
+      )}
+      <CallEndButton onClick={onHangOff}>
         <CallEndIcon />
       </CallEndButton>
     </Group>

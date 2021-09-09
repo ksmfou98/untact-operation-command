@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import io from "socket.io-client";
 import { useRef } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
 import MeetFooter from "components/meet/MeetFooter";
@@ -13,6 +13,8 @@ interface MeetParams {
 }
 
 const Meet = () => {
+  const history = useHistory();
+
   const [socket, setSocket] = useState<SocketIOClient.Socket>();
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
 
@@ -317,6 +319,10 @@ const Meet = () => {
     videoTrack.enabled = !nextValue;
   };
 
+  const onHangOff = () => {
+    window.location.replace("/");
+  };
+
   return (
     <MeetPageBlock>
       <Wrapper>
@@ -330,6 +336,7 @@ const Meet = () => {
         onToggleMuted={onToggleMuted}
         videoDisabled={videoDisabled}
         onToggleVideoDisabled={onToggleVideoDisabled}
+        onHangOff={onHangOff}
       />
     </MeetPageBlock>
   );

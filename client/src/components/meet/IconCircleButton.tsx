@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-interface IconCircleButtonProps {
+type IconCircleButtonProps = {
   backgroundColor?: string;
   className?: string;
   children: React.ReactNode;
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 function IconCircleButton({
   children,

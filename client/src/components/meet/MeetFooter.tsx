@@ -7,6 +7,7 @@ interface MeetFooterProps {
   onToggleMuted: () => void;
   videoDisabled: boolean;
   onToggleVideoDisabled: () => void;
+  onHangOff: () => void;
 }
 
 const MeetFooter = ({
@@ -14,6 +15,7 @@ const MeetFooter = ({
   onToggleMuted,
   videoDisabled,
   onToggleVideoDisabled,
+  onHangOff,
 }: MeetFooterProps) => {
   return (
     <MeetFooterBlock>
@@ -26,6 +28,7 @@ const MeetFooter = ({
           onToggleMuted={onToggleMuted}
           videoDisabled={videoDisabled}
           onToggleVideoDisabled={onToggleVideoDisabled}
+          onHangOff={onHangOff}
         />
       </div>
       <div className="right">
