@@ -5,16 +5,17 @@ import styled from "styled-components";
 interface UserItemProps {
   userName: string;
   isMySelf: boolean;
+  muted: boolean;
 }
 
-const UserItem = ({ userName, isMySelf }: UserItemProps) => {
+const UserItem = ({ userName, isMySelf, muted }: UserItemProps) => {
   return (
     <Item>
       <div>
         {userName}
         {isMySelf && <span className="me">(Me)</span>}
       </div>
-      {/* {muted && <MicOffIcon />} */}
+      {muted && <MicOffIcon />}
     </Item>
   );
 };

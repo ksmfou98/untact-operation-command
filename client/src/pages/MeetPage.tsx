@@ -268,7 +268,7 @@ const Meet = () => {
     };
 
     pc.oniceconnectionstatechange = (e) => {
-      console.log(e);
+      console.log("oniceconnetions", e);
     };
 
     pc.ontrack = (e) => {
@@ -292,6 +292,12 @@ const Meet = () => {
   const onToggleMuted = () => {
     const nextValue = !muted;
     setMediaState((prev) => ({ ...prev, muted: nextValue }));
+
+    // users.map((user) => {
+    //   if (user.id === mySessionId) {
+    //     user.muted = nextValue;
+    //   }
+    // });
 
     const audioTrack = users[0].stream.getAudioTracks()[0];
     if (!audioTrack) return;

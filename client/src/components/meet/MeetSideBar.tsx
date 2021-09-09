@@ -32,6 +32,7 @@ const MeetSidebar = ({
                 key={index}
                 userName={user.id} // TODO: user.id 를 나중에 user.name 으로 변경
                 isMySelf={user.id === mySessionId}
+                muted={user.muted}
               />
             ))}
           </div>
