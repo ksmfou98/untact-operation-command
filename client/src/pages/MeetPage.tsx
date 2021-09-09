@@ -323,6 +323,10 @@ const Meet = () => {
     window.location.replace("/");
   };
 
+  const onToggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <MeetPageBlock>
       <Wrapper>
@@ -337,6 +341,8 @@ const Meet = () => {
         videoDisabled={videoDisabled}
         onToggleVideoDisabled={onToggleVideoDisabled}
         onHangOff={onHangOff}
+        users={users}
+        onToggleSidebar={onToggleSidebar}
       />
     </MeetPageBlock>
   );

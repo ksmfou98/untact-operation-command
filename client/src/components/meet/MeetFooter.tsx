@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import FooterButtonGroup from "./FooterButtonGroup";
+import UsersButton from "./UsersButton";
 
 interface MeetFooterProps {
   muted: boolean;
@@ -8,6 +9,8 @@ interface MeetFooterProps {
   videoDisabled: boolean;
   onToggleVideoDisabled: () => void;
   onHangOff: () => void;
+  users: IWebRTCUser[];
+  onToggleSidebar: () => void;
 }
 
 const MeetFooter = ({
@@ -16,6 +19,8 @@ const MeetFooter = ({
   videoDisabled,
   onToggleVideoDisabled,
   onHangOff,
+  users,
+  onToggleSidebar,
 }: MeetFooterProps) => {
   return (
     <MeetFooterBlock>
@@ -32,7 +37,7 @@ const MeetFooter = ({
         />
       </div>
       <div className="right">
-        {/* <UsersButton usersCount={sessions.length} onClick={onToggleSidebar} /> */}
+        <UsersButton usersCount={users.length} onClick={onToggleSidebar} />
       </div>
     </MeetFooterBlock>
   );
