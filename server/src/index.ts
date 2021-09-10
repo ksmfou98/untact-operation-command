@@ -1,7 +1,7 @@
-let http = require("http");
-let express = require("express");
-let cors = require("cors");
-let socketio = require("socket.io");
+import http from "http";
+import express from "express";
+import cors from "cors";
+import socketio, { Server } from "socket.io";
 let wrtc = require("wrtc");
 
 const app = express();
@@ -162,7 +162,14 @@ const closeSenderPCs = (socketID) => {
   delete senderPCs[socketID];
 };
 
-const io = socketio.listen(server);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+  allowEIO3: true,
+});
 
 io.sockets.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {

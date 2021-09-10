@@ -46,6 +46,7 @@ const Meet = () => {
 
   useEffect(() => {
     let newSocket = io.connect("http://localhost:8080");
+
     let localStream: MediaStream;
 
     newSocket.on("userEnter", (data: { id: string }) => {
