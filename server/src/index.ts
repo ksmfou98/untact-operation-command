@@ -168,7 +168,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true,
   },
-  allowEIO3: true,
+  allowEIO3: true, // socket io Unsupported protocol version 에러 방지
 });
 
 io.sockets.on("connection", (socket) => {
