@@ -7,13 +7,15 @@ import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
 import MeetFooter from "components/meet/MeetFooter";
 import MeetSidebar from "components/meet/MeetSideBar";
+import { SERVER_URL } from "lib/config";
+
+let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
 interface MeetParams {
   roomId: string;
 }
 
 const Meet = () => {
-  const [socket, setSocket] = useState<SocketIOClient.Socket>();
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [mySessionId, setMySessionId] = useState<string>("");
 
@@ -33,11 +35,6 @@ const Meet = () => {
 
   const pc_config = {
     iceServers: [
-      // {
-      //   urls: 'stun:[STUN_IP]:[PORT]',
-      //   'credentials': '[YOR CREDENTIALS]',
-      //   'username': '[USERNAME]'
-      // },
       {
         urls: "stun:stun.l.google.com:19302",
       },
@@ -45,8 +42,6 @@ const Meet = () => {
   };
 
   useEffect(() => {
-    let newSocket = io.connect("http://localhost:8080");
-
     let localStream: MediaStream;
 
     newSocket.on("userEnter", (data: { id: string }) => {
@@ -125,8 +120,6 @@ const Meet = () => {
       }
     );
 
-    setSocket(newSocket);
-
     navigator.mediaDevices
       .getUserMedia({
         audio: true,
@@ -149,6 +142,7 @@ const Meet = () => {
         setUsers(users.concat(myStream));
         setMySessionId(myStream.id);
 
+        // eslint-disable-next-line
         sendPC = createSenderPeerConnection(newSocket, localStream);
         createSenderOffer(newSocket);
 
