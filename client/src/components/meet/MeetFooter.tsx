@@ -11,6 +11,7 @@ interface MeetFooterProps {
   onHangOff: () => void;
   users: IWebRTCUser[];
   onToggleSidebar: () => void;
+  onScreenShare: () => void;
 }
 
 const MeetFooter = ({
@@ -21,6 +22,7 @@ const MeetFooter = ({
   onHangOff,
   users,
   onToggleSidebar,
+  onScreenShare,
 }: MeetFooterProps) => {
   return (
     <MeetFooterBlock>
@@ -34,6 +36,7 @@ const MeetFooter = ({
           videoDisabled={videoDisabled}
           onToggleVideoDisabled={onToggleVideoDisabled}
           onHangOff={onHangOff}
+          onScreenShare={onScreenShare}
         />
       </div>
       <div className="right">

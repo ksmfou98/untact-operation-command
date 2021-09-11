@@ -15,6 +15,7 @@ interface FooterButtonGroupProps {
   videoDisabled: boolean;
   onToggleVideoDisabled: () => void;
   onHangOff: () => void;
+  onScreenShare: () => void;
 }
 
 const FooterButtonGroup = ({
@@ -23,6 +24,7 @@ const FooterButtonGroup = ({
   videoDisabled,
   onToggleVideoDisabled,
   onHangOff,
+  onScreenShare,
 }: FooterButtonGroupProps) => {
   return (
     <Group>
@@ -47,6 +49,10 @@ const FooterButtonGroup = ({
       <CallEndButton onClick={onHangOff}>
         <CallEndIcon />
       </CallEndButton>
+
+      <RedButton onClick={onScreenShare}>
+        <MicOffIcon />
+      </RedButton>
     </Group>
   );
 };

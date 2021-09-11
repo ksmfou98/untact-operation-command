@@ -17,12 +17,10 @@ interface MeetParams {
 const Meet = () => {
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [mySessionId, setMySessionId] = useState<string>("");
-
   const [{ muted, videoDisabled }, setMediaState] = useState({
     muted: false,
     videoDisabled: false,
   });
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { roomId } = useParams<MeetParams>();
@@ -41,10 +39,58 @@ const Meet = () => {
   useEffect(() => {
     let localStream: MediaStream;
 
+    // 사용자에게 미디어 입력 장치 사용권한을 가져온 후 스트림을 생성한다.
+    navigator.mediaDevices
+      .getUserMedia({
+        audio: true,
+        video: true,
+      })
+      .then((stream) => {
+        localStream = stream;
+        // stream 정보에 내 데이터도 추가
+        console.log("stream", stream);
+        const myStream = {
+          id: newSocket.id,
+          stream,
+          muted: false,
+          videoOff: false,
+        };
+        setUsers(users.concat(myStream));
+        setMySessionId(myStream.id);
+
+        // eslint-disable-next-line
+        sendPC = createSenderPeerConnection(newSocket, localStream);
+        createSenderOffer(newSocket);
+
+        newSocket.emit("joinRoom", {
+          id: newSocket.id,
+          roomId,
+        });
+      })
+      .catch((error) => {
+        console.log(`getUserMedia error: ${error}`);
+      });
+
+    // //화면공유 테스트 여기부터
+    // navigator.mediaDevices
+    //   .getDisplayMedia({
+    //     video: true,
+    //     audio: true,
+    //   })
+    //   .then((stream) => {
+    //     console.log("getDisplayMedia", stream);
+    //   })
+    //   .catch((error) => {
+    //     console.log(`getDisplayMedia error: ${error}`);
+    //   });
+
+    // //화면 공유 테스트 여기까지
+
     newSocket.on("userEnter", (data: { id: string }) => {
       createReceivePC(data.id, newSocket);
     });
 
+    // 해당 방에 있는 유저들 목록을 받음
     newSocket.on("allUsers", (data: { users: Array<{ id: string }> }) => {
       let len = data.users.length;
       for (let i = 0; i < len; i++) {
@@ -116,36 +162,6 @@ const Meet = () => {
         }
       }
     );
-
-    navigator.mediaDevices
-      .getUserMedia({
-        audio: true,
-        video: true,
-      })
-      .then((stream) => {
-        localStream = stream;
-        // stream 정보에 내 데이터도 추가
-        const myStream = {
-          id: newSocket.id,
-          stream,
-          muted: false,
-          videoOff: false,
-        };
-        setUsers(users.concat(myStream));
-        setMySessionId(myStream.id);
-
-        // eslint-disable-next-line
-        sendPC = createSenderPeerConnection(newSocket, localStream);
-        createSenderOffer(newSocket);
-
-        newSocket.emit("joinRoom", {
-          id: newSocket.id,
-          roomId,
-        });
-      })
-      .catch((error) => {
-        console.log(`getUserMedia error: ${error}`);
-      });
   }, []);
 
   const createReceivePC = (id: string, newSocket: SocketIOClient.Socket) => {
@@ -300,12 +316,53 @@ const Meet = () => {
     videoTrack.enabled = !nextValue;
   };
 
+  // 통화 종료
   const onHangOff = () => {
     window.location.replace("/");
   };
 
+  // 사이드바 토글
   const onToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
+  };
+
+  // 화면 공유
+
+  const onScreenShare = () => {
+    navigator.mediaDevices
+      .getDisplayMedia({
+        video: true,
+        audio: true,
+      })
+      .then((stream) => {
+        console.log("getDisplayMedia", stream);
+        const myStream = {
+          id: "1asdasd6789",
+          stream,
+          muted: false,
+          videoOff: false,
+        };
+
+        setUsers((oldUsers) => [...oldUsers, myStream]);
+        // eslint-disable-next-line
+
+        // todo : 화면 공유 했을때 상대방도 보이게 설정 해줘야됌.
+        // 아마 displayMedia 를 따로 사용하는법이 있을 거 같은데 낼 일어나서 해보자
+
+        let ScreenSocket = newSocket;
+        ScreenSocket.id = "1asdasd6789";
+
+        sendPC = createSenderPeerConnection(ScreenSocket, stream);
+        createSenderOffer(ScreenSocket);
+
+        newSocket.emit("joinRoom", {
+          id: "1asdasd6789",
+          roomId,
+        });
+      })
+      .catch((error) => {
+        console.log(`getDisplayMedia error: ${error}`);
+      });
   };
 
   return (
@@ -329,6 +386,7 @@ const Meet = () => {
         onHangOff={onHangOff}
         users={users}
         onToggleSidebar={onToggleSidebar}
+        onScreenShare={onScreenShare}
       />
     </MeetPageBlock>
   );

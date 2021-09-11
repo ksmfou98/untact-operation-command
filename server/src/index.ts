@@ -11,6 +11,7 @@ app.use(cors());
 
 let receiverPCs = {};
 let senderPCs = {};
+// 유저 목록
 let users = {};
 let socketToRoom = {};
 
@@ -168,6 +169,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
+  // 방에 입장
   socket.on("joinRoom", (data) => {
     try {
       let allUsers = getOtherUsersInRoom(data.id, data.roomId);
