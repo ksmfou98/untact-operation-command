@@ -1,7 +1,7 @@
 import http from "http";
 import express from "express";
 import cors from "cors";
-import socketio, { Server } from "socket.io";
+import { Server } from "socket.io";
 let wrtc = require("wrtc");
 
 const app = express();
@@ -16,11 +16,6 @@ let socketToRoom = {};
 
 const pc_config = {
   iceServers: [
-    // {
-    //   urls: 'stun:[STUN_IP]:[PORT]',
-    //   'credentials': '[YOR CREDENTIALS]',
-    //   'username': '[USERNAME]'
-    // },
     {
       urls: "stun:stun.l.google.com:19302",
     },
@@ -162,6 +157,7 @@ const closeSenderPCs = (socketID) => {
   delete senderPCs[socketID];
 };
 
+// socket 서버 생성
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -171,7 +167,7 @@ const io = new Server(server, {
   allowEIO3: true, // socket io Unsupported protocol version 에러 방지
 });
 
-io.sockets.on("connection", (socket) => {
+io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     try {
       let allUsers = getOtherUsersInRoom(data.id, data.roomId);

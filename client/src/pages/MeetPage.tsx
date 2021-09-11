@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import io from "socket.io-client";
-import { useRef } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
@@ -27,8 +26,6 @@ const Meet = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { roomId } = useParams<MeetParams>();
-
-  let localVideoRef = useRef<HTMLVideoElement>(null);
 
   let sendPC: RTCPeerConnection;
   let receivePCs: { [socketId: string]: RTCPeerConnection };
@@ -123,14 +120,9 @@ const Meet = () => {
     navigator.mediaDevices
       .getUserMedia({
         audio: true,
-        video: {
-          width: 240,
-          // height: 240,
-        },
+        video: true,
       })
       .then((stream) => {
-        if (localVideoRef.current) localVideoRef.current.srcObject = stream;
-
         localStream = stream;
         // stream 정보에 내 데이터도 추가
         const myStream = {
