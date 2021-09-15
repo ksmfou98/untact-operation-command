@@ -1,7 +1,8 @@
 import { Server } from "socket.io";
-let wrtc = require("wrtc");
+import http from "http";
+import wrtc from "wrtc";
 
-export default function (server) {
+export default function (server: http.Server) {
   let receiverPCs = {};
   let senderPCs = {};
   // 유저 목록

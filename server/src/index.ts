@@ -4,7 +4,7 @@ import cors from "cors";
 import webRTCSocket from "./socket";
 
 const app = express();
-const server = http.createServer(app);
+const server: http.Server = http.createServer(app);
 
 app.use(cors());
 webRTCSocket(server);
