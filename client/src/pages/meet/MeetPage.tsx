@@ -14,7 +14,7 @@ interface MeetParams {
   roomId: string;
 }
 
-const Meet = () => {
+const MeetPage = () => {
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [mySessionId, setMySessionId] = useState<string>("");
   const [{ muted, videoDisabled }, setMediaState] = useState({
@@ -412,4 +412,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default Meet;
+export default MeetPage;

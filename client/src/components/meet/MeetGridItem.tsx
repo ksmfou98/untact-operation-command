@@ -5,10 +5,9 @@ interface Props {
   stream: MediaStream;
   muted?: boolean;
   width: number;
-  isLastRow: boolean;
 }
 
-const MeetGridItem = ({ stream, muted, width, isLastRow }: Props) => {
+const MeetGridItem = ({ stream, muted, width }: Props) => {
   const ref = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState<boolean>(false);
 

@@ -16,6 +16,10 @@ const MeetSidebar = ({
   users,
   mySessionId,
 }: MeetSidebarProps) => {
+  if (!visible) {
+    return null;
+  }
+
   return (
     <Aside visible={visible}>
       <div className="content">
@@ -45,8 +49,8 @@ const MeetSidebar = ({
 const Aside = styled.aside<{ visible: boolean }>`
   display: flex;
   background: #212121;
-  width: 320px;
   flex-direction: column;
+  width: 320px;
   ${(props) =>
     props.visible
       ? css`

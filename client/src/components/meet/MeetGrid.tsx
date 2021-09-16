@@ -30,18 +30,9 @@ function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
 
   return (
     <Grid ref={ref}>
-      {users.map((user, index) => {
-        const remainder = users.length % divisor;
-        const isLastRow = index >= users.length - remainder;
-        return (
-          <MeetGridItem
-            key={index}
-            isLastRow={isLastRow}
-            stream={user.stream}
-            width={itemWidth}
-          />
-        );
-      })}
+      {users.map((user, index) => (
+        <MeetGridItem key={index} stream={user.stream} width={itemWidth} />
+      ))}
     </Grid>
   );
 }
