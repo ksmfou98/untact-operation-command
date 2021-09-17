@@ -3,23 +3,24 @@ import styled from "styled-components";
 import { BiHomeAlt, BiCalendar, BiHelpCircle } from "react-icons/bi";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
+import media from "lib/styles/media";
 
 const AsideMenu = () => {
   const asideMenus = [
     {
       name: "Home",
       link: "/",
-      icon: <BiHomeAlt size="22" />,
+      icon: <BiHomeAlt size="30" />,
     },
     {
       name: "Events",
       link: "/events",
-      icon: <BiCalendar size="22" />,
+      icon: <BiCalendar size="30" />,
     },
     {
       name: "Members",
       link: "/members",
-      icon: <IoPeopleOutline size="22" />,
+      icon: <IoPeopleOutline size="30" />,
     },
   ];
 
@@ -45,15 +46,15 @@ const AsideMenu = () => {
       <div className="bottom-menu">
         <NavLink to="/setting">
           <div className="ico">
-            <IoSettingsOutline />
+            <IoSettingsOutline size="30" />
           </div>
           <div className="name">Settings</div>
         </NavLink>
         <NavLink to="/help">
           <div className="ico">
-            <BiHelpCircle />
+            <BiHelpCircle size="30" />
           </div>
-          <div className="name">Help Center</div>
+          <div className="name">Help</div>
         </NavLink>
       </div>
     </AsideMenuBlock>
@@ -83,7 +84,16 @@ const AsideMenuBlock = styled.div`
       margin-right: 10px;
     }
     .name {
-      font-size: 16px;
+      font-size: 18px;
+    }
+    ${media.xlarge} {
+      flex-direction: column;
+      .ico {
+        margin-right: 0;
+      }
+      .name {
+        font-size: 12px;
+      }
     }
   }
 `;
