@@ -39,7 +39,7 @@ const AsideLayout = styled.div`
 `;
 
 const MainLayout = styled.div`
-  padding: 20px;
+  padding: 35px 50px;
 `;
 
 const PageTitle = styled.div`

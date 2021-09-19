@@ -13,8 +13,8 @@ const AsideMenu = () => {
       icon: <BiHomeAlt size="30" />,
     },
     {
-      name: "Events",
-      link: "/events",
+      name: "Schedule",
+      link: "/schedule",
       icon: <BiCalendar size="30" />,
     },
     {
