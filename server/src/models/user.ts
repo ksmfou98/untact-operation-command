@@ -9,6 +9,8 @@ export interface IUser {
   email: string;
   password: string;
   name: string;
+  thumbnail: string;
+  friends: string[];
   token: string;
 }
 
@@ -53,6 +55,16 @@ const UserSchema: Schema<IUserMethod> = new Schema(
         }
       },
     },
+    thumbnail: {
+      type: String,
+      trim: true,
+    },
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     token: {
       type: String,
     },
