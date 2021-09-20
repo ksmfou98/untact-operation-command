@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router";
-import MeetPage from "pages/meet/MeetPage";
-import MeetListPage from "pages/meet/HomePage";
+import MeetPage from "pages/MeetPage";
+import MeetListPage from "pages/HomePage";
 import Aside from "components/base/Aside";
 import useChannelPluginEffect from "hooks/useChannelPluginEffect";
 import styled from "styled-components";
