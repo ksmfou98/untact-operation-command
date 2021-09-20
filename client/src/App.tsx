@@ -36,10 +36,25 @@ const AsideLayout = styled.div`
   ${media.xlarge} {
     margin-left: 90px;
   }
+  ${media.small} {
+    margin-left: 0;
+  }
 `;
 
 const MainLayout = styled.div`
-  padding: 35px 85px;
+  /* padding: 35px 85px; */
+  padding: 35px 0;
+  width: 1760px;
+  margin: 0 auto;
+  ${media.xxlarge} {
+    width: 1410px;
+  }
+  ${media.large} {
+    width: 1060px;
+  }
+  ${media.medium} {
+    width: calc(100% - 32px);
+  }
 `;
 
 const PageTitle = styled.div`

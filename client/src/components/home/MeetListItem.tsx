@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BsFillPeopleFill } from "react-icons/bs";
+import media from "lib/styles/media";
 
 interface MeetListItemProps {
   data: {
@@ -57,6 +58,13 @@ const MeetListItemBlock = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  ${media.medium} {
+    width: calc(50% - 32px);
+  }
+  ${media.small} {
+    width: 100%;
+    margin-bottom: 5px;
+  }
 `;
 
 const MeetThumbnail = styled(Link)`

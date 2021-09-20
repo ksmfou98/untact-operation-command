@@ -6,6 +6,7 @@ import { RiBarChartHorizontalLine } from "react-icons/ri";
 import { BiBuilding } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import Button from "components/common/Button";
+import media from "lib/styles/media";
 
 const HomeNav = () => {
   const navList = [
@@ -80,12 +81,20 @@ const LeftBox = styled.div`
     .name {
       font-size: 18px;
     }
+    ${media.custom(980)} {
+      padding-right: 10px;
+      .ico {
+        margin-right: 3px;
+      }
+      .name {
+        font-size: 14px;
+      }
+    }
   }
 `;
 
 const RightBox = styled.div`
   display: flex;
-  margin-right: 50px;
   .search {
     position: relative;
     margin-right: 20px;
@@ -101,12 +110,19 @@ const RightBox = styled.div`
       color: #666;
       line-height: 16px;
       outline: none;
+      ${media.custom(980)} {
+        width: 175px;
+        height: 36px;
+      }
     }
     button {
       position: absolute;
       right: 3px;
       top: 5px;
     }
+  }
+  ${media.small} {
+    display: none;
   }
 `;
 
