@@ -4,47 +4,53 @@ import { IoPeopleOutline, IoEarthOutline } from "react-icons/io5";
 import { BsPencil } from "react-icons/bs";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
 import { BiBuilding } from "react-icons/bi";
+import { AiOutlineSearch } from "react-icons/ai";
 import Button from "components/common/Button";
 
 const HomeNav = () => {
   const navList = [
     {
       name: "전체",
-      icon: <RiBarChartHorizontalLine size="30" />,
+      icon: <RiBarChartHorizontalLine size="22" />,
     },
     {
       name: "행사",
-      icon: <IoPeopleOutline size="30" />,
+      icon: <IoPeopleOutline size="22" />,
     },
     {
       name: "강의",
-      icon: <BsPencil size="30" />,
+      icon: <BsPencil size="22" />,
     },
     {
       name: "종교",
-      icon: <BiBuilding size="30" />,
+      icon: <BiBuilding size="22" />,
     },
     {
       name: "상담",
-      icon: <IoEarthOutline size="30" />,
+      icon: <IoEarthOutline size="22" />,
     },
   ];
 
   return (
     <HomeNavBlock>
       <div className="nav-list">
-        <div className="left-box">
+        <LeftBox>
           {navList.map((item, index) => (
             <div className="item" key={index}>
               <div className="ico">{item.icon}</div>
               <div className="name">{item.name}</div>
             </div>
           ))}
-        </div>
-        <div className="right-box">
-          <div>검색기능</div>
+        </LeftBox>
+        <RightBox>
+          <div className="search">
+            <input type="text" placeholder="회의를 검색해주세요" />
+            <button>
+              <AiOutlineSearch size="22" />
+            </button>
+          </div>
           <StyledButton color="true">회의 생성</StyledButton>
-        </div>
+        </RightBox>
       </div>
     </HomeNavBlock>
   );
@@ -56,22 +62,50 @@ const HomeNavBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .left-box {
-      display: flex;
-      align-items: center;
-      .item {
-        display: flex;
-        align-items: center;
-        padding: 5px 30px 5px 5px;
-        cursor: pointer;
-        .ico {
-          margin-right: 5px;
-        }
-      }
+  }
+`;
+
+const LeftBox = styled.div`
+  display: flex;
+  align-items: center;
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 5px 30px 5px 5px;
+    cursor: pointer;
+    .ico {
+      margin-right: 5px;
+      color: #424242;
     }
-    .right-box {
-      display: flex;
-      margin-right: 50px;
+    .name {
+      font-size: 18px;
+    }
+  }
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  margin-right: 50px;
+  .search {
+    position: relative;
+    margin-right: 20px;
+    input {
+      width: 242px;
+      height: 36px;
+      padding: 0 60px 0 14px;
+      border: 1px solid #f7f7f6;
+      border-radius: 18px;
+      background-color: #f7f7f7;
+      font-weight: 400;
+      font-size: 12px;
+      color: #666;
+      line-height: 16px;
+      outline: none;
+    }
+    button {
+      position: absolute;
+      right: 3px;
+      top: 5px;
     }
   }
 `;
