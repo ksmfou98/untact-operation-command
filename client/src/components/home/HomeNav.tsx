@@ -7,8 +7,11 @@ import { BiBuilding } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import Button from "components/common/Button";
 import media from "lib/styles/media";
+import useModal from "hooks/common/useModal";
+import MeetCreateModal from "./MeetCreateModal";
 
 const HomeNav = () => {
+  const { isModal, onToggleModal } = useModal();
   const navList = [
     {
       name: "전체",
@@ -50,9 +53,14 @@ const HomeNav = () => {
               <AiOutlineSearch size="22" />
             </button>
           </div>
-          <StyledButton color="true">회의 생성</StyledButton>
+          <StyledButton onClick={onToggleModal} color="true">
+            회의 생성
+          </StyledButton>
         </RightBox>
       </div>
+      {isModal && (
+        <MeetCreateModal isModal={isModal} onToggleModal={onToggleModal} />
+      )}
     </HomeNavBlock>
   );
 };

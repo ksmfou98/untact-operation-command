@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router";
 import MeetPage from "pages/MeetPage";
 import MeetListPage from "pages/HomePage";
 import Aside from "components/base/Aside";
-import useChannelPluginEffect from "hooks/useChannelPluginEffect";
+import useChannelPluginEffect from "hooks/common/useChannelPluginEffect";
 import styled from "styled-components";
 import media from "lib/styles/media";
 
