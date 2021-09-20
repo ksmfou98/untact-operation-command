@@ -15,7 +15,7 @@ interface MeetListItemProps {
 }
 
 const MeetListItem = ({ data }: MeetListItemProps) => {
-  const { id, title, type, description, host } = data;
+  const { title, description, host } = data;
 
   return (
     <MeetListItemBlock>
