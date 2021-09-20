@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router";
-import MeetPage from "pages/meet/MeetPage";
-import MeetListPage from "pages/meet/HomePage";
+import MeetPage from "pages/MeetPage";
+import MeetListPage from "pages/HomePage";
 import Aside from "components/base/Aside";
 import useChannelPluginEffect from "hooks/useChannelPluginEffect";
 import styled from "styled-components";
@@ -36,10 +36,25 @@ const AsideLayout = styled.div`
   ${media.xlarge} {
     margin-left: 90px;
   }
+  ${media.small} {
+    margin-left: 0;
+  }
 `;
 
 const MainLayout = styled.div`
-  padding: 35px 50px;
+  /* padding: 35px 85px; */
+  padding: 35px 0;
+  width: 1760px;
+  margin: 0 auto;
+  ${media.xxlarge} {
+    width: 1410px;
+  }
+  ${media.large} {
+    width: 1060px;
+  }
+  ${media.medium} {
+    width: calc(100% - 32px);
+  }
 `;
 
 const PageTitle = styled.div`

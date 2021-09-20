@@ -37,6 +37,9 @@ const AsideBlock = styled.aside`
     padding-left: 5px;
     padding-right: 5px;
   }
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const AsideTitle = styled.div`
