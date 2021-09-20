@@ -7,6 +7,7 @@ import Aside from "components/base/Aside";
 import useChannelPluginEffect from "hooks/common/useChannelPluginEffect";
 import styled from "styled-components";
 import media from "lib/styles/media";
+import CalendarPage from "pages/CalendarPage";
 
 const App = () => {
   useChannelPluginEffect();
@@ -22,6 +23,7 @@ const App = () => {
               <h1 className="left">비대면 작전 사령부</h1>
             </PageTitle>
             <Route path="/" exact component={MeetListPage} />
+            <Route path="/schedule" exact component={CalendarPage} />
           </MainLayout>
         </AsideLayout>
       </Switch>
