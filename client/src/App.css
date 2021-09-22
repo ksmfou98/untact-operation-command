@@ -150,3 +150,7 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
+
+*::placeholder {
+  color: #afaeae;
+}
