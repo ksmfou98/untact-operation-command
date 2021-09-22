@@ -84,6 +84,13 @@ const Calendar = styled.main`
     --fc-event-border-color: #3788d8;
     --fc-event-text-color: #fff;
     --fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
+    .fc-daygrid-event {
+      z-index: 6;
+      color: #777dce;
+      border: solid 1px #777dce;
+      background-color: rgb(194, 204, 255);
+      margin-top: 1px;
+    }
     .fc-col-header-cell-cushion {
       /* needs to be same precedence */
       padding-top: 6px; /* an override! */
@@ -105,15 +112,12 @@ const Calendar = styled.main`
       }
     }
   }
-  ${media.xsmall} {
-    font-size: 11px;
-  }
 `;
 
 const ModalStyled = styled.div`
   margin-left: 4.5%;
   .infoEle {
-    margin:30px 0px;
+    margin: 30px 0px;
     .infoQutn {
       font-size: 17px;
       padding: 15px 15px 9px 5px;
@@ -125,3 +129,6 @@ const ModalStyled = styled.div`
   }
 `;
 export default CalendarPage;
+
+//#777dce
+//rgb(194,204,255)
