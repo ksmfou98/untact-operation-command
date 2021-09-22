@@ -1,8 +1,8 @@
 import http from "http";
 import express from "express";
 import cors from "cors";
-import "dotenv/config";
-import "./database";
+// import "dotenv/config";
+// import "./database";
 import webRTCSocket from "./socket";
 import fs from "fs";
 import cookieParser from "cookie-parser";
