@@ -22,7 +22,7 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
 
   return (
     <MeetGridItemBlock style={{ width }}>
-      <VideoContainer ref={ref} muted={isMuted} autoPlay />
+      <VideoContainer ref={ref} playsInline muted={isMuted} autoPlay />
     </MeetGridItemBlock>
   );
 };
