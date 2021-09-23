@@ -1,5 +1,5 @@
-import { Server } from "socket.io";
 import http from "http";
+import { Server } from "socket.io";
 import wrtc from "wrtc";
 
 export default function (server: http.Server) {
@@ -157,6 +157,7 @@ export default function (server: http.Server) {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],
+      allowedHeaders: ["my-custom-header"],
       credentials: true,
     },
     allowEIO3: true, // socket io Unsupported protocol version 에러 방지
