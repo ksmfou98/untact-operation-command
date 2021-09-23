@@ -94,6 +94,12 @@ export default function (server: http.Server) {
     };
 
     const sendUser = users[roomId].filter((user) => user.id === senderSocketID);
+    console.log(
+      "스트림 정보입니다.",
+      sendUser[0].stream.getTracks().forEach((track) => {
+        console.log(track.muted);
+      })
+    );
     sendUser[0].stream.getTracks().forEach((track) => {
       pc.addTrack(track, sendUser[0].stream);
     });
@@ -187,6 +193,7 @@ export default function (server: http.Server) {
           offerToReceiveAudio: true,
           offerToReceiveVideo: true,
         });
+
         await pc.setLocalDescription(sdp);
         socket.join(data.roomId);
         io.to(data.senderSocketID).emit("getSenderAnswer", { sdp });

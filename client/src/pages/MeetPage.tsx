@@ -109,7 +109,7 @@ const MeetPage = () => {
       async (data: { sdp: RTCSessionDescription }) => {
         try {
           console.log("get sender answer");
-          console.log(data.sdp);
+          console.log("여긴가", data.sdp);
           await sendPC.setRemoteDescription(
             new RTCSessionDescription(data.sdp)
           );
@@ -222,6 +222,7 @@ const MeetPage = () => {
     localStream: MediaStream
   ): RTCPeerConnection => {
     let pc = new RTCPeerConnection(pc_config);
+    console.log("pc", pc);
 
     pc.onicecandidate = (e) => {
       if (e.candidate) {
@@ -238,7 +239,7 @@ const MeetPage = () => {
     };
 
     if (localStream) {
-      console.log("localstream add");
+      console.log("localstream add", localStream.getTracks());
       localStream.getTracks().forEach((track) => {
         pc.addTrack(track, localStream);
       });
@@ -277,6 +278,7 @@ const MeetPage = () => {
     pc.ontrack = (e) => {
       console.log("ontrack success");
       setUsers((oldUsers) => oldUsers.filter((user) => user.id !== socketID));
+      console.log("stream 정보", e.streams[0].getTracks());
       setUsers((oldUsers) => [
         ...oldUsers,
         {

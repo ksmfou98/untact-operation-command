@@ -19,13 +19,13 @@ const MeetListItem = ({ data }: MeetListItemProps) => {
 
   return (
     <MeetListItemBlock>
-      <MeetThumbnail to="/">
+      <MeetThumbnail to="/meet/123">
         <div className="thumbnail">
           <img src="https://picsum.photos/600/300" alt="" />
         </div>
       </MeetThumbnail>
       <MeetContent>
-        <Link to="/">
+        <Link to="/meet/123">
           <h4>{title}</h4>
           <div className="description-wrapper">
             <p>{description}</p>
