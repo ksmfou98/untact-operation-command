@@ -43,6 +43,9 @@ export default function (server: http.Server) {
     };
 
     pc.ontrack = (e) => {
+      e.streams[0].getTracks().forEach((track) => {
+        console.log(track.muted);
+      });
       if (users[roomId]) {
         if (!isIncluded(users[roomId], socketID)) {
           users[roomId].push({
@@ -96,6 +99,7 @@ export default function (server: http.Server) {
     const sendUser = users[roomId].filter((user) => user.id === senderSocketID);
     sendUser[0].stream.getTracks().forEach((track) => {
       pc.addTrack(track, sendUser[0].stream);
+      console.log(track.muted);
     });
 
     return pc;
