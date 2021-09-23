@@ -13,6 +13,10 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
 
   useEffect(() => {
     if (ref.current) ref.current.srcObject = stream;
+    console.log("랄라", stream.getTracks());
+    // stream.getTracks().forEach((track) => {
+    //   track.enabled = false;
+    // });
     if (muted) setIsMuted(muted);
   }, [muted, stream]);
 

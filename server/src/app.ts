@@ -26,7 +26,7 @@ app.use("/api/v1", routes);
 webRTCSocket(server);
 
 server.listen(PORT, () => {
-  // const dir = "./uploads";
-  // if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  const dir = "./uploads";
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
   console.log(`✅ server ON ${PORT}`);
 });

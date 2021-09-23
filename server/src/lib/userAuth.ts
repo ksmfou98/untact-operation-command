@@ -8,7 +8,7 @@ const userAuth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET || "Require key here!!!"
+      process.env.JWT_SECRET || "untact-operation-command"
     );
     res.locals.user = {
       // res.locals는 전역변수를 만드는 것임 그러므로 다른곳에서 user를 사용할 수 있음
