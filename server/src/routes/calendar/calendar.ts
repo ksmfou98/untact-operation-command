@@ -69,3 +69,34 @@ export const updateSchedule = async (req: Request, res: Response) => {
     });
   }
 };
+
+//일정 삭제
+export const deleteSchedule = async (req: Request, res: Response) => {
+  const userId = res.locals.user._id;
+  const { scheduleId } = req.params;
+  try {
+    let schedule = await Calendar.findById({ _id: scheduleId });
+    if (!schedule) {
+      return res.status(400).json({
+        success: false,
+        message: "해당 일정이 존재하지 않습니다.",
+      });
+    }
+    if (schedule.user.toString() !== userId) {
+      return res.status(400).json({
+        success: false,
+        message: "일정 작성자가 아닙니다.",
+      });
+    }
+    schedule = await Calendar.findByIdAndDelete({ _id: scheduleId });
+    const schedules = await Calendar.find().populate("user");
+    return res.status(200).json({
+      success: true,
+      schedules,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    });
+  }
+};
