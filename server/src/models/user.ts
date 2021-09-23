@@ -1,7 +1,7 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
-import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose, { Document, Model, Schema } from "mongoose";
+import validator from "validator";
 
 const saltRounds: number = 10;
 
@@ -97,7 +97,7 @@ UserSchema.methods.generateToken = async function () {
       name: this.name,
       email: this.email,
     },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET || "Require key here!!!"
   );
   this.token = token;
   await this.save();
