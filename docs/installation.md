@@ -41,7 +41,7 @@ JWT_SECRET=untact-operation-command
 
 ```console
 $ cd server
-$ npm start
+$ npm run dev
 ```
 
 ## Frontend 서버 실행
