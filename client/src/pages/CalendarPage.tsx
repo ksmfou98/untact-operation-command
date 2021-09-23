@@ -12,73 +12,86 @@ const CalendarPage = () => {
   const { isModal, onToggleModal } = useModal();
   return (
     <CalendarPageBlock>
-      <CalendarMain>
-        <Calendar>
-          <FullCalendar
-            aspectRatio={1.75}
-            customButtons={{
-              createSchedule: {
-                text: "일정생성",
-                click: function () {
-                  onToggleModal();
-                },
+      <Calendar>
+        <FullCalendar
+          aspectRatio={1.75}
+          customButtons={{
+            createSchedule: {
+              text: "일정생성",
+              click: function () {
+                onToggleModal();
               },
-            }}
-            initialView="dayGridMonth"
-            headerToolbar={{
-              left: "prev,next today createSchedule",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
-            }}
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              interactionPlugin,
-              listPlugin,
-            ]}
-            events={[
-              { title: "event 1", date: "2021-09-10" },
-              { title: "event 2", date: "2021-09-20T12:30:00Z" },
-            ]}
-          />
-        </Calendar>
-        {isModal && (
-          <Modal
-            title="일정 생성"
-            buttonName="생성"
-            onClick={() => console.log("생성")}
-            onToggleModal={() => onToggleModal()}
-            isModal={true}
-            size="big"
-          >
-            <ModalStyled>
-              <div className="infoEle">
-                <div className="infoQutn">제목</div>
-                <input type="text" className="infoInput" />
+            },
+          }}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: "prev,next today createSchedule",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+          }}
+          plugins={[
+            dayGridPlugin,
+            timeGridPlugin,
+            interactionPlugin,
+            listPlugin,
+          ]}
+          events={[
+            { title: "event 1", date: "2021-09-26T18:30" },
+            {
+              title: "event 2",
+              start: "2021-09-23T18:30",
+              end: "2021-09-23T23:30",
+              user: "12a1wdw23w1dw1w3",
+            },
+          ]}
+        />
+      </Calendar>
+      {isModal && (
+        <Modal
+          title="일정 생성"
+          buttonName="생성"
+          onClick={() => console.log(FullCalendar)}
+          onToggleModal={() => onToggleModal()}
+          isModal={true}
+          size="big"
+        >
+          <ModalStyled>
+            <div className="infoEle">
+              <div className="infoQutn">제목</div>
+              <input type="text" className="infoInput" />
+            </div>
+            <div className="infoEle">
+              <div className="infoQutn"> 날짜 </div>
+              <input type="date" className="infoInput" />
+            </div>
+            <div className="infoEle">
+              <div className="infoQutn"> 시간 </div>
+              <div className="flex">
+                <input
+                  type="time"
+                  className="infoInputShort"
+                  onChange={(e) => {}}
+                />
+                ~
+                <input
+                  type="time"
+                  className="infoInputShort"
+                  onChange={(e) => {}}
+                />
               </div>
-              <div className="infoEle">
-                <div className="infoQutn"> 날짜 </div>
-                <input type="date" className="infoInput" />
-              </div>
-              <div className="infoEle">
-                <div className="infoQutn"> 시간 </div>
-                <input type="time" className="infoInput" />
-              </div>
-            </ModalStyled>
-          </Modal>
-        )}
-      </CalendarMain>
+            </div>
+          </ModalStyled>
+        </Modal>
+      )}
     </CalendarPageBlock>
   );
 };
 
-const CalendarPageBlock = styled.div``;
-
-const CalendarMain = styled.main`
+const CalendarPageBlock = styled.div`
   width: 90%;
 `;
 
-const Calendar = styled.main`
+const Calendar = styled.div`
   .fc {
     --fc-event-bg-color: #3788d8;
     --fc-event-border-color: #3788d8;
@@ -118,12 +131,21 @@ const ModalStyled = styled.div`
   margin-left: 4.5%;
   .infoEle {
     margin: 30px 0px;
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      width: 350px;
+    }
     .infoQutn {
       font-size: 17px;
       padding: 15px 15px 9px 5px;
     }
     .infoInput {
       width: 90%;
+      height: 40px;
+    }
+    .infoInputShort {
+      width: 140px;
       height: 40px;
     }
   }

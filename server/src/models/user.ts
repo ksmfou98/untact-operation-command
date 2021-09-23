@@ -9,6 +9,7 @@ export interface IUser {
   email: string;
   password: string;
   name: string;
+  role: string;
   thumbnail: string;
   friends: string[];
   token: string;
@@ -54,6 +55,11 @@ const UserSchema: Schema<IUserMethod> = new Schema(
           throw new Error("Password can not contain a word password");
         }
       },
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
     thumbnail: {
       type: String,
