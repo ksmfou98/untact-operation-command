@@ -5,8 +5,8 @@ import fs from "fs";
 import http from "http";
 import userAuth from "./lib/userAuth";
 import routes from "./routes";
-// import "dotenv/config";
-// import "./database";
+import "dotenv/config";
+import "./database";
 import webRTCSocket from "./socket";
 
 const PORT = process.env.PORT || 8080;
