@@ -13,12 +13,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 const server = http.createServer(app);
 
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST"],
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,7 +26,7 @@ app.use("/api/v1", routes);
 webRTCSocket(server);
 
 server.listen(PORT, () => {
-  const dir = "./uploads";
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+  // const dir = "./uploads";
+  // if (!fs.existsSync(dir)) fs.mkdirSync(dir);
   console.log(`✅ server ON ${PORT}`);
 });
