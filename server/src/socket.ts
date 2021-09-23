@@ -97,7 +97,7 @@ export default function (server: http.Server) {
     console.log(
       "스트림 정보입니다.",
       sendUser[0].stream.getTracks().forEach((track) => {
-        console.log(track.muted);
+        console.log(track.label);
       })
     );
     sendUser[0].stream.getTracks().forEach((track) => {

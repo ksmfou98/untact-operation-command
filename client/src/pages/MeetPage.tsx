@@ -276,18 +276,17 @@ const MeetPage = () => {
     };
 
     pc.ontrack = (e) => {
-      console.log("ontrack success");
+      console.log("ontrack success", e);
       setUsers((oldUsers) => oldUsers.filter((user) => user.id !== socketID));
       console.log("stream 정보", e.streams[0].getTracks());
-      setUsers((oldUsers) => [
-        ...oldUsers,
-        {
+      setUsers((oldUsers) =>
+        oldUsers.concat({
           id: socketID,
           stream: e.streams[0],
           muted: false,
           videoOff: false,
-        },
-      ]);
+        })
+      );
     };
 
     // return pc

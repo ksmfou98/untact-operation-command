@@ -97,7 +97,7 @@ UserSchema.methods.generateToken = async function () {
       name: this.name,
       email: this.email,
     },
-    process.env.JWT_SECRET || "Require key here!!!"
+    process.env.JWT_SECRET || "untact-operation-command"
   );
   this.token = token;
   await this.save();
