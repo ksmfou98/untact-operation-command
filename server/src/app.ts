@@ -1,13 +1,13 @@
-import http from "http";
-import express from "express";
-import cors from "cors";
-import "dotenv/config";
-import "./database";
-import webRTCSocket from "./socket";
-import fs from "fs";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import express from "express";
+import fs from "fs";
+import http from "http";
 import userAuth from "./lib/userAuth";
 import routes from "./routes";
+// import "dotenv/config";
+// import "./database";
+import webRTCSocket from "./socket";
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -15,10 +15,11 @@ const server = http.createServer(app);
 
 app.use(
   cors({
-    credentials: true,
-    origin: true,
+    origin: "*",
+    methods: ["GET", "POST"],
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
