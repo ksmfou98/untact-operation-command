@@ -1,5 +1,5 @@
 import express from "express";
-import * as calendarCtrl from "./calendar";
+import * as calendarCtrl from "./calendar.ctrl";
 
 const router = express.Router();
 
