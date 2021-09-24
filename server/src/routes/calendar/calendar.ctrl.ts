@@ -7,7 +7,12 @@ export const createSchedule = async (req: Request, res: Response) => {
   const userId = res.locals.user._id;
   try {
     const schedules = await Calendar.find();
-    const schedule = new Calendar({ title, start, end, user: userId });
+    const schedule = new Calendar({
+      title,
+      start,
+      end,
+      user: userId,
+    });
     await schedule.save();
 
     return res.status(201).json({
