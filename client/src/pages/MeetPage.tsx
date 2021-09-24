@@ -270,7 +270,7 @@ const MeetPage = () => {
 
     pc.onicecandidate = (e) => {
       if (e.candidate) {
-        console.log("receiver PC onicecandidate");
+        console.log("receiver PC onicecandidate", e.candidate);
         newSocket.emit("receiverCandidate", {
           candidate: e.candidate,
           receiverSocketID: newSocket.id,

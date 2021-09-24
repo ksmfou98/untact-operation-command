@@ -45,6 +45,10 @@ export default function (server: http.Server) {
 
     pc.oniceconnectionstatechange = (e) => {
       //console.log(e);
+      console.log(
+        "Receiver oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     pc.ontrack = (e) => {
@@ -99,6 +103,10 @@ export default function (server: http.Server) {
 
     pc.oniceconnectionstatechange = (e) => {
       //console.log(e);
+      console.log(
+        "Sender oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     const sendUser = users[roomId].filter((user) => user.id === senderSocketID);
