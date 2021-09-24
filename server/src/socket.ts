@@ -14,6 +14,11 @@ export default function (server: http.Server) {
       {
         urls: "stun:stun.l.google.com:19302",
       },
+      {
+        urls: "turn:numb.viagenie.ca",
+        credential: "muazkh",
+        username: "webrtc@live.com",
+      },
     ],
   };
 
