@@ -1,4 +1,4 @@
-import client from "./common/client";
+import client from "../../hooks/common/client";
 
 // 일정 목록 조회
 export const readScheduleLinstAPI = async () => {
