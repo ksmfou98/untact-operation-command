@@ -8,12 +8,14 @@ import listPlugin from "@fullcalendar/list";
 import Modal from "components/common/Modal";
 import useModal from "hooks/common/useModal";
 import media from "lib/styles/media";
+
 const CalendarPage = () => {
   const { isModal, onToggleModal } = useModal();
   return (
     <CalendarPageBlock>
       <Calendar>
         <FullCalendar
+          timeZone="UTC"
           aspectRatio={1.75}
           customButtons={{
             createSchedule: {
@@ -36,11 +38,11 @@ const CalendarPage = () => {
             listPlugin,
           ]}
           events={[
-            { title: "event 1", date: "2021-09-26T18:30" },
+            { title: "event 1", date: "2021-09-24T03:39:49.334Z" },
             {
               title: "event 2",
               start: "2021-09-23T18:30",
-              end: "2021-09-23T23:30",
+              end: "2021-09-24 23:30",
               user: "12a1wdw23w1dw1w3",
             },
           ]}

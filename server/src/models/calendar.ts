@@ -2,8 +2,8 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 
 export interface ICalendar {
   title: string;
-  start: string;
-  end: string;
+  start: Date;
+  end: Date;
   user: string;
 }
 export interface ICalendarMethod extends ICalendar, Document {}
@@ -17,12 +17,12 @@ const CalendarSchema: Schema<ICalendarMethod> = new Schema(
       maxlength: 30,
     },
     start: {
-      type: String,
+      type: Date,
       required: true,
       default: Date.now,
     },
     end: {
-      type: String,
+      type: Date,
       required: false,
     },
     user: {
