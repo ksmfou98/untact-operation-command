@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 interface Props {
   stream: MediaStream;
-  muted?: boolean;
+  muted: boolean;
   width: number;
 }
 
 const MeetGridItem = ({ stream, muted, width }: Props) => {
   const ref = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(true);
 
   useEffect(() => {
     if (ref.current) ref.current.srcObject = stream;
