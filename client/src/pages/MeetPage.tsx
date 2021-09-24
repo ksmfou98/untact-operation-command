@@ -92,10 +92,7 @@ const MeetPage = () => {
     // //화면 공유 테스트 여기까지
 
     newSocket.on("userEnter", (data: { id: string }) => {
-      setTimeout(() => {
-        // 사용자가 참여했습니다.
-        createReceivePC(data.id, newSocket);
-      }, 3000);
+      createReceivePC(data.id, newSocket);
     });
 
     // 해당 방에 있는 유저들 목록을 받음
@@ -242,8 +239,11 @@ const MeetPage = () => {
       }
     };
 
-    pc.oniceconnectionstatechange = (e) => {
-      console.log(e);
+    pc.oniceconnectionstatechange = (e: any) => {
+      console.log(
+        "Sender oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     if (localStream) {
@@ -279,8 +279,11 @@ const MeetPage = () => {
       }
     };
 
-    pc.oniceconnectionstatechange = (e) => {
-      console.log("oniceconnetions", e);
+    pc.oniceconnectionstatechange = (e: any) => {
+      console.log(
+        "Receiver oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     pc.ontrack = (e) => {
