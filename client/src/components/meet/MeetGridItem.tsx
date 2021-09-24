@@ -12,7 +12,10 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
   const [isMuted, setIsMuted] = useState<boolean>(true);
 
   useEffect(() => {
-    if (ref.current) ref.current.srcObject = stream;
+    if (ref.current) {
+      ref.current.srcObject = stream;
+      ref.current.muted = true;
+    }
     console.log("랄라", stream.getTracks());
     // stream.getTracks().forEach((track) => {
     //   track.enabled = false;
@@ -22,7 +25,7 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
 
   return (
     <MeetGridItemBlock style={{ width }}>
-      <VideoContainer ref={ref} playsInline muted={isMuted} autoPlay />
+      <VideoContainer ref={ref} playsInline autoPlay />
     </MeetGridItemBlock>
   );
 };
