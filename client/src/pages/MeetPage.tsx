@@ -92,7 +92,10 @@ const MeetPage = () => {
     // //화면 공유 테스트 여기까지
 
     newSocket.on("userEnter", (data: { id: string }) => {
-      createReceivePC(data.id, newSocket);
+      setTimeout(() => {
+        // 사용자가 참여했습니다.
+        createReceivePC(data.id, newSocket);
+      }, 3000);
     });
 
     // 해당 방에 있는 유저들 목록을 받음
