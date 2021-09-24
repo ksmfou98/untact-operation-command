@@ -11,13 +11,8 @@ export default function (server: http.Server) {
 
   const pc_config = {
     iceServers: [
-      // {
-      //   urls: "stun:stun.l.google.com:19302",
-      // },
       {
-        urls: "turn:numb.viagenie.ca",
-        credential: "muazkh",
-        username: "webrtc@live.com",
+        urls: "stun:stun.l.google.com:19302",
       },
     ],
   };
