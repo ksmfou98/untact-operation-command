@@ -12,6 +12,7 @@ import useCalendarEffect from "hooks/calendar/useCalendarEffect";
 
 const CalendarPage = () => {
   const { schedules } = useCalendarEffect();
+  console.log(schedules);
   const { isModal, onToggleModal } = useModal();
   return (
     <CalendarPageBlock>

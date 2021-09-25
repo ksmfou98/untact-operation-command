@@ -8,6 +8,8 @@ import useChannelPluginEffect from "hooks/common/useChannelPluginEffect";
 import styled from "styled-components";
 import media from "lib/styles/media";
 import CalendarPage from "pages/CalendarPage";
+import RegisterPage from "pages/RegisterPage";
+import LoginPage from "pages/LoginPage";
 
 const App = () => {
   useChannelPluginEffect();
@@ -15,6 +17,8 @@ const App = () => {
     <>
       <Switch>
         <Route path="/meet/:roomId" component={MeetPage} />
+        <Route path="/register" exact component={RegisterPage} />
+        <Route path="/login" exact component={LoginPage} />
 
         <AsideLayout>
           <Aside />
