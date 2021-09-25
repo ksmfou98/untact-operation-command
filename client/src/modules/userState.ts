@@ -10,15 +10,4 @@ const userState = atom({
     friends: [],
   }, // default value (aka initial value)
 });
-
-const calendarScheduleState = atom({
-  key: "calendarScheduleState",
-  default: {
-    title: "",
-    start: "",
-    end: "",
-    user: "",
-  },
-});
-
-export { userState, calendarScheduleState };
+export { userState };

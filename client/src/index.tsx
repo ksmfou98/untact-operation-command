@@ -5,13 +5,14 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 ReactDOM.render(
-  <RecoilRoot>
-    <React.StrictMode>
+  <React.StrictMode>
+    <RecoilRoot>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
-  </RecoilRoot>,
+    </RecoilRoot>
+  </React.StrictMode>,
+
   document.getElementById("root")
 );
 
