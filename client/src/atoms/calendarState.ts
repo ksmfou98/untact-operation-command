@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-const calendarScheduleState = atom({
+export const scheduleState = atom({
   key: "calendarScheduleState",
   default: {
     title: "",
@@ -9,5 +9,3 @@ const calendarScheduleState = atom({
     user: "",
   },
 });
-
-export { calendarScheduleState };
