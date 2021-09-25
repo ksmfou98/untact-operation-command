@@ -8,9 +8,12 @@ import listPlugin from "@fullcalendar/list";
 import Modal from "components/common/Modal";
 import useModal from "hooks/common/useModal";
 import media from "lib/styles/media";
+import useCalendarEffect from "./../hooks/calendar/useCalendarEffect";
 
 const CalendarPage = () => {
+  const { schedules } = useCalendarEffect();
   const { isModal, onToggleModal } = useModal();
+  console.log(schedules);
   return (
     <CalendarPageBlock>
       <Calendar>
