@@ -1,34 +1,23 @@
 import Button from "components/common/Button";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import LabelInput from "./LabelInput";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { palette } from "lib/styles/palette";
+import useAuth from "hooks/auth/useAuth";
 
 interface AuthFormProps {
   AuthType: "login" | "register";
-  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const AuthForm = ({ AuthType, onSubmit }: AuthFormProps) => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    name: "",
-  });
+const AuthForm = ({ AuthType }: AuthFormProps) => {
+  const { form, onChange, onRegister } = useAuth();
 
   const { email, password, passwordConfirm, name } = form;
-
-  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  }, []);
-
   return (
-    <AuthFormBlock>
+    <AuthFormBlock onSubmit={AuthType === "login" ? onRegister : onRegister}>
       <LabelInput
         label="이메일"
         name="email"
@@ -97,7 +86,9 @@ const AuthForm = ({ AuthType, onSubmit }: AuthFormProps) => {
         </>
       ) : (
         <>
-          <StyledButton color="true">회원가입</StyledButton>
+          <StyledButton color="true" type="submit">
+            회원가입
+          </StyledButton>
           <hr />
           <SocialButton socialType="google" color="false">
             <FcGoogle size="24" />
@@ -115,7 +106,7 @@ const AuthForm = ({ AuthType, onSubmit }: AuthFormProps) => {
   );
 };
 
-const AuthFormBlock = styled.div``;
+const AuthFormBlock = styled.form``;
 
 const LoginUtil = styled.div`
   display: flex;

@@ -13,7 +13,12 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
