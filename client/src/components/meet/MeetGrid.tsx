@@ -31,7 +31,12 @@ function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
   return (
     <Grid ref={ref}>
       {users.map((user, index) => (
-        <MeetGridItem key={index} stream={user.stream} width={itemWidth} />
+        <MeetGridItem
+          key={index}
+          stream={user.stream}
+          muted={true}
+          width={itemWidth}
+        />
       ))}
     </Grid>
   );

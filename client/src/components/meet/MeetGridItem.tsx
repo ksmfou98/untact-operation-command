@@ -3,26 +3,28 @@ import styled from "styled-components";
 
 interface Props {
   stream: MediaStream;
-  muted?: boolean;
+  muted: boolean;
   width: number;
 }
 
 const MeetGridItem = ({ stream, muted, width }: Props) => {
   const ref = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(true);
 
   useEffect(() => {
-    if (ref.current) ref.current.srcObject = stream;
+    if (ref.current) {
+      ref.current.srcObject = stream;
+      console.log("muted", ref.current.muted);
+      ref.current.muted = true;
+      setIsMuted(true);
+    }
     console.log("랄라", stream.getTracks());
-    // stream.getTracks().forEach((track) => {
-    //   track.enabled = false;
-    // });
     if (muted) setIsMuted(muted);
   }, [muted, stream]);
 
   return (
     <MeetGridItemBlock style={{ width }}>
-      <VideoContainer ref={ref} playsInline muted={isMuted} autoPlay />
+      <VideoContainer ref={ref} muted={isMuted} playsInline autoPlay />
     </MeetGridItemBlock>
   );
 };

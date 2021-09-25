@@ -33,11 +33,6 @@ const MeetPage = () => {
       {
         urls: "stun:stun.l.google.com:19302",
       },
-      {
-        urls: "turn:numb.viagenie.ca",
-        credential: "muazkh",
-        username: "webrtc@live.com",
-      },
     ],
   };
 
@@ -239,8 +234,11 @@ const MeetPage = () => {
       }
     };
 
-    pc.oniceconnectionstatechange = (e) => {
-      console.log(e);
+    pc.oniceconnectionstatechange = (e: any) => {
+      console.log(
+        "Sender oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     if (localStream) {
@@ -267,7 +265,7 @@ const MeetPage = () => {
 
     pc.onicecandidate = (e) => {
       if (e.candidate) {
-        console.log("receiver PC onicecandidate");
+        console.log("receiver PC onicecandidate", e.candidate);
         newSocket.emit("receiverCandidate", {
           candidate: e.candidate,
           receiverSocketID: newSocket.id,
@@ -276,8 +274,11 @@ const MeetPage = () => {
       }
     };
 
-    pc.oniceconnectionstatechange = (e) => {
-      console.log("oniceconnetions", e);
+    pc.oniceconnectionstatechange = (e: any) => {
+      console.log(
+        "Receiver oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     pc.ontrack = (e) => {

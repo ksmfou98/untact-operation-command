@@ -14,11 +14,6 @@ export default function (server: http.Server) {
       {
         urls: "stun:stun.l.google.com:19302",
       },
-      {
-        urls: "turn:numb.viagenie.ca",
-        credential: "muazkh",
-        username: "webrtc@live.com",
-      },
     ],
   };
 
@@ -45,6 +40,10 @@ export default function (server: http.Server) {
 
     pc.oniceconnectionstatechange = (e) => {
       //console.log(e);
+      console.log(
+        "Receiver oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     pc.ontrack = (e) => {
@@ -99,6 +98,10 @@ export default function (server: http.Server) {
 
     pc.oniceconnectionstatechange = (e) => {
       //console.log(e);
+      console.log(
+        "Sender oniceconnectionstatechange",
+        e.target.iceConnectionState
+      );
     };
 
     const sendUser = users[roomId].filter((user) => user.id === senderSocketID);
