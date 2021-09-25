@@ -1,5 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import Button from "components/common/Button";
+import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
+import LabelInput from "./LabelInput";
+import { FcGoogle } from "react-icons/fc";
+import { RiKakaoTalkFill } from "react-icons/ri";
+import { palette } from "lib/styles/palette";
 
 interface AuthFormProps {
   AuthType: "login" | "register";
@@ -7,33 +13,154 @@ interface AuthFormProps {
 }
 
 const AuthForm = ({ AuthType, onSubmit }: AuthFormProps) => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    name: "",
+  });
+
+  const { email, password, passwordConfirm, name } = form;
+
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }, []);
+
   return (
     <AuthFormBlock>
-      <label>이메일</label>
-      <input type="email" />
+      <LabelInput
+        label="이메일"
+        name="email"
+        value={email}
+        type="email"
+        placeholder="이메일을 입력해주세요"
+        onChange={onChange}
+      />
 
-      <label>비밀번호</label>
-      <input type="password" />
+      <LabelInput
+        label="비밀번호"
+        type="password"
+        name="password"
+        placeholder="비밀번호를 입력해주세요"
+        value={password}
+        onChange={onChange}
+      />
 
-      {AuthType === "register" && (
+      {AuthType === "login" ? (
+        <LoginUtil>
+          <div className="remember-option">
+            <input type="checkbox" />
+            <span>자동 로그인</span>
+          </div>
+
+          <div className="forgot-auth">
+            <Link to="/">이메일/비밀번호 찾기</Link>
+          </div>
+        </LoginUtil>
+      ) : (
         <>
-          <label>비밀번호확인</label>
-          <input type="password" />
+          <LabelInput
+            label="비밀번호 확인"
+            type="password"
+            placeholder="비밀번호를 다시 입력해주세요"
+            name="passwordConfirm"
+            value={passwordConfirm}
+            onChange={onChange}
+          />
 
-          <label>이름</label>
-          <input type="text" />
+          <LabelInput
+            label="이름"
+            name="name"
+            placeholder="이름을 입력해주세요"
+            value={name}
+            onChange={onChange}
+          />
         </>
       )}
 
       {AuthType === "login" ? (
-        <button>로그인</button>
+        <>
+          <StyledButton color="true">로그인</StyledButton>
+          <hr />
+          <SocialButton socialType="google" color="false">
+            <FcGoogle size="24" />
+            <span>Google로 로그인</span>
+            <div></div>
+          </SocialButton>
+
+          <SocialButton socialType="kakao" color="false">
+            <RiKakaoTalkFill size="24" />
+            <span>카카오계정으로 로그인</span>
+            <div></div>
+          </SocialButton>
+        </>
       ) : (
-        <button>회원가입</button>
+        <>
+          <StyledButton color="true">회원가입</StyledButton>
+          <hr />
+          <SocialButton socialType="google" color="false">
+            <FcGoogle size="24" />
+            <span>Google로 회원가입</span>
+            <div></div>
+          </SocialButton>
+          <SocialButton socialType="kakao" color="false">
+            <RiKakaoTalkFill size="24" />
+            <span>카카오계정으로 회원가입</span>
+            <div></div>
+          </SocialButton>
+        </>
       )}
     </AuthFormBlock>
   );
 };
 
 const AuthFormBlock = styled.div``;
+
+const LoginUtil = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 14px;
+  align-items: center;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  height: 45px;
+  margin: 20px 0 8px;
+`;
+
+const SocialButton = styled(Button)<{ socialType: "kakao" | "google" }>`
+  display: flex;
+  width: 100%;
+  height: 45px;
+  padding: 10px;
+  margin-top: 15px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid ${palette.border};
+  color: rgba(0, 0, 0, 0.85);
+  div {
+    width: 24px;
+  }
+  &:hover {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  ${(props) =>
+    props.socialType === "kakao" &&
+    css`
+      background-color: #fee500;
+      border: none;
+      svg {
+        color: #000;
+      }
+      &:hover {
+        background-color: #fee500;
+      }
+    `}
+`;
 
 export default AuthForm;
