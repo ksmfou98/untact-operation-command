@@ -4,15 +4,19 @@ import styled from "styled-components";
 import { BsPeopleCircle } from "react-icons/bs";
 import AsideMenu from "./AsideMenu";
 import media from "lib/styles/media";
+import { useRecoilValue } from "recoil";
+import { userState } from "atoms/userState";
 
 const Aside = () => {
+  const user = useRecoilValue(userState);
+
   return (
     <AsideBlock>
       <AsideTitle>
         <div className="profile-img">
           <BsPeopleCircle size="40" />
         </div>
-        <div className="user-name">이도현</div>
+        <div className="user-name">{user.name}</div>
       </AsideTitle>
 
       <AsideMenu />

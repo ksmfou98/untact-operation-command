@@ -7,5 +7,5 @@ export const registerAPI = async (
 ) => {
   const body = { email, password, name };
   const response = await client.post(`/user/register`, body);
-  return response.data;
+  return response.data.user;
 };
