@@ -50,7 +50,7 @@ export const register = async (req: Request, res: Response) => {
     const data = user.serialize(); // 응답할 데이터에서 password 필드 제거
 
     //성공시 전송
-    res.cookie("user", token).status(200).json({
+    res.cookie("user", token).status(201).json({
       success: true,
       user: data,
     });

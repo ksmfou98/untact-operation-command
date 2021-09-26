@@ -13,11 +13,11 @@ interface AuthFormProps {
 }
 
 const AuthForm = ({ AuthType }: AuthFormProps) => {
-  const { form, onChange, onRegister } = useAuth();
+  const { form, onChange, onRegister, onLogin } = useAuth();
 
   const { email, password, passwordConfirm, name } = form;
   return (
-    <AuthFormBlock onSubmit={AuthType === "login" ? onRegister : onRegister}>
+    <AuthFormBlock onSubmit={AuthType === "login" ? onLogin : onRegister}>
       <LabelInput
         label="이메일"
         name="email"
@@ -38,10 +38,7 @@ const AuthForm = ({ AuthType }: AuthFormProps) => {
 
       {AuthType === "login" ? (
         <LoginUtil>
-          <div className="remember-option">
-            <input type="checkbox" />
-            <span>자동 로그인</span>
-          </div>
+          <div></div>
 
           <div className="forgot-auth">
             <Link to="/">이메일/비밀번호 찾기</Link>
@@ -70,7 +67,9 @@ const AuthForm = ({ AuthType }: AuthFormProps) => {
 
       {AuthType === "login" ? (
         <>
-          <StyledButton color="true">로그인</StyledButton>
+          <StyledButton color="true" type="submit">
+            로그인
+          </StyledButton>
           <hr />
           <SocialButton socialType="google" color="false">
             <FcGoogle size="24" />

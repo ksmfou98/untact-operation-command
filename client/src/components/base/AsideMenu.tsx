@@ -1,11 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { BiHomeAlt, BiCalendar, BiHelpCircle } from "react-icons/bi";
+import { BiHomeAlt, BiCalendar } from "react-icons/bi";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
+import { FiLogOut } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import media from "lib/styles/media";
+import useAuth from "hooks/auth/useAuth";
+import { useRecoilValue } from "recoil";
+import { userState } from "atoms/userState";
 
 const AsideMenu = () => {
+  const { onLogout } = useAuth();
+  const user = useRecoilValue(userState);
+
   const asideMenus = [
     {
       name: "Home",
@@ -44,18 +51,20 @@ const AsideMenu = () => {
         ))}
       </div>
       <div className="bottom-menu">
-        <NavLink to="/setting">
+        <NavLink to="/setting" exact activeStyle={activeStyle}>
           <div className="ico">
             <IoSettingsOutline size="30" />
           </div>
           <div className="name">Settings</div>
         </NavLink>
-        <NavLink to="/help">
-          <div className="ico">
-            <BiHelpCircle size="30" />
-          </div>
-          <div className="name">Help</div>
-        </NavLink>
+        {user?.name && (
+          <button className="logout" type="button" onClick={onLogout}>
+            <div className="ico">
+              <FiLogOut size="30" />
+            </div>
+            <div className="name">Logout</div>
+          </button>
+        )}
       </div>
     </AsideMenuBlock>
   );
@@ -78,22 +87,35 @@ const AsideMenuBlock = styled.div`
       background-color: #f5f5f5;
       color: #000;
     }
+  }
+  .ico {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  .name {
+    font-size: 18px;
+  }
+  ${media.xlarge} {
+    flex-direction: column;
     .ico {
-      display: flex;
-      align-items: center;
-      margin-right: 10px;
+      margin-right: 0;
     }
     .name {
-      font-size: 18px;
+      font-size: 12px;
     }
-    ${media.xlarge} {
-      flex-direction: column;
-      .ico {
-        margin-right: 0;
-      }
-      .name {
-        font-size: 12px;
-      }
+  }
+
+  .logout {
+    display: flex;
+    padding: 10px 7px;
+    align-items: center;
+    color: #b1b1b1;
+    width: 100%;
+    border-radius: 10px;
+    &:hover {
+      background-color: #f5f5f5;
+      color: #000;
     }
   }
 `;
