@@ -6,6 +6,7 @@ import AsideMenu from "./AsideMenu";
 import media from "lib/styles/media";
 import { useRecoilValue } from "recoil";
 import { userState } from "atoms/userState";
+import { Link } from "react-router-dom";
 
 const Aside = () => {
   const user = useRecoilValue(userState);
@@ -16,7 +17,13 @@ const Aside = () => {
         <div className="profile-img">
           <BsPeopleCircle size="40" />
         </div>
-        <div className="user-name">{user.name}</div>
+        {user.name ? (
+          <div className="user-name">{user.name}</div>
+        ) : (
+          <Link to="/login" className="user-name">
+            로그인
+          </Link>
+        )}
       </AsideTitle>
 
       <AsideMenu />
