@@ -1,12 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { BiHomeAlt, BiCalendar, BiHelpCircle } from "react-icons/bi";
+import { BiHomeAlt, BiCalendar } from "react-icons/bi";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import media from "lib/styles/media";
+import useAuth from "hooks/auth/useAuth";
+import { useRecoilValue } from "recoil";
+import { userState } from "atoms/userState";
 
 const AsideMenu = () => {
+  const { onLogout } = useAuth();
+  const user = useRecoilValue(userState);
+
   const asideMenus = [
     {
       name: "Home",
@@ -51,12 +57,14 @@ const AsideMenu = () => {
           </div>
           <div className="name">Settings</div>
         </NavLink>
-        <button className="logout">
-          <div className="ico">
-            <FiLogOut size="30" />
-          </div>
-          <div className="name">Logout</div>
-        </button>
+        {user?.name && (
+          <button className="logout" type="button" onClick={onLogout}>
+            <div className="ico">
+              <FiLogOut size="30" />
+            </div>
+            <div className="name">Logout</div>
+          </button>
+        )}
       </div>
     </AsideMenuBlock>
   );

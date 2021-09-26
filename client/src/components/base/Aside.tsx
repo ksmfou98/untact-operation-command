@@ -17,7 +17,7 @@ const Aside = () => {
         <div className="profile-img">
           <BsPeopleCircle size="40" />
         </div>
-        {user.name ? (
+        {user?.name ? (
           <div className="user-name">{user.name}</div>
         ) : (
           <Link to="/login" className="user-name">
