@@ -8,7 +8,8 @@ export default function useCalendarEffect() {
       const schedules = await readScheduleLinstAPI();
       setSchedules(schedules);
     };
-    getData();
+    getData();  
   }, []);
   return { schedules };
-}
+}//나중에 조건 달거임.
+
