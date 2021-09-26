@@ -3,10 +3,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
+import recoilInitializer from "atoms/recoilInitializer";
+
+// initializeState : 초기 상태 설정
 
 ReactDOM.render(
   <React.StrictMode>
-    <RecoilRoot>
+    <RecoilRoot initializeState={recoilInitializer}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

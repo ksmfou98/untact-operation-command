@@ -5,7 +5,6 @@ export interface IUserState {
   email: string;
   name: string;
   role: string;
-  token: string;
   thumbnail: string;
   friends: IUserState[];
 }
@@ -15,7 +14,6 @@ const initialState: IUserState = {
   email: "",
   name: "",
   role: "",
-  token: "",
   thumbnail: "",
   friends: [],
 };
