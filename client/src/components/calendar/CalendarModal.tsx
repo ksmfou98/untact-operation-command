@@ -1,14 +1,15 @@
 import { scheduleState } from "atoms/calendarState";
 import Modal from "components/common/Modal";
 import useCalendarForm from "hooks/calendar/useCalendarForm";
-import useModal from "hooks/common/useModal";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-
-const CalendarModal = (props: any) => {
+interface CalendarModalProps {
+  onToggleModal: () => void;
+  isModal: boolean;
+}
+const CalendarModal = ({ isModal, onToggleModal }: CalendarModalProps) => {
   const { onChangeSchedule, onCreateSchedule } = useCalendarForm();
-  const { isModal, onToggleModal } = useModal();
   const schedule = useRecoilValue(scheduleState);
   const { title, start, end } = schedule;
   return (
@@ -88,51 +89,3 @@ const ModalStyled = styled.div`
   }
 `;
 export default CalendarModal;
-
-{
-  /* <Modal
-title="일정 생성"
-buttonName="생성"
-onClick={onCreateSchedule}
-onToggleModal={() => onToggleModal()}
-isModal={true}
-size="big"
->
-<ModalStyled>
-  <div className="infoEle">
-    <div className="infoQutn">제목</div>
-    <input
-      type="text"
-      className="infoInput"
-      name="title"
-      value={title}
-      onChange={onChangeSchedule}
-    />
-  </div>
-  <div className="infoEle">
-    <div className="infoQutn"> 날짜 </div>
-    <input type="date" className="infoInput" />
-  </div>
-  <div className="infoEle">
-    <div className="infoQutn"> 시간 </div>
-    <div className="flex">
-      <input
-        type="time"
-        className="infoInputShort"
-        name="start"
-        value={start}
-        onChange={onChangeSchedule}
-      />
-      ~
-      <input
-        type="time"
-        className="infoInputShort"
-        name="end"
-        value={end}
-        onChange={onChangeSchedule}
-      />
-    </div>
-  </div>
-</ModalStyled>
-</Modal> */
-}

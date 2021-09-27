@@ -12,7 +12,7 @@ import { scheduleState } from "atoms/calendarState";
 import CalendarModal from "components/calendar/CalendarModal";
 
 const CalendarPage = () => {
-  const { onToggleModal } = useModal();
+  const { isModal, onToggleModal } = useModal();
   console.log("asd");
   return (
     <CalendarPageBlock>
@@ -51,7 +51,7 @@ const CalendarPage = () => {
           ]}
         />
       </Calendar>
-      <CalendarModal props={false} />
+      <CalendarModal isModal={isModal} onToggleModal={onToggleModal} />
     </CalendarPageBlock>
   );
 };

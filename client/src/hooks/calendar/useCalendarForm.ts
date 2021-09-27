@@ -1,5 +1,4 @@
 import { scheduleState } from "atoms/calendarState";
-import { useState } from "react";
 import { useRecoilState } from "recoil";
 
 export default function useCalendarForm() {
