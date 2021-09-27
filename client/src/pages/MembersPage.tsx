@@ -7,9 +7,7 @@ const MembersPage = () => {
   return (
     <MenberPageBlock>
       <MembersNav />
-      <main>
-        <MembersList />
-      </main>
+      <MembersList />
     </MenberPageBlock>
   );
 };
