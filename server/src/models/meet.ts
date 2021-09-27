@@ -38,11 +38,11 @@ const MeetSchema: Schema<IMeetMethod> = new Schema(
     },
     muted: {
       type: Boolean,
-      default: false,
+      required: true,
     },
     videoOff: {
       type: Boolean,
-      default: false,
+      required: true,
     },
   },
   { timestamps: true }
