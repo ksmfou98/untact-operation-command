@@ -1,1 +1,1 @@
-console.log("meetctrl");
+export const createMeet = (req: Request, res: Response) => {};
