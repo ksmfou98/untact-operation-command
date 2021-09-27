@@ -7,18 +7,15 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import useModal from "hooks/common/useModal";
 import media from "lib/styles/media";
-import { useRecoilValue } from "recoil";
-import { scheduleState } from "atoms/calendarState";
 import CalendarModal from "components/calendar/CalendarModal";
 
 const CalendarPage = () => {
   const { isModal, onToggleModal } = useModal();
-  console.log("asd");
+  console.log("렌더링");
   return (
     <CalendarPageBlock>
       <Calendar>
         <FullCalendar
-          timeZone="UTC"
           aspectRatio={1.75}
           customButtons={{
             createSchedule: {
@@ -41,10 +38,10 @@ const CalendarPage = () => {
             listPlugin,
           ]}
           events={[
-            { title: "event 1", date: "2021-09-24T03:39:49.334Z" },
+            { title: "event 1", date: "2021-09-25T22:30:00.000Z" },
             {
               title: "event 2",
-              start: "2021-09-23T18:30",
+              start: "2021-09-23T11:30:00.000Z",
               end: "2021-09-24 23:30",
               user: "12a1wdw23w1dw1w3",
             },
