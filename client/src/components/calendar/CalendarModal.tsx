@@ -4,7 +4,6 @@ import useCalendarForm from "hooks/calendar/useCalendarForm";
 import React from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-
 interface CalendarModalProps {
   onToggleModal: () => void;
   isModal: boolean;
