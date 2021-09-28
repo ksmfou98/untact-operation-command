@@ -1,5 +1,4 @@
 import React from "react";
-import { IUser } from "./../../../../server/src/models/user";
 import styled from "styled-components";
 
 const MembersList = () => {
