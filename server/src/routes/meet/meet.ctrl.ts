@@ -17,3 +17,19 @@ export const createMeet = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const readMeetList = async (req: Request, res: Response) => {
+  try {
+    const meets = await Meet.find();
+
+    return res.status(200).json({
+      success: true,
+      meets,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      e,
+    });
+  }
+};
