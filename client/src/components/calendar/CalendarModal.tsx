@@ -46,7 +46,7 @@ const CalendarModal = ({ isModal, onToggleModal }: CalendarModalProps) => {
                   type="time"
                   className="infoInputShort"
                   name="start"
-                  value={start}
+
                   onChange={onChangeSchedule}
                 />
                 ~
@@ -54,7 +54,7 @@ const CalendarModal = ({ isModal, onToggleModal }: CalendarModalProps) => {
                   type="time"
                   className="infoInputShort"
                   name="end"
-                  value={end}
+ 
                   onChange={onChangeSchedule}
                 />
               </div>
