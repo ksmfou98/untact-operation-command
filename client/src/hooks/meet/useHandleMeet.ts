@@ -1,11 +1,15 @@
 import { meetState } from "atoms/meetState";
 import { IUserState, userState } from "atoms/userState";
 import { createMeetAPI } from "lib/api/meet";
+import { useHistory } from "react-router";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
 export default function useHandleMeet() {
   const [meetForm, setMeetForm] = useRecoilState(meetState);
-  const resetMeet = useResetRecoilState(meetState);
+  const { title, description, thumbnail, password, muted, videoOff } = meetForm;
+  const history = useHistory();
+  const resetMeetState = useResetRecoilState(meetState);
+
   const user = useRecoilValue(userState) as IUserState;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,10 +26,19 @@ export default function useHandleMeet() {
   };
 
   const onCreateMeet = async () => {
-    const body = { ...meetForm, host: user._id };
+    const host = user._id;
     try {
-      await createMeetAPI(body);
-      resetMeet();
+      const meet = await createMeetAPI(
+        host,
+        title,
+        description,
+        thumbnail,
+        password,
+        muted,
+        videoOff
+      );
+      resetMeetState();
+      history.push(`/meet/${meet._id}`);
     } catch (e) {
       alert("미팅 생성에 실패했습니다.");
     }

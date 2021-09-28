@@ -2,7 +2,7 @@ import { atom } from "recoil";
 import { initialUserState, IUserState } from "./userState";
 
 export interface IMeetState {
-  host: IUserState | string;
+  host: IUserState;
   title: string;
   description: string;
   thumbnail: string;
@@ -12,7 +12,7 @@ export interface IMeetState {
 }
 
 export const initialMeetState: IMeetState = {
-  host: initialUserState || "",
+  host: initialUserState,
   title: "",
   description: "",
   thumbnail: "",

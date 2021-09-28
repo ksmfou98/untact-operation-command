@@ -54,11 +54,11 @@ export const uploadMeetThumb = async (req: Request, res: Response) => {
 // 미팅 목록 조회
 export const readMeetList = async (req: Request, res: Response) => {
   try {
-    const meets = await Meet.find();
+    const meets = await Meet.find().populate("host");
 
     return res.status(200).json({
       success: true,
-      meets,
+      meets: [...meets.reverse()],
     });
   } catch (e) {
     return res.status(500).json({

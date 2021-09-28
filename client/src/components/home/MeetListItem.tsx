@@ -3,19 +3,14 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BsFillPeopleFill } from "react-icons/bs";
 import media from "lib/styles/media";
+import { IMeetState } from "atoms/meetState";
 
 interface MeetListItemProps {
-  data: {
-    id: number;
-    title: string;
-    type: string;
-    description: string;
-    host: string;
-  };
+  meet: IMeetState;
 }
 
-const MeetListItem = ({ data }: MeetListItemProps) => {
-  const { title, description, host } = data;
+const MeetListItem = ({ meet }: MeetListItemProps) => {
+  const { title, description, host } = meet;
 
   return (
     <MeetListItemBlock>
@@ -37,7 +32,7 @@ const MeetListItem = ({ data }: MeetListItemProps) => {
           <img src="https://picsum.photos/600/300" alt="" />
           <span>
             by &nbsp;
-            <b>{host}</b>
+            <b>{host.name}</b>
           </span>
         </div>
         <div className="members">

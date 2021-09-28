@@ -63,7 +63,7 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
           <div className="form-option">
             <span>회의 비밀번호</span>
             <input
-              type="text"
+              type="password"
               name="password"
               value={password}
               onChange={onChange}
