@@ -51,7 +51,7 @@ const CalendarPage = () => {
           ]}
         />
       </Calendar>
-      <CalendarModal props={false} />
+      <CalendarModal isModal={true} onToggleModal={onToggleModal} />
     </CalendarPageBlock>
   );
 };
