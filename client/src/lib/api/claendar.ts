@@ -9,18 +9,15 @@ export const readScheduleLinstAPI = async () => {
 // 일정 추가
 export const createScheduleAPI = async (
   title: string,
-  date: string,
-  start: string,
-  end?: string
+  start: Date,
+  end?: Date
 ) => {
   const body = {
     title,
-    date,
     start,
     end,
   };
   const response = await client.post("/calendar/createSchedule/", body);
-  console.log(response.data);
   return response;
 };
 
@@ -35,10 +32,9 @@ export const deleteScheduleAPI = async (scheduleId: string) => {
 // 일정 수정
 export const updateScheduleAPI = async (
   title: string,
-  date: Date,
-  start: number,
+  start: Date,
   scheduleId: string,
-  end?: number
+  end?: Date
 ) => {
   const body = {
     title,
