@@ -112,9 +112,9 @@ UserSchema.methods.generateToken = async function () {
 
 // 응답할 데이터에서 password 필드 제거
 UserSchema.methods.serialize = function () {
-  let data = this.toJSON();
-  const {password : temp, ...userWithoutPassword} = data
-  return userWithoutPassword;
+  const data = this.toJSON();
+  delete data.password;
+  return data;
 };
 
 const User = mongoose.model<IUserMethod, IUserStatics>("User", UserSchema);
