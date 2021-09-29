@@ -59,6 +59,7 @@ const MeetFooterBlock = styled.footer`
   }
   .right {
     justify-content: flex-end;
+    margin-right: 50px;
   }
   .center {
     display: flex;

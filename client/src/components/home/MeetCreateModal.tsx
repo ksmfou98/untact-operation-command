@@ -3,6 +3,7 @@ import { palette } from "lib/styles/palette";
 import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import styled from "styled-components";
+import useHandleMeet from "hooks/meet/useHandleMeet";
 
 interface MeetCreateModalProps {
   onToggleModal: () => void;
@@ -10,11 +11,15 @@ interface MeetCreateModalProps {
 }
 
 const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
+  const { meetForm, onChange, onToggleMuted, onToggleVideoOff, onCreateMeet } =
+    useHandleMeet();
+  const { title, description, thumbnail, password, muted, videoOff } = meetForm;
+
   return (
     <Modal
       title="회의 생성"
       buttonName="생성"
-      onClick={() => console.log("나중에 생성 api나오면 그떄 ㄱ")}
+      onClick={onCreateMeet}
       onToggleModal={onToggleModal}
       isModal={isModal}
       size="big"
@@ -24,14 +29,22 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
           <label>제목</label>
           <input
             type="text"
+            value={title}
+            name="title"
+            onChange={onChange}
             placeholder="회의 제목을 입력해주세요"
-            value={"이도현 님의 회의"}
           />
         </div>
 
         <div className="create-form">
           <label>설명</label>
-          <input type="text" placeholder="회의 설명을 입력해주세요" />
+          <input
+            type="text"
+            value={description}
+            name="description"
+            onChange={onChange}
+            placeholder="회의 설명을 입력해주세요"
+          />
         </div>
 
         <div className="create-form">
@@ -48,18 +61,33 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
         <div className="create-form">
           <label>회의 옵션</label>
           <div className="form-option">
-            <input type="checkbox" />
             <span>회의 비밀번호</span>
-            <input type="text" placeholder="비밀번호 입력" />
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChange}
+              placeholder="비밀번호 입력"
+            />
           </div>
 
           <div className="form-option">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={muted}
+              onChange={onToggleMuted}
+              name="muted"
+            />
             <span>입장 시 참가자 음소거</span>
           </div>
 
           <div className="form-option">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={videoOff}
+              name="videoOff"
+              onChange={onToggleVideoOff}
+            />
             <span>입장 시 참가자 비디오 끄기</span>
           </div>
         </div>

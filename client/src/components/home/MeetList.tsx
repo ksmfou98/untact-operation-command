@@ -1,14 +1,15 @@
-import { fakeData } from "fakeData";
+import useMeetListEffect from "hooks/meet/useMeetListEffect";
 import React from "react";
 import styled from "styled-components";
 import MeetListItem from "./MeetListItem";
 
 const MeetList = () => {
+  const { meets } = useMeetListEffect();
   return (
     <MeetListBlock>
       <div className="meet-list">
-        {fakeData.map((data, index) => (
-          <MeetListItem data={data} key={index} />
+        {meets.map((meet, index) => (
+          <MeetListItem meet={meet} key={index} />
         ))}
       </div>
     </MeetListBlock>

@@ -9,7 +9,7 @@ export interface IUserState {
   friends: IUserState[];
 }
 
-const initialState: IUserState = {
+export const initialUserState: IUserState = {
   _id: "",
   email: "",
   name: "",
@@ -20,5 +20,5 @@ const initialState: IUserState = {
 
 export const userState = atom<IUserState | null>({
   key: "userState",
-  default: initialState,
+  default: initialUserState,
 });
