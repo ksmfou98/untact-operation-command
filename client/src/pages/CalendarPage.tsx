@@ -5,15 +5,19 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import Modal from "components/common/Modal";
 import useModal from "hooks/common/useModal";
 import media from "lib/styles/media";
+import CalendarModal from "components/calendar/CalendarModal";
 import useCalendarEffect from "hooks/calendar/useCalendarEffect";
+import { useRecoilValue } from "recoil";
+import { schedulesState } from "atoms/calendarState";
 
 const CalendarPage = () => {
-  const { schedules } = useCalendarEffect();
-  console.log(schedules);
   const { isModal, onToggleModal } = useModal();
+  useCalendarEffect();
+  const schedules = useRecoilValue(schedulesState);
+  console.log("asd");
+
   return (
     <CalendarPageBlock>
       <Calendar>
@@ -40,54 +44,10 @@ const CalendarPage = () => {
             interactionPlugin,
             listPlugin,
           ]}
-          events={[
-            { title: "event 1", date: "2021-09-24T03:39:49.334Z" },
-            {
-              title: "event 2",
-              start: "2021-09-23T18:30",
-              end: "2021-09-24 23:30",
-              user: "12a1wdw23w1dw1w3",
-            },
-          ]}
+          events={schedules}
         />
       </Calendar>
-      {isModal && (
-        <Modal
-          title="일정 생성"
-          buttonName="생성"
-          onClick={() => console.log(FullCalendar)}
-          onToggleModal={() => onToggleModal()}
-          isModal={true}
-          size="big"
-        >
-          <ModalStyled>
-            <div className="infoEle">
-              <div className="infoQutn">제목</div>
-              <input type="text" className="infoInput" />
-            </div>
-            <div className="infoEle">
-              <div className="infoQutn"> 날짜 </div>
-              <input type="date" className="infoInput" />
-            </div>
-            <div className="infoEle">
-              <div className="infoQutn"> 시간 </div>
-              <div className="flex">
-                <input
-                  type="time"
-                  className="infoInputShort"
-                  onChange={(e) => {}}
-                />
-                ~
-                <input
-                  type="time"
-                  className="infoInputShort"
-                  onChange={(e) => {}}
-                />
-              </div>
-            </div>
-          </ModalStyled>
-        </Modal>
-      )}
+      <CalendarModal isModal={isModal} onToggleModal={onToggleModal} />
     </CalendarPageBlock>
   );
 };
@@ -132,29 +92,6 @@ const Calendar = styled.div`
   }
 `;
 
-const ModalStyled = styled.div`
-  margin-left: 4.5%;
-  .infoEle {
-    margin: 30px 0px;
-    .flex {
-      display: flex;
-      justify-content: space-between;
-      width: 350px;
-    }
-    .infoQutn {
-      font-size: 17px;
-      padding: 15px 15px 9px 5px;
-    }
-    .infoInput {
-      width: 90%;
-      height: 40px;
-    }
-    .infoInputShort {
-      width: 140px;
-      height: 40px;
-    }
-  }
-`;
 export default CalendarPage;
 
 //#777dce

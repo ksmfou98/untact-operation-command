@@ -3,21 +3,22 @@ import Calendar from "../../models/calendar";
 
 //일정 생성
 export const createSchedule = async (req: Request, res: Response) => {
-  const { title, start, end } = req.body;
+  const { title, date, start, end } = req.body;
   const userId = res.locals.user._id;
+  const startTime = new Date(date.substr(0, 10) + "T" + start);
+  const endTime = new Date(date.substr(0, 10) + "T" + end);
   try {
-    const schedules = await Calendar.find();
     const schedule = new Calendar({
       title,
-      start,
-      end,
+      start: startTime,
+      end: endTime,
       user: userId,
     });
     await schedule.save();
 
     return res.status(201).json({
       success: true,
-      schedules: schedules.concat(schedule),
+      // schedule,
     });
   } catch (error) {
     return res.status(500).json({
@@ -32,7 +33,7 @@ export const readSchedule = async (req: Request, res: Response) => {
     const schedules = await Calendar.find().populate("user");
     return res.status(200).json({
       success: true,
-      schedules: [...schedules.reverse()],
+      schedules,
     });
   } catch (error) {
     return res.status(500).json({

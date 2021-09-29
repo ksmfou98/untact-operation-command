@@ -10,7 +10,7 @@ import media from "lib/styles/media";
 import CalendarPage from "pages/CalendarPage";
 import RegisterPage from "pages/RegisterPage";
 import LoginPage from "pages/LoginPage";
-
+import MembersPage from "pages/MembersPage";
 const App = () => {
   useChannelPluginEffect();
   return (
@@ -28,6 +28,7 @@ const App = () => {
             </PageTitle>
             <Route path="/" exact component={MeetListPage} />
             <Route path="/schedule" exact component={CalendarPage} />
+            <Route path="/members" exact component={MembersPage} />
           </MainLayout>
         </AsideLayout>
       </Switch>
