@@ -7,12 +7,10 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import useModal from "hooks/common/useModal";
 import media from "lib/styles/media";
-import { useRecoilValue } from "recoil";
-import { scheduleState } from "atoms/calendarState";
 import CalendarModal from "components/calendar/CalendarModal";
 
 const CalendarPage = () => {
-  const { onToggleModal } = useModal();
+  const { isModal, onToggleModal } = useModal();
   console.log("asd");
   return (
     <CalendarPageBlock>
@@ -51,9 +49,12 @@ const CalendarPage = () => {
           ]}
         />
       </Calendar>
-      <CalendarModal isModal={true} onToggleModal={onToggleModal} />
+      <CalendarModal isModal={isModal} onToggleModal={onToggleModal} />
     </CalendarPageBlock>
+
+    
   );
+
 };
 
 const CalendarPageBlock = styled.div`
