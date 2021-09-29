@@ -30,3 +30,9 @@ export const scheduleState = atom({
   key: "calendarScheduleState",
   default: initialScheduleState,
 });
+
+
+export const schedulesState = atom({
+  key: "calendarSchedulesState",
+  default: [],
+});

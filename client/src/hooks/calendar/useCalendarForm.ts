@@ -1,9 +1,15 @@
-import { initialScheduleState, scheduleState } from "atoms/calendarState";
+import {
+  initialScheduleState,
+  schedulesState,
+  scheduleState,
+} from "atoms/calendarState";
 import { createScheduleAPI } from "lib/api/claendar";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 
 export default function useCalendarForm() {
+  const setSchedules = useSetRecoilState(schedulesState);
+  const resetSchedule = useResetRecoilState(scheduleState);
   const [schedule, setSchedule] = useRecoilState(scheduleState);
   const { start, date, title, end } = schedule;
   const onChangeSchedule = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,8 +25,11 @@ export default function useCalendarForm() {
 
   const onCreateSchedule = async () => {
     try {
-      await createScheduleAPI(title, date, start, end);
-      setSchedule(initialScheduleState);
+      const response = await createScheduleAPI(title, date, start, end);
+      setSchedules((prev) => prev.concat(response.data));
+      // setSchedule(initialScheduleState);
+      resetSchedule();
+      return response.data;
     } catch (e) {
       alert("게시물 작성에 실패했습니다");
       console.log(e);

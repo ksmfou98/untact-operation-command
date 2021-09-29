@@ -8,10 +8,16 @@ import listPlugin from "@fullcalendar/list";
 import useModal from "hooks/common/useModal";
 import media from "lib/styles/media";
 import CalendarModal from "components/calendar/CalendarModal";
+import useCalendarEffect from "hooks/calendar/useCalendarEffect";
+import { useRecoilValue } from "recoil";
+import { schedulesState } from "atoms/calendarState";
 
 const CalendarPage = () => {
   const { isModal, onToggleModal } = useModal();
+  useCalendarEffect();
+  const schedules = useRecoilValue(schedulesState);
   console.log("asd");
+
   return (
     <CalendarPageBlock>
       <Calendar>
@@ -38,23 +44,12 @@ const CalendarPage = () => {
             interactionPlugin,
             listPlugin,
           ]}
-          events={[
-            { title: "event 1", date: "2021-09-24T03:39:49.334Z" },
-            {
-              title: "event 2",
-              start: "2021-09-23T18:30",
-              end: "2021-09-24 23:30",
-              user: "12a1wdw23w1dw1w3",
-            },
-          ]}
+          events={schedules}
         />
       </Calendar>
       <CalendarModal isModal={isModal} onToggleModal={onToggleModal} />
     </CalendarPageBlock>
-
-    
   );
-
 };
 
 const CalendarPageBlock = styled.div`
