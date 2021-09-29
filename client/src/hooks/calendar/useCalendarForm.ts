@@ -26,8 +26,8 @@ export default function useCalendarForm() {
   const onCreateSchedule = async () => {
     try {
       const response = await createScheduleAPI(title, date, start, end);
-      setSchedules((prev) => prev.concat(response.data));
-      // setSchedule(initialScheduleState);
+      setSchedules((prev) => prev.concat(response));
+      console.log(response);
       resetSchedule();
       return response.data;
     } catch (e) {

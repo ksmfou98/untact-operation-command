@@ -9,7 +9,7 @@ export const readScheduleLinstAPI = async () => {
 // 일정 추가
 export const createScheduleAPI = async (
   title: string,
-  date:Date,
+  date: Date,
   start: string,
   end?: string
 ) => {
@@ -20,7 +20,7 @@ export const createScheduleAPI = async (
     end,
   };
   const response = await client.post("/calendar/createSchedule/", body);
-  return response;
+  return response.data.schedule;
 };
 
 // 일정 삭제
