@@ -9,11 +9,13 @@ export const readScheduleLinstAPI = async () => {
 // 일정 추가
 export const createScheduleAPI = async (
   title: string,
-  start: Date,
-  end?: Date
+  date:Date,
+  start: string,
+  end?: string
 ) => {
   const body = {
     title,
+    date,
     start,
     end,
   };

@@ -1,20 +1,21 @@
 import { atom } from "recoil";
 import { IUserState } from "atoms/userState";
-import { now } from "moment";
 
 export interface IScheduleState {
   _id: string;
   title: string;
-  start: Date;
-  end: Date;
+  date: Date;
+  start: string;
+  end: string;
   user: IUserState;
 }
 
-const initialState: IScheduleState = {
+export const initialScheduleState: IScheduleState = {
   _id: "",
   title: "",
-  start: new Date(),
-  end: new Date(),
+  date: new Date(),
+  start: "",
+  end: "",
   user: {
     _id: "",
     email: "",
@@ -27,5 +28,5 @@ const initialState: IScheduleState = {
 
 export const scheduleState = atom({
   key: "calendarScheduleState",
-  default: initialState,
+  default: initialScheduleState,
 });
