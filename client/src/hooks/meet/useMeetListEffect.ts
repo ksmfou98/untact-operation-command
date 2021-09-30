@@ -9,8 +9,9 @@ export default function useMeetListEffect() {
   useEffect(() => {
     const getData = async () => {
       const meets = await readMeetListAPI();
+      console.log(meets);
       setMeets(meets);
     };
     getData();
-  }, []);
+  }, [setMeets]);
 }

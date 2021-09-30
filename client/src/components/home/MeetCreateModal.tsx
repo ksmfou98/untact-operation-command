@@ -11,8 +11,14 @@ interface MeetCreateModalProps {
 }
 
 const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
-  const { meetForm, onChange, onToggleMuted, onToggleVideoOff, onCreateMeet } =
-    useHandleMeet();
+  const {
+    meetForm,
+    onChange,
+    onToggleMuted,
+    onToggleVideoOff,
+    onCreateMeet,
+    onThumbnailUpload,
+  } = useHandleMeet();
   const { title, description, thumbnail, password, muted, videoOff } = meetForm;
 
   return (
@@ -51,10 +57,10 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
           <label>회의 썸네일</label>
           <div className="img-upload">
             <label htmlFor="img-upload">
-              <span>썸네일 이미지를 업로드 해주세요</span>
+              <span>{thumbnail}</span>
               <AiOutlineCloudUpload size="30" />
             </label>
-            <input type="file" id="img-upload" />
+            <input type="file" id="img-upload" onChange={onThumbnailUpload} />
           </div>
         </div>
 
