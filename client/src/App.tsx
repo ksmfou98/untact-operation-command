@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router";
-import MeetPage from "pages/MeetPage";
+import MeetPage from "components/meet/Meet";
 import MeetListPage from "pages/HomePage";
 import Aside from "components/base/Aside";
 import useChannelPluginEffect from "hooks/common/useChannelPluginEffect";
@@ -16,7 +16,7 @@ const App = () => {
   return (
     <>
       <Switch>
-        <Route path="/meet/:roomId" component={MeetPage} />
+        <Route path="/meet/:meetId" component={MeetPage} />
         <Route path="/register" exact component={RegisterPage} />
         <Route path="/login" exact component={LoginPage} />
 

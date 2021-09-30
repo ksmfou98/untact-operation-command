@@ -7,11 +7,13 @@ import styled from "styled-components";
 import MeetFooter from "components/meet/MeetFooter";
 import MeetSidebar from "components/meet/MeetSideBar";
 import { SERVER_URL } from "lib/config";
+import useFindMeet from "hooks/meet/useFindMeet";
+import MeetNotFound from "components/meet/MeetNotFound";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
 interface MeetParams {
-  roomId: string;
+  meetId: string;
 }
 
 const MeetPage = () => {
@@ -22,8 +24,9 @@ const MeetPage = () => {
     videoDisabled: false,
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { meetId } = useParams<MeetParams>();
 
-  const { roomId } = useParams<MeetParams>();
+  const { exist, meet } = useFindMeet(meetId);
 
   let sendPC: RTCPeerConnection;
   let receivePCs: { [socketId: string]: RTCPeerConnection };
@@ -64,7 +67,7 @@ const MeetPage = () => {
 
         newSocket.emit("joinRoom", {
           id: newSocket.id,
-          roomId,
+          meetId,
         });
       })
       .catch((error) => {
@@ -186,7 +189,7 @@ const MeetPage = () => {
       newSocket.emit("senderOffer", {
         sdp,
         senderSocketID: newSocket.id,
-        roomId,
+        meetId,
       });
     } catch (error) {
       console.log(error);
@@ -210,7 +213,7 @@ const MeetPage = () => {
         sdp,
         receiverSocketID: newSocket.id,
         senderSocketID,
-        roomId,
+        meetId,
       });
     } catch (error) {
       console.log(error);
@@ -366,13 +369,15 @@ const MeetPage = () => {
 
         newSocket.emit("joinRoom", {
           id: "1asdasd6789",
-          roomId,
+          meetId,
         });
       })
       .catch((error) => {
         console.log(`getDisplayMedia error: ${error}`);
       });
   };
+
+  if (!exist) return <MeetNotFound />;
 
   return (
     <MeetPageBlock>

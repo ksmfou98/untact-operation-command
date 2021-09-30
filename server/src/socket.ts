@@ -25,7 +25,7 @@ export default function (server: http.Server) {
     return false;
   };
 
-  const createReceiverPeerConnection = (socketID, socket, roomId) => {
+  const createReceiverPeerConnection = (socketID, socket, meetId) => {
     let pc = new wrtc.RTCPeerConnection(pc_config);
 
     if (receiverPCs[socketID]) receiverPCs[socketID] = pc;
@@ -50,22 +50,22 @@ export default function (server: http.Server) {
       e.streams[0].getTracks().forEach((track) => {
         console.log(track.muted);
       });
-      if (users[roomId]) {
-        if (!isIncluded(users[roomId], socketID)) {
-          users[roomId].push({
+      if (users[meetId]) {
+        if (!isIncluded(users[meetId], socketID)) {
+          users[meetId].push({
             id: socketID,
             stream: e.streams[0],
           });
         } else return;
       } else {
-        users[roomId] = [
+        users[meetId] = [
           {
             id: socketID,
             stream: e.streams[0],
           },
         ];
       }
-      socket.broadcast.to(roomId).emit("userEnter", { id: socketID });
+      socket.broadcast.to(meetId).emit("userEnter", { id: socketID });
     };
 
     return pc;
@@ -75,7 +75,7 @@ export default function (server: http.Server) {
     receiverSocketID,
     senderSocketID,
     socket,
-    roomId
+    meetId
   ) => {
     let pc = new wrtc.RTCPeerConnection(pc_config);
 
@@ -104,7 +104,7 @@ export default function (server: http.Server) {
       );
     };
 
-    const sendUser = users[roomId].filter((user) => user.id === senderSocketID);
+    const sendUser = users[meetId].filter((user) => user.id === senderSocketID);
     sendUser[0].stream.getTracks().forEach((track) => {
       pc.addTrack(track, sendUser[0].stream);
       console.log(track.muted);
@@ -113,27 +113,27 @@ export default function (server: http.Server) {
     return pc;
   };
 
-  const getOtherUsersInRoom = (socketID, roomId) => {
+  const getOtherUsersInRoom = (socketID, meetId) => {
     let allUsers = [];
 
-    if (!users[roomId]) return allUsers;
+    if (!users[meetId]) return allUsers;
 
-    let len = users[roomId].length;
+    let len = users[meetId].length;
     for (let i = 0; i < len; i++) {
-      if (users[roomId][i].id === socketID) continue;
-      allUsers.push({ id: users[roomId][i].id });
+      if (users[meetId][i].id === socketID) continue;
+      allUsers.push({ id: users[meetId][i].id });
     }
 
     return allUsers;
   };
 
-  const deleteUser = (socketID, roomId) => {
-    let roomUsers = users[roomId];
+  const deleteUser = (socketID, meetId) => {
+    let roomUsers = users[meetId];
     if (!roomUsers) return;
     roomUsers = roomUsers.filter((user) => user.id !== socketID);
-    users[roomId] = roomUsers;
+    users[meetId] = roomUsers;
     if (roomUsers.length === 0) {
-      delete users[roomId];
+      delete users[meetId];
     }
     delete socketToRoom[socketID];
   };
@@ -179,7 +179,7 @@ export default function (server: http.Server) {
     // 방에 입장
     socket.on("joinRoom", (data) => {
       try {
-        let allUsers = getOtherUsersInRoom(data.id, data.roomId);
+        let allUsers = getOtherUsersInRoom(data.id, data.meetId);
         io.to(data.id).emit("allUsers", { users: allUsers });
       } catch (error) {
         console.log(error);
@@ -188,11 +188,11 @@ export default function (server: http.Server) {
 
     socket.on("senderOffer", async (data) => {
       try {
-        socketToRoom[data.senderSocketID] = data.roomId;
+        socketToRoom[data.senderSocketID] = data.meetId;
         let pc = createReceiverPeerConnection(
           data.senderSocketID,
           socket,
-          data.roomId
+          data.meetId
         );
         await pc.setRemoteDescription(data.sdp);
         let sdp = await pc.createAnswer({
@@ -201,7 +201,7 @@ export default function (server: http.Server) {
         });
 
         await pc.setLocalDescription(sdp);
-        socket.join(data.roomId);
+        socket.join(data.meetId);
         io.to(data.senderSocketID).emit("getSenderAnswer", { sdp });
       } catch (error) {
         console.log(error);
@@ -223,7 +223,7 @@ export default function (server: http.Server) {
           data.receiverSocketID,
           data.senderSocketID,
           socket,
-          data.roomId
+          data.meetId
         );
         await pc.setRemoteDescription(data.sdp);
         let sdp = await pc.createAnswer({
@@ -255,13 +255,13 @@ export default function (server: http.Server) {
 
     socket.on("disconnect", () => {
       try {
-        let roomId = socketToRoom[socket.id];
+        let meetId = socketToRoom[socket.id];
 
-        deleteUser(socket.id, roomId);
+        deleteUser(socket.id, meetId);
         closeRecevierPC(socket.id);
         closeSenderPCs(socket.id);
 
-        socket.broadcast.to(roomId).emit("userExit", { id: socket.id });
+        socket.broadcast.to(meetId).emit("userExit", { id: socket.id });
       } catch (error) {
         console.log(error);
       }

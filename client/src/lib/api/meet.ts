@@ -31,3 +31,8 @@ export const meetThumbnailAPI = async (fd: FormData) => {
   const response = await client.post(`/meet/uploadMeetThumb`, fd);
   return response.data.image;
 };
+
+export const findMeetAPI = async (meetId: string) => {
+  const response = await client.get(`/meet/findMeet/${meetId}`);
+  return response.data;
+};

@@ -72,7 +72,7 @@ export const readMeetList = async (req: Request, res: Response) => {
 export const findMeet = async (req: Request, res: Response) => {
   const { meetId } = req.params;
   try {
-    const meet = await Meet.findById(meetId);
+    const meet = await Meet.findById(meetId).populate("host");
     if (!meet) {
       return res.status(200).json({
         exist: false,
