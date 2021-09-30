@@ -7,8 +7,6 @@ import styled from "styled-components";
 import MeetFooter from "components/meet/MeetFooter";
 import MeetSidebar from "components/meet/MeetSideBar";
 import { SERVER_URL } from "lib/config";
-import useFindMeet from "hooks/meet/useFindMeet";
-import MeetNotFound from "components/meet/MeetNotFound";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
