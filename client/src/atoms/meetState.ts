@@ -4,6 +4,7 @@ import { initialUserState, IUserState } from "./userState";
 export interface IMeetState {
   host: IUserState;
   title: string;
+  _id: string;
   description: string;
   thumbnail: string;
   password: string;
@@ -13,9 +14,10 @@ export interface IMeetState {
 
 export const initialMeetState: IMeetState = {
   host: initialUserState,
+  _id: "",
   title: "",
   description: "",
-  thumbnail: "",
+  thumbnail: "회의 썸네일을 업로드 해주세요",
   password: "",
   muted: false,
   videoOff: false,

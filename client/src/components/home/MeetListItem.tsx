@@ -11,17 +11,17 @@ interface MeetListItemProps {
 }
 
 const MeetListItem = ({ meet }: MeetListItemProps) => {
-  const { title, description, host, thumbnail } = meet;
+  const { _id, title, description, host, thumbnail } = meet;
 
   return (
     <MeetListItemBlock>
-      <MeetThumbnail to="/meet/123">
+      <MeetThumbnail to={`/meet/${_id}`}>
         <div className="thumbnail">
           <img src={`${SERVER_URL}/${thumbnail}`} alt="" />
         </div>
       </MeetThumbnail>
       <MeetContent>
-        <Link to="/meet/123">
+        <Link to={`/meet/${_id}`}>
           <h4>{title}</h4>
           <div className="description-wrapper">
             <p>{description}</p>
