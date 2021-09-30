@@ -8,7 +8,9 @@ import MeetListItem from "./MeetListItem";
 
 const MeetList = () => {
   const meets = useRecoilValue(meetsState);
-  useMeetListEffect();
+  const { loading } = useMeetListEffect();
+
+  if (loading) return <Loading />;
   return (
     <MeetListBlock>
       <div className="meet-list">
