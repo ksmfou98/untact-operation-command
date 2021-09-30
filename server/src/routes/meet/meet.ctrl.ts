@@ -3,7 +3,7 @@ import multer from "multer";
 import fs from "fs";
 import Meet from "../../models/meet";
 
-// 미팅 생성
+// 회의 생성
 export const createMeet = async (req: Request, res: Response) => {
   try {
     const meet = new Meet(req.body);
@@ -21,7 +21,7 @@ export const createMeet = async (req: Request, res: Response) => {
   }
 };
 
-// 미팅 썸네일 이미지 저장
+// 회의 썸네일 이미지 저장
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -51,7 +51,7 @@ export const uploadMeetThumb = async (req: Request, res: Response) => {
   });
 };
 
-// 미팅 목록 조회
+// 회의 목록 조회
 export const readMeetList = async (req: Request, res: Response) => {
   try {
     const meets = await Meet.find().populate("host");
@@ -59,6 +59,31 @@ export const readMeetList = async (req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       meets: [...meets.reverse()],
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      e,
+    });
+  }
+};
+
+// 회의 조회
+export const findMeet = async (req: Request, res: Response) => {
+  const { meetId } = req.params;
+  try {
+    const meet = await Meet.findById(meetId);
+    if (!meet) {
+      return res.status(200).json({
+        exist: false,
+        message: "회의가 존재하지 않습니다.",
+      });
+    }
+
+    return res.status(200).json({
+      exist: true,
+      meet,
+      message: "회의 조회 성공",
     });
   } catch (e) {
     return res.status(500).json({
