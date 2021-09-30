@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router";
-import MeetPage from "components/meet/Meet";
 import MeetListPage from "pages/HomePage";
 import Aside from "components/base/Aside";
 import useChannelPluginEffect from "hooks/common/useChannelPluginEffect";
@@ -11,6 +10,7 @@ import CalendarPage from "pages/CalendarPage";
 import RegisterPage from "pages/RegisterPage";
 import LoginPage from "pages/LoginPage";
 import MembersPage from "pages/MembersPage";
+import MeetPage from "pages/MeetPage";
 const App = () => {
   useChannelPluginEffect();
   return (

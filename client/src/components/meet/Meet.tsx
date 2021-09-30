@@ -12,11 +12,11 @@ import MeetNotFound from "components/meet/MeetNotFound";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
-interface MeetParams {
+export interface MeetParams {
   meetId: string;
 }
 
-const MeetPage = () => {
+const Meet = () => {
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [mySessionId, setMySessionId] = useState<string>("");
   const [{ muted, videoDisabled }, setMediaState] = useState({
@@ -25,8 +25,6 @@ const MeetPage = () => {
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { meetId } = useParams<MeetParams>();
-
-  const { exist, meet } = useFindMeet(meetId);
 
   let sendPC: RTCPeerConnection;
   let receivePCs: { [socketId: string]: RTCPeerConnection };
@@ -377,8 +375,6 @@ const MeetPage = () => {
       });
   };
 
-  if (!exist) return <MeetNotFound />;
-
   return (
     <MeetPageBlock>
       <Wrapper>
@@ -426,4 +422,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default MeetPage;
+export default Meet;

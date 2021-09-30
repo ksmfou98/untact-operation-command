@@ -1,8 +1,11 @@
 import { IMeetState } from "atoms/meetState";
+import { MeetParams } from "components/meet/Meet";
 import { findMeetAPI } from "lib/api/meet";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
-export default function useFindMeet(meetId: string) {
+export default function useFindMeet() {
+  const { meetId } = useParams<MeetParams>();
   const [exist, setExist] = useState(null);
   const [meet, setMeet] = useState<IMeetState>();
   useEffect(() => {
