@@ -1,8 +1,10 @@
+import { meetsState } from "atoms/meetState";
 import { readMeetListAPI } from "lib/api/meet";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 
 export default function useMeetListEffect() {
-  const [meets, setMeets] = useState([]);
+  const setMeets = useSetRecoilState(meetsState);
 
   useEffect(() => {
     const getData = async () => {
@@ -11,7 +13,4 @@ export default function useMeetListEffect() {
     };
     getData();
   }, []);
-  return {
-    meets,
-  };
 }

@@ -25,3 +25,8 @@ export const meetState = atom<IMeetState>({
   key: "meetState",
   default: initialMeetState,
 });
+
+export const meetsState = atom<IMeetState[]>({
+  key: "meetsState",
+  default: [],
+});

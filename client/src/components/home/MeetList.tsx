@@ -1,10 +1,13 @@
+import { meetsState } from "atoms/meetState";
 import useMeetListEffect from "hooks/meet/useMeetListEffect";
 import React from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import MeetListItem from "./MeetListItem";
 
 const MeetList = () => {
-  const { meets } = useMeetListEffect();
+  const meets = useRecoilValue(meetsState);
+  useMeetListEffect();
   return (
     <MeetListBlock>
       <div className="meet-list">
