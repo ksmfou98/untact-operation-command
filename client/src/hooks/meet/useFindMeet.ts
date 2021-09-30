@@ -13,7 +13,6 @@ export default function useFindMeet() {
       const response = await findMeetAPI(meetId);
       setExist(response.exist);
       setMeet(response.meet);
-      console.log(meet);
     };
     getData();
   }, []);
