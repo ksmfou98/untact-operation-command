@@ -1,4 +1,3 @@
-import { IMeetState } from "atoms/meetState";
 import client from "./client";
 
 export const createMeetAPI = async (
