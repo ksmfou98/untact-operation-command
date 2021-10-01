@@ -50,7 +50,7 @@ const Meet = () => {
       .then((stream) => {
         localStream = stream;
         // stream 정보에 내 데이터도 추가
-        console.log("stream", stream);
+        console.log("my stream : ", stream);
         const myStream = {
           id: newSocket.id,
           stream,
@@ -111,7 +111,6 @@ const Meet = () => {
       async (data: { sdp: RTCSessionDescription }) => {
         try {
           console.log("get sender answer");
-          console.log("여긴가", data.sdp);
           await sendPC.setRemoteDescription(
             new RTCSessionDescription(data.sdp)
           );
@@ -153,7 +152,6 @@ const Meet = () => {
       "getReceiverCandidate",
       async (data: { id: string; candidate: RTCIceCandidateInit }) => {
         try {
-          console.log(data);
           console.log(`get socketID(${data.id})'s candidate`);
           let pc: RTCPeerConnection = receivePCs[data.id];
           if (!data.candidate) return;
@@ -193,7 +191,7 @@ const Meet = () => {
         sdp,
         senderSocketID: newSocket.id,
         meetId,
-        userId: user?._id,
+        userId: user._id,
       });
     } catch (error) {
       console.log(error);
@@ -229,7 +227,6 @@ const Meet = () => {
     localStream: MediaStream
   ): RTCPeerConnection => {
     let pc = new RTCPeerConnection(pc_config);
-    console.log("pc", pc);
 
     pc.onicecandidate = (e) => {
       if (e.candidate) {
