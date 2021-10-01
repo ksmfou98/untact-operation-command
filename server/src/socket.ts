@@ -1,6 +1,7 @@
 import http from "http";
 import { Server } from "socket.io";
 import wrtc from "wrtc";
+import Meet from "./models/meet";
 
 export default function (server: http.Server) {
   let receiverPCs = {};
@@ -25,7 +26,7 @@ export default function (server: http.Server) {
     return false;
   };
 
-  const createReceiverPeerConnection = (socketID, socket, meetId) => {
+  const createReceiverPeerConnection = (socketID, socket, meetId, userId) => {
     let pc = new wrtc.RTCPeerConnection(pc_config);
 
     if (receiverPCs[socketID]) receiverPCs[socketID] = pc;
@@ -40,21 +41,20 @@ export default function (server: http.Server) {
 
     pc.oniceconnectionstatechange = (e) => {
       //console.log(e);
-      console.log(
-        "Receiver oniceconnectionstatechange",
-        e.target.iceConnectionState
-      );
+      // console.log(
+      //   "Receiver oniceconnectionstatechange",
+      //   e.target.iceConnectionState
+      // );
     };
 
     pc.ontrack = (e) => {
-      e.streams[0].getTracks().forEach((track) => {
-        console.log(track.muted);
-      });
+      e.streams[0].getTracks().forEach((track) => {});
       if (users[meetId]) {
         if (!isIncluded(users[meetId], socketID)) {
           users[meetId].push({
             id: socketID,
             stream: e.streams[0],
+            userId,
           });
         } else return;
       } else {
@@ -62,6 +62,7 @@ export default function (server: http.Server) {
           {
             id: socketID,
             stream: e.streams[0],
+            userId,
           },
         ];
       }
@@ -98,16 +99,15 @@ export default function (server: http.Server) {
 
     pc.oniceconnectionstatechange = (e) => {
       //console.log(e);
-      console.log(
-        "Sender oniceconnectionstatechange",
-        e.target.iceConnectionState
-      );
+      // console.log(
+      //   "Sender oniceconnectionstatechange",
+      //   e.target.iceConnectionState
+      // );
     };
 
     const sendUser = users[meetId].filter((user) => user.id === senderSocketID);
     sendUser[0].stream.getTracks().forEach((track) => {
       pc.addTrack(track, sendUser[0].stream);
-      console.log(track.muted);
     });
 
     return pc;
@@ -127,9 +127,23 @@ export default function (server: http.Server) {
     return allUsers;
   };
 
-  const deleteUser = (socketID, meetId) => {
+  const deleteUser = async (socketID, meetId, io) => {
     let roomUsers = users[meetId];
     if (!roomUsers) return;
+
+    // 나갈려고하는 user의 id를 찾아서 호스트 인지 체크
+    const userId = roomUsers.filter((user) => user.id === socketID)[0].userId;
+    try {
+      const meet = await Meet.findOne({ _id: meetId });
+      console.log(meet);
+      if (meet.host.toString() === userId) {
+        io.to(meetId).emit("hostLeave", { message: "호스트가 종료했습니다." });
+        meet.deleteOne();
+      }
+    } catch (e) {
+      console.log("deleteUser 에러", e);
+    }
+
     roomUsers = roomUsers.filter((user) => user.id !== socketID);
     users[meetId] = roomUsers;
     if (roomUsers.length === 0) {
@@ -192,7 +206,8 @@ export default function (server: http.Server) {
         let pc = createReceiverPeerConnection(
           data.senderSocketID,
           socket,
-          data.meetId
+          data.meetId,
+          data.userId
         );
         await pc.setRemoteDescription(data.sdp);
         let sdp = await pc.createAnswer({
@@ -253,14 +268,12 @@ export default function (server: http.Server) {
       }
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
       try {
         let meetId = socketToRoom[socket.id];
-
-        deleteUser(socket.id, meetId);
+        deleteUser(socket.id, meetId, io);
         closeRecevierPC(socket.id);
         closeSenderPCs(socket.id);
-
         socket.broadcast.to(meetId).emit("userExit", { id: socket.id });
       } catch (error) {
         console.log(error);

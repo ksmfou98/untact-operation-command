@@ -7,6 +7,8 @@ import styled from "styled-components";
 import MeetFooter from "components/meet/MeetFooter";
 import MeetSidebar from "components/meet/MeetSideBar";
 import { SERVER_URL } from "lib/config";
+import { useRecoilValue } from "recoil";
+import { userState } from "atoms/userState";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
@@ -15,6 +17,7 @@ export interface MeetParams {
 }
 
 const Meet = () => {
+  const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [mySessionId, setMySessionId] = useState<string>("");
   const [{ muted, videoDisabled }, setMediaState] = useState({
@@ -161,6 +164,10 @@ const Meet = () => {
         }
       }
     );
+
+    newSocket.on("hostLeave", async (data: { message: string }) => {
+      alert(data.message);
+    });
   }, []);
 
   const createReceivePC = (id: string, newSocket: SocketIOClient.Socket) => {
@@ -186,6 +193,7 @@ const Meet = () => {
         sdp,
         senderSocketID: newSocket.id,
         meetId,
+        userId: user?._id,
       });
     } catch (error) {
       console.log(error);
