@@ -26,7 +26,13 @@ export default function (server: http.Server) {
     return false;
   };
 
-  const createReceiverPeerConnection = (socketID, socket, meetId, userId) => {
+  const createReceiverPeerConnection = (
+    socketID,
+    socket,
+    meetId,
+    userId,
+    name
+  ) => {
     let pc = new wrtc.RTCPeerConnection(pc_config);
 
     if (receiverPCs[socketID]) receiverPCs[socketID] = pc;
@@ -55,6 +61,7 @@ export default function (server: http.Server) {
             id: socketID,
             stream: e.streams[0],
             userId,
+            name,
           });
         } else return;
       } else {
@@ -63,10 +70,11 @@ export default function (server: http.Server) {
             id: socketID,
             stream: e.streams[0],
             userId,
+            name,
           },
         ];
       }
-      socket.broadcast.to(meetId).emit("userEnter", { id: socketID });
+      socket.broadcast.to(meetId).emit("userEnter", { id: socketID, name });
     };
 
     return pc;
@@ -121,7 +129,7 @@ export default function (server: http.Server) {
     let len = users[meetId].length;
     for (let i = 0; i < len; i++) {
       if (users[meetId][i].id === socketID) continue;
-      allUsers.push({ id: users[meetId][i].id });
+      allUsers.push({ id: users[meetId][i].id, name: users[meetId][i].name });
     }
 
     return allUsers;
@@ -135,7 +143,6 @@ export default function (server: http.Server) {
     const userId = roomUsers.filter((user) => user.id === socketID)[0].userId;
     try {
       const meet = await Meet.findOne({ _id: meetId });
-      console.log(meet);
       if (meet.host.toString() === userId) {
         io.to(meetId).emit("hostLeave", { message: "호스트가 종료했습니다." });
         meet.deleteOne();
@@ -207,7 +214,8 @@ export default function (server: http.Server) {
           data.senderSocketID,
           socket,
           data.meetId,
-          data.userId
+          data.userId,
+          data.name
         );
         await pc.setRemoteDescription(data.sdp);
         let sdp = await pc.createAnswer({

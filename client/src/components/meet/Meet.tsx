@@ -54,6 +54,7 @@ const Meet = () => {
         const myStream = {
           id: newSocket.id,
           stream,
+          name: user.name,
           muted: false,
           videoOff: false,
         };
@@ -88,17 +89,20 @@ const Meet = () => {
 
     // //화면 공유 테스트 여기까지
 
-    newSocket.on("userEnter", (data: { id: string }) => {
-      createReceivePC(data.id, newSocket);
+    newSocket.on("userEnter", (data: { id: string; name: string }) => {
+      createReceivePC(data.id, newSocket, data.name);
     });
 
     // 해당 방에 있는 유저들 목록을 받음
-    newSocket.on("allUsers", (data: { users: Array<{ id: string }> }) => {
-      let len = data.users.length;
-      for (let i = 0; i < len; i++) {
-        createReceivePC(data.users[i].id, newSocket);
+    newSocket.on(
+      "allUsers",
+      (data: { users: Array<{ id: string; name: string }> }) => {
+        let len = data.users.length;
+        for (let i = 0; i < len; i++) {
+          createReceivePC(data.users[i].id, newSocket, data.users[i].name);
+        }
       }
-    });
+    );
 
     newSocket.on("userExit", (data: { id: string }) => {
       receivePCs[data.id].close();
@@ -168,10 +172,14 @@ const Meet = () => {
     });
   }, []);
 
-  const createReceivePC = (id: string, newSocket: SocketIOClient.Socket) => {
+  const createReceivePC = (
+    id: string,
+    newSocket: SocketIOClient.Socket,
+    name: string
+  ) => {
     try {
       console.log(`socketID(${id}) user entered`);
-      let pc = createReceiverPeerConnection(id, newSocket);
+      let pc = createReceiverPeerConnection(id, newSocket, name);
       createReceiverOffer(pc, newSocket, id);
     } catch (error) {
       console.log(error);
@@ -192,6 +200,7 @@ const Meet = () => {
         senderSocketID: newSocket.id,
         meetId,
         userId: user._id,
+        name: user.name,
       });
     } catch (error) {
       console.log(error);
@@ -260,7 +269,8 @@ const Meet = () => {
 
   const createReceiverPeerConnection = (
     socketID: string,
-    newSocket: SocketIOClient.Socket
+    newSocket: SocketIOClient.Socket,
+    name: string
   ): RTCPeerConnection => {
     let pc = new RTCPeerConnection(pc_config);
 
@@ -295,6 +305,7 @@ const Meet = () => {
         oldUsers.concat({
           id: socketID,
           stream: e.streams[0],
+          name,
           muted: false,
           videoOff: false,
         })
@@ -352,6 +363,7 @@ const Meet = () => {
         const myStream = {
           id: "1asdasd6789",
           stream,
+          name: user.name,
           muted: false,
           videoOff: false,
         };
