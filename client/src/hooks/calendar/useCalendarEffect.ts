@@ -26,7 +26,7 @@ export default function useCalendarEffect() {
       ...prev,
       _id: clickInfo.event._def.extendedProps._id,
     })); //_id값을 리코일에 저장
-
+    
     onEditToggleModal();
   };
 
