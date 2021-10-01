@@ -4,11 +4,13 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
-import MeetFooter from "components/meet/MeetFooter";
 import MeetSidebar from "components/meet/MeetSideBar";
 import { SERVER_URL } from "lib/config";
 import { useRecoilValue } from "recoil";
 import { userState } from "atoms/userState";
+import FooterButtonGroup from "./FooterButtonGroup";
+import UsersButton from "./UsersButton";
+import { IMeetState } from "atoms/meetState";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
@@ -16,7 +18,11 @@ export interface MeetParams {
   meetId: string;
 }
 
-const Meet = () => {
+interface MeetPorps {
+  meetInfo: IMeetState;
+}
+
+const Meet = ({ meetInfo }: MeetPorps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [mySessionId, setMySessionId] = useState<string>("");
@@ -403,16 +409,25 @@ const Meet = () => {
           mySessionId={mySessionId}
         />
       </Wrapper>
-      <MeetFooter
-        muted={muted}
-        onToggleMuted={onToggleMuted}
-        videoDisabled={videoDisabled}
-        onToggleVideoDisabled={onToggleVideoDisabled}
-        onHangOff={onHangOff}
-        users={users}
-        onToggleSidebar={onToggleSidebar}
-        onScreenShare={onScreenShare}
-      />
+
+      <MeetFooter>
+        <div className="left">
+          <div className="meetId">{meetInfo.title}</div>
+        </div>
+        <div className="center">
+          <FooterButtonGroup
+            muted={muted}
+            onToggleMuted={onToggleMuted}
+            videoDisabled={videoDisabled}
+            onToggleVideoDisabled={onToggleVideoDisabled}
+            onHangOff={onHangOff}
+            onScreenShare={onScreenShare}
+          />
+        </div>
+        <div className="right">
+          <UsersButton usersCount={users.length} onClick={onToggleSidebar} />
+        </div>
+      </MeetFooter>
     </MeetPageBlock>
   );
 };
@@ -434,6 +449,34 @@ const Wrapper = styled.div`
     flex: 1;
     min-height: 0;
     overflow: hidden;
+  }
+`;
+
+const MeetFooter = styled.footer`
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding-left: 24px;
+  padding-right: 24px;
+  .left,
+  .right {
+    width: 240px;
+    display: flex;
+  }
+  .right {
+    justify-content: flex-end;
+    margin-right: 50px;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+  .meetId {
+    font-family: monospace;
+    color: white;
+    font-size: 21px;
+    font-weight: bold;
   }
 `;
 
