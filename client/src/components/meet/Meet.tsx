@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import io from "socket.io-client";
-import { useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import io, { Socket } from "socket.io-client";
 import { useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
@@ -24,9 +23,24 @@ interface MeetProps {
   meetInfo: IMeetState;
 }
 
+export interface IChat {
+  meetId: string;
+  message: string;
+  name: string;
+}
+
 const Meet = ({ meetInfo }: MeetProps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
+
+  const [chatMessages, setChatMessages] = useState<IChat[]>([]);
+  const [message, setMessage] = useState("");
+  const [receiveMessage, setReceiveMessage] = useState({
+    meetId: "",
+    message: "",
+    name: "",
+  });
+
   const [mySessionId, setMySessionId] = useState<string>("");
   const [{ muted, videoDisabled }, setMediaState] = useState({
     muted: false,
@@ -187,10 +201,31 @@ const Meet = ({ meetInfo }: MeetProps) => {
       }
     );
 
+    newSocket.on("receiveChatMessage", (messageObject: IChat) => {
+      console.log("get Chat Effect Rendering");
+      setReceiveMessage(messageObject);
+    });
+
     newSocket.on("hostLeave", async (data: { message: string }) => {
       alert(data.message);
     });
   }, []);
+
+  // 채팅 스크롤 고정
+  const messagesEndRef = useRef<any>(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    console.log("set Chat Effect Rendering");
+    const setChat = async () => {
+      (await receiveMessage.name.length) > 0 &&
+        setChatMessages((chat) => chat.concat(receiveMessage));
+      scrollToBottom();
+    };
+    setChat();
+  }, [receiveMessage]);
 
   const createReceivePC = (
     id: string,
@@ -405,6 +440,24 @@ const Meet = ({ meetInfo }: MeetProps) => {
       });
   };
 
+  // 채팅 부분
+
+  const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const onSendChatMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const messageObject = {
+      meetId,
+      message,
+      name: user.name,
+    };
+
+    newSocket.emit("sendChatMessage", messageObject);
+    setMessage("");
+  };
+
   return (
     <MeetPageBlock>
       <Wrapper>
@@ -421,8 +474,11 @@ const Meet = ({ meetInfo }: MeetProps) => {
         <ChatsSideBar
           visible={chatsSidebarOpen}
           onToggleSidebar={onToggleChatsSidebar}
-          users={users}
-          mySessionId={mySessionId}
+          chatMessages={chatMessages}
+          messagesEndRef={messagesEndRef}
+          onSendChatMessage={onSendChatMessage}
+          onChangeMessage={onChangeMessage}
+          message={message}
         />
       </Wrapper>
 

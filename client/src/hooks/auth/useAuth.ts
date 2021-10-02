@@ -62,7 +62,7 @@ export default function useAuth() {
     } catch (e) {
       alert("로그아웃에 실패했습니다.");
     }
-  }, [setUserState]);
+  }, [resetUserState]);
 
   return {
     form,
