@@ -20,7 +20,7 @@ const UsersSidebar = ({
     <Aside visible={visible}>
       <div className="content">
         <header>
-          <h3>Users</h3>
+          <h3>사용자</h3>
           <button onClick={onToggleSidebar}>
             <CloseIcon />
           </button>
@@ -30,7 +30,7 @@ const UsersSidebar = ({
             {users.map((user, index) => (
               <UserItem
                 key={index}
-                userName={user.name} // TODO: user.id 를 나중에 user.name 으로 변경
+                userName={user.name}
                 isMySelf={user.id === mySessionId}
                 muted={user.muted}
               />
@@ -82,7 +82,7 @@ const Aside = styled.aside<{ visible: boolean }>`
         align-items: center;
       }
       h3 {
-        font-size: 24px;
+        font-size: 20px;
         margin: 0;
       }
     }
