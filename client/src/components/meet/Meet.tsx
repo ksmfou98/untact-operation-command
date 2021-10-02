@@ -4,13 +4,15 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
-import MeetSidebar from "components/meet/MeetSideBar";
+import UsersSidebar from "components/meet/UsersSideBar";
 import { SERVER_URL } from "lib/config";
 import { useRecoilValue } from "recoil";
 import { userState } from "atoms/userState";
 import FooterButtonGroup from "./FooterButtonGroup";
 import UsersButton from "./UsersButton";
 import { IMeetState } from "atoms/meetState";
+import ChatsSideBar from "./ChatsSideBar";
+import ChatsButton from "./ChatsButton";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
@@ -18,11 +20,11 @@ export interface MeetParams {
   meetId: string;
 }
 
-interface MeetPorps {
+interface MeetProps {
   meetInfo: IMeetState;
 }
 
-const Meet = ({ meetInfo }: MeetPorps) => {
+const Meet = ({ meetInfo }: MeetProps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [mySessionId, setMySessionId] = useState<string>("");
@@ -30,8 +32,20 @@ const Meet = ({ meetInfo }: MeetPorps) => {
     muted: false,
     videoDisabled: false,
   });
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { meetId } = useParams<MeetParams>();
+
+  const [usersSidebarOpen, setUsersSidebarOpen] = useState(false);
+  const [chatsSidebarOpen, setChatsSidebarOpen] = useState(false);
+
+  // 유저 목록사이드바 토글
+  const onToggleUsersSidebar = () => {
+    setUsersSidebarOpen(!usersSidebarOpen);
+  };
+
+  // 채팅 사이드바 토글
+  const onToggleChatsSidebar = () => {
+    setChatsSidebarOpen(!chatsSidebarOpen);
+  };
 
   let sendPC: RTCPeerConnection;
   let receivePCs: { [socketId: string]: RTCPeerConnection };
@@ -351,11 +365,6 @@ const Meet = ({ meetInfo }: MeetPorps) => {
     window.location.replace("/");
   };
 
-  // 사이드바 토글
-  const onToggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   // 화면 공유
 
   const onScreenShare = () => {
@@ -400,11 +409,18 @@ const Meet = ({ meetInfo }: MeetPorps) => {
     <MeetPageBlock>
       <Wrapper>
         <main>
-          <MeetGrid users={users} sidebarOpen={sidebarOpen} />
+          <MeetGrid users={users} sidebarOpen={usersSidebarOpen} />
         </main>
-        <MeetSidebar
-          visible={sidebarOpen}
-          onToggleSidebar={onToggleSidebar}
+        <UsersSidebar
+          visible={usersSidebarOpen}
+          onToggleSidebar={onToggleUsersSidebar}
+          users={users}
+          mySessionId={mySessionId}
+        />
+
+        <ChatsSideBar
+          visible={chatsSidebarOpen}
+          onToggleSidebar={onToggleChatsSidebar}
           users={users}
           mySessionId={mySessionId}
         />
@@ -425,7 +441,11 @@ const Meet = ({ meetInfo }: MeetPorps) => {
           />
         </div>
         <div className="right">
-          <UsersButton usersCount={users.length} onClick={onToggleSidebar} />
+          <ChatsButton onClick={onToggleChatsSidebar} />
+          <UsersButton
+            usersCount={users.length}
+            onClick={onToggleUsersSidebar}
+          />
         </div>
       </MeetFooter>
     </MeetPageBlock>
@@ -465,7 +485,7 @@ const MeetFooter = styled.footer`
   }
   .right {
     justify-content: flex-end;
-    margin-right: 50px;
+    margin-right: 80px;
   }
   .center {
     display: flex;

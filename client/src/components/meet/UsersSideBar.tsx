@@ -3,23 +3,19 @@ import { CloseIcon } from "assets/icons";
 import styled, { css } from "styled-components";
 import UserItem from "./UserItem";
 
-interface MeetSidebarProps {
+interface UsersSidebarProps {
   visible: boolean;
   onToggleSidebar: () => void;
   users: IWebRTCUser[];
   mySessionId: string;
 }
 
-const MeetSidebar = ({
+const UsersSidebar = ({
   visible,
   onToggleSidebar,
   users,
   mySessionId,
-}: MeetSidebarProps) => {
-  // if (!visible) {
-  //   return null;
-  // }
-
+}: UsersSidebarProps) => {
   return (
     <Aside visible={visible}>
       <div className="content">
@@ -108,4 +104,4 @@ const Aside = styled.aside<{ visible: boolean }>`
   }
 `;
 
-export default MeetSidebar;
+export default UsersSidebar;
