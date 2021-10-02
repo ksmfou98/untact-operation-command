@@ -71,12 +71,18 @@ const HomeNavBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    ${media.xsmall} {
+    }
   }
 `;
 
 const LeftBox = styled.div`
   display: flex;
   align-items: center;
+  ${media.xsmall} {
+    flex: 1;
+    justify-content: space-around;
+  }
   .item {
     display: flex;
     align-items: center;
@@ -97,6 +103,9 @@ const LeftBox = styled.div`
       .name {
         font-size: 14px;
       }
+    }
+    ${media.xsmall} {
+      flex-direction: column;
     }
   }
 `;
