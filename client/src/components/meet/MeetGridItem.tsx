@@ -1,3 +1,4 @@
+import useFullscreen from "hooks/common/useFullscreen";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -11,6 +12,8 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
   const ref = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState<boolean>(true);
 
+  const { element, onFullScreen } = useFullscreen();
+
   useEffect(() => {
     if (ref.current) {
       ref.current.srcObject = stream;
@@ -23,8 +26,14 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
   }, [muted, stream]);
 
   return (
-    <MeetGridItemBlock style={{ width }}>
-      <VideoContainer ref={ref} muted={isMuted} playsInline autoPlay />
+    <MeetGridItemBlock ref={element} style={{ width }}>
+      <VideoContainer
+        ref={ref}
+        onDoubleClick={onFullScreen}
+        muted={isMuted}
+        playsInline
+        autoPlay
+      />
     </MeetGridItemBlock>
   );
 };
