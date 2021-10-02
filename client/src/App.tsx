@@ -40,6 +40,7 @@ export default App;
 
 const AsideLayout = styled.div`
   margin-left: 260px;
+  height: 100%;
   ${media.xlarge} {
     margin-left: 90px;
   }
@@ -50,6 +51,7 @@ const AsideLayout = styled.div`
 
 const MainLayout = styled.div`
   /* padding: 35px 85px; */
+  height: 100%;
   padding: 35px 0;
   width: 1760px;
   margin: 0 auto;
