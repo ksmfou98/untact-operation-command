@@ -4,23 +4,24 @@ import styled from "styled-components";
 import { BsFillPeopleFill } from "react-icons/bs";
 import media from "lib/styles/media";
 import { IMeetState } from "atoms/meetState";
+import { SERVER_URL } from "lib/config";
 
 interface MeetListItemProps {
   meet: IMeetState;
 }
 
 const MeetListItem = ({ meet }: MeetListItemProps) => {
-  const { title, description, host } = meet;
+  const { _id, title, description, host, thumbnail } = meet;
 
   return (
     <MeetListItemBlock>
-      <MeetThumbnail to="/meet/123">
+      <MeetThumbnail to={`/meet/${_id}`}>
         <div className="thumbnail">
-          <img src="https://picsum.photos/600/300" alt="" />
+          <img src={`${SERVER_URL}/${thumbnail}`} alt="" />
         </div>
       </MeetThumbnail>
       <MeetContent>
-        <Link to="/meet/123">
+        <Link to={`/meet/${_id}`}>
           <h4>{title}</h4>
           <div className="description-wrapper">
             <p>{description}</p>

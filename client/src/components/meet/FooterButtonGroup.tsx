@@ -4,6 +4,7 @@ import {
   MicOffIcon,
   VideocamIcon,
   VideocamOffIcon,
+  ScreenShareIcon,
 } from "assets/icons";
 import React from "react";
 import styled from "styled-components";
@@ -46,13 +47,13 @@ const FooterButtonGroup = ({
           <VideocamIcon />
         </IconCircleButton>
       )}
+      <IconCircleButton onClick={onScreenShare}>
+        <ScreenShareIcon />
+      </IconCircleButton>
+
       <CallEndButton onClick={onHangOff}>
         <CallEndIcon />
       </CallEndButton>
-
-      <RedButton onClick={onScreenShare}>
-        <MicOffIcon />
-      </RedButton>
     </Group>
   );
 };

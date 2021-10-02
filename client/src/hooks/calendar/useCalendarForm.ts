@@ -1,10 +1,9 @@
-import {
-  initialScheduleState,
-  schedulesState,
-  scheduleState,
-} from "atoms/calendarState";
+import { schedulesState, scheduleState } from "atoms/calendarState";
 import { createScheduleAPI } from "lib/api/claendar";
+<<<<<<< HEAD
 
+=======
+>>>>>>> df04f0f598f0b5528f72665d31237276fa505d29
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 
 export default function useCalendarForm() {

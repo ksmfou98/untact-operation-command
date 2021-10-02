@@ -1,4 +1,3 @@
-import { IMeetState } from "atoms/meetState";
 import client from "./client";
 
 export const createMeetAPI = async (
@@ -26,4 +25,14 @@ export const createMeetAPI = async (
 export const readMeetListAPI = async () => {
   const response = await client.get(`/meet/readMeetList`);
   return response.data.meets;
+};
+
+export const meetThumbnailAPI = async (fd: FormData) => {
+  const response = await client.post(`/meet/uploadMeetThumb`, fd);
+  return response.data.image;
+};
+
+export const findMeetAPI = async (meetId: string) => {
+  const response = await client.get(`/meet/findMeet/${meetId}`);
+  return response.data;
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router";
-import MeetPage from "pages/MeetPage";
 import MeetListPage from "pages/HomePage";
 import Aside from "components/base/Aside";
 import useChannelPluginEffect from "hooks/common/useChannelPluginEffect";
@@ -11,12 +10,13 @@ import CalendarPage from "pages/CalendarPage";
 import RegisterPage from "pages/RegisterPage";
 import LoginPage from "pages/LoginPage";
 import MembersPage from "pages/MembersPage";
+import MeetPage from "pages/MeetPage";
 const App = () => {
   useChannelPluginEffect();
   return (
     <>
       <Switch>
-        <Route path="/meet/:roomId" component={MeetPage} />
+        <Route path="/meet/:meetId" component={MeetPage} />
         <Route path="/register" exact component={RegisterPage} />
         <Route path="/login" exact component={LoginPage} />
 
@@ -40,6 +40,7 @@ export default App;
 
 const AsideLayout = styled.div`
   margin-left: 260px;
+  height: 100%;
   ${media.xlarge} {
     margin-left: 90px;
   }
@@ -50,6 +51,7 @@ const AsideLayout = styled.div`
 
 const MainLayout = styled.div`
   /* padding: 35px 85px; */
+  height: 100%;
   padding: 35px 0;
   width: 1760px;
   margin: 0 auto;

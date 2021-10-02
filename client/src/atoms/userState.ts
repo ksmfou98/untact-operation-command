@@ -18,7 +18,7 @@ export const initialUserState: IUserState = {
   friends: [],
 };
 
-export const userState = atom<IUserState | null>({
+export const userState = atom<IUserState>({
   key: "userState",
   default: initialUserState,
 });

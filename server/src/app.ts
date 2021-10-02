@@ -28,6 +28,8 @@ app.use(cookieParser());
 app.use(userAuth);
 app.use("/api/v1", routes);
 
+app.use("/uploads", express.static("uploads"));
+
 webRTCSocket(server);
 
 server.listen(PORT, () => {
