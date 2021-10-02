@@ -29,109 +29,57 @@ const CalendarModal = ({
   return (
     <div>
       {isModal ? (
-        isEdit === false ? (
-          <Modal
-            title="일정 생성"
-            buttonName="생성"
-            onClick={onCreateSchedule}
-            onToggleModal={() => onToggleModal()}
-            isModal={true}
-            size="big"
-          >
-            <ModalStyled>
-              <div className="infoEle">
-                <div className="infoQutn">제목</div>
+        <Modal
+          title={isEdit === false ? "일정 생성" : "일정 수정"}
+          buttonName={isEdit === false ? "생성" : "수정"}
+          onClick={onCreateSchedule}
+          onToggleModal={
+            isEdit === false ? () => onToggleModal() : () => onEditToggleModal()
+          }
+          isModal={true}
+          size="big"
+        >
+          <ModalStyled>
+            <div className="infoEle">
+              <div className="infoQutn">제목</div>
+              <input
+                type="text"
+                className="infoInput"
+                name="title"
+                value={title}
+                onChange={onChangeSchedule}
+              />
+            </div>
+            <div className="infoEle">
+              <div className="infoQutn"> 날짜 </div>
+              <MyDatePicker
+                dateFormat="yyyy-MM-dd"
+                selected={date}
+                onChange={onChangeScheduleDate}
+              />
+            </div>
+            <div className="infoEle">
+              <div className="infoQutn"> 시간 </div>
+              <div className="flex">
                 <input
-                  type="text"
-                  className="infoInput"
-                  name="title"
-                  value={title}
+                  type="time"
+                  className="infoInputShort"
+                  name="start"
+                  value={start}
+                  onChange={onChangeSchedule}
+                />
+                ~
+                <input
+                  type="time"
+                  className="infoInputShort"
+                  name="end"
+                  value={end}
                   onChange={onChangeSchedule}
                 />
               </div>
-              <div className="infoEle">
-                <div className="infoQutn"> 날짜 </div>
-                <MyDatePicker
-                  dateFormat="yyyy-MM-dd"
-                  selected={date}
-                  onChange={onChangeScheduleDate}
-                />
-              </div>
-              <div className="infoEle">
-                <div className="infoQutn"> 시간 </div>
-                <div className="flex">
-                  <input
-                    type="time"
-                    className="infoInputShort"
-                    name="start"
-                    value={start}
-                    onChange={onChangeSchedule}
-                  />
-                  ~
-                  <input
-                    type="time"
-                    className="infoInputShort"
-                    name="end"
-                    value={end}
-                    onChange={onChangeSchedule}
-                  />
-                </div>
-              </div>
-            </ModalStyled>
-          </Modal>
-        ) : (
-          <Modal
-            title="일정 수정"
-            buttonName="수정"
-            onClick={onCreateSchedule}
-            onToggleModal={() => {
-              onEditToggleModal();
-            }}
-            isModal={true}
-            size="big"
-          >
-            <ModalStyled>
-              <div className="infoEle">
-                <div className="infoQutn">제목</div>
-                <input
-                  type="text"
-                  className="infoInput"
-                  name="title"
-                  value={title}
-                  onChange={onChangeSchedule}
-                />
-              </div>
-              <div className="infoEle">
-                <div className="infoQutn"> 날짜 </div>
-                <MyDatePicker
-                  dateFormat="yyyy-MM-dd"
-                  selected={date}
-                  onChange={onChangeScheduleDate}
-                />
-              </div>
-              <div className="infoEle">
-                <div className="infoQutn"> 시간 </div>
-                <div className="flex">
-                  <input
-                    type="time"
-                    className="infoInputShort"
-                    name="start"
-                    value={start}
-                    onChange={onChangeSchedule}
-                  />
-                  ~
-                  <input
-                    type="time"
-                    className="infoInputShort"
-                    name="end"
-                    value={end}
-                    onChange={onChangeSchedule}
-                  />
-                </div>
-              </div>
-            </ModalStyled>
-          </Modal>
-        )
+            </div>
+          </ModalStyled>
+        </Modal>
       ) : null}
     </div>
   );
