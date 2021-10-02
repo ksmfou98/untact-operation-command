@@ -16,9 +16,9 @@ const MeetSidebar = ({
   users,
   mySessionId,
 }: MeetSidebarProps) => {
-  if (!visible) {
-    return null;
-  }
+  // if (!visible) {
+  //   return null;
+  // }
 
   return (
     <Aside visible={visible}>
@@ -50,22 +50,23 @@ const Aside = styled.aside<{ visible: boolean }>`
   display: flex;
   background: #212121;
   flex-direction: column;
-  width: 320px;
+  overflow: hidden;
   ${(props) =>
     props.visible
       ? css`
           width: 320px;
-          opacity: 1;
         `
       : css`
           width: 0px;
-          opacity: 0;
         `}
+
+  transition: 0.5s;
   .content {
     border: 8px solid #212121;
     border-left-width: 4px;
     background: white;
     flex: 1;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     header {
