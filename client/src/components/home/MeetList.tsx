@@ -11,6 +11,7 @@ const MeetList = () => {
   const { loading } = useMeetListEffect();
 
   if (loading) return <Loading />;
+
   return (
     <MeetListBlock>
       <div className="meet-list">
