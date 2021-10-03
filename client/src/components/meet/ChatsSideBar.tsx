@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CloseIcon } from "assets/icons";
 import styled, { css } from "styled-components";
-import UserItem from "./UserItem";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { palette } from "lib/styles/palette";
 import { IChat } from "./Meet";

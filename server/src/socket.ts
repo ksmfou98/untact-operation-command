@@ -32,13 +32,13 @@ export default function (server: http.Server) {
     meetId,
     userId,
     name
-  ) => {
+  ): RTCPeerConnection => {
     let pc = new wrtc.RTCPeerConnection(pc_config);
 
     if (receiverPCs[socketID]) receiverPCs[socketID] = pc;
     else receiverPCs = { ...receiverPCs, [socketID]: pc };
 
-    pc.onicecandidate = (e) => {
+    pc.onicecandidate = (e: RTCPeerConnectionIceEvent) => {
       //console.log(`socketID: ${socketID}'s receiverPeerConnection icecandidate`);
       socket.to(socketID).emit("getSenderCandidate", {
         candidate: e.candidate,
@@ -53,8 +53,11 @@ export default function (server: http.Server) {
       // );
     };
 
-    pc.ontrack = (e) => {
-      e.streams[0].getTracks().forEach((track) => {});
+    pc.ontrack = (e: RTCTrackEvent) => {
+      e.streams[0].getTracks().forEach((track: MediaStreamTrack) => {
+        // console.log(track.kind, track.muted);
+      });
+
       if (users[meetId]) {
         if (!isIncluded(users[meetId], socketID)) {
           users[meetId].push({
@@ -62,6 +65,7 @@ export default function (server: http.Server) {
             stream: e.streams[0],
             userId,
             name,
+            muted: e.streams[0].getAudioTracks()[0].muted,
           });
         } else return;
       } else {
@@ -71,6 +75,7 @@ export default function (server: http.Server) {
             stream: e.streams[0],
             userId,
             name,
+            muted: e.streams[0].getAudioTracks()[0].muted,
           },
         ];
       }

@@ -1,4 +1,4 @@
-import { MicOffIcon } from "assets/icons";
+import { MicOffIcon, MicIcon } from "assets/icons";
 import React from "react";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ const UserItem = ({ userName, isMySelf, muted }: UserItemProps) => {
         {userName}
         {isMySelf && <span className="me">(Me)</span>}
       </div>
-      {muted && <MicOffIcon />}
+      {muted ? <MicOffIcon /> : <MicIcon />}
     </Item>
   );
 };

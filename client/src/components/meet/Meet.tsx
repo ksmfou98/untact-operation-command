@@ -40,6 +40,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
   });
   const { meetId } = useParams<MeetParams>();
 
+  // 사이드바 토글 상태
   const [usersSidebarOpen, setUsersSidebarOpen] = useState(false);
   const [chatsSidebarOpen, setChatsSidebarOpen] = useState(false);
 
@@ -346,12 +347,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
     const nextValue = !muted;
     setMediaState((prev) => ({ ...prev, muted: nextValue }));
 
-    // users.map((user) => {
-    //   if (user.id === mySessionId) {
-    //     user.muted = nextValue;
-    //   }
-    // });
-
     const audioTrack = users[0].stream.getAudioTracks()[0];
     if (!audioTrack) return;
     audioTrack.enabled = !nextValue;
@@ -410,48 +405,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
         console.log(`getDisplayMedia error: ${error}`);
       });
   };
-
-  // 채팅 부분
-
-  // const [chatMessages, setChatMessages] = useState<IChat[]>([]);
-  // const [message, setMessage] = useState("");
-  // const [receiveMessage, setReceiveMessage] = useState({
-  //   meetId: "",
-  //   message: "",
-  //   name: "",
-  // });
-
-  // const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setMessage(e.target.value);
-  // };
-
-  // const onSendChatMessage = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const messageObject = {
-  //     meetId,
-  //     message,
-  //     name: user.name,
-  //   };
-
-  //   newSocket.emit("sendChatMessage", messageObject);
-  //   setMessage("");
-  // };
-
-  // // 채팅 스크롤 고정
-  // const messagesEndRef = useRef<any>(null);
-  // const scrollToBottom = () => {
-  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  // };
-
-  // useEffect(() => {
-  //   console.log("set Chat Effect Rendering");
-  //   const setChat = async () => {
-  //     (await receiveMessage.name.length) > 0 &&
-  //       setChatMessages((chat) => chat.concat(receiveMessage));
-  //     scrollToBottom();
-  //   };
-  //   setChat();
-  // }, [receiveMessage]);
 
   return (
     <MeetPageBlock>
