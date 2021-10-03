@@ -56,7 +56,7 @@ export default function (server: http.Server) {
         "Receiver oniceconnectionstatechange",
         e.target.iceConnectionState
       );
-      if (e.iceConnectionState === "failed") {
+      if (e.target.iceConnectionState === "failed") {
         pc.restartIce();
       }
     };
@@ -119,7 +119,7 @@ export default function (server: http.Server) {
         "Sender oniceconnectionstatechange",
         e.target.iceConnectionState
       );
-      if (e.iceConnectionState === "failed") {
+      if (e.target.iceConnectionState === "failed") {
         pc.restartIce();
       }
     };
