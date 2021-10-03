@@ -34,7 +34,7 @@ function MeetGrid({ users, sidebarOpen }: MeetGridProps) {
         <MeetGridItem
           key={index}
           stream={user.stream}
-          muted={true}
+          muted={user.muted}
           width={itemWidth}
         />
       ))}

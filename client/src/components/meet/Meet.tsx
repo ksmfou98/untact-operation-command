@@ -119,7 +119,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
     newSocket.on(
       "userEnter",
       (data: { id: string; name: string; muted: boolean }) => {
-        console.log("3명이면 이거 몇버 실행되는지 확인해보자", data.name);
         createReceivePC(data.id, newSocket, data.name, data.muted);
       }
     );
@@ -208,7 +207,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
     newSocket.on(
       "receiveToggleMuted",
       (data: { userSocketId: string; meetId: string; muted: boolean }) => {
-        console.log("얌마", data);
         setUsers((users) =>
           users.map((user) => {
             if (user.id === data.userSocketId) {
