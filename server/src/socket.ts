@@ -56,6 +56,9 @@ export default function (server: http.Server) {
         "Receiver oniceconnectionstatechange",
         e.target.iceConnectionState
       );
+      if (e.iceConnectionState === "failed") {
+        pc.restartIce();
+      }
     };
 
     pc.ontrack = (e) => {
@@ -116,6 +119,9 @@ export default function (server: http.Server) {
         "Sender oniceconnectionstatechange",
         e.target.iceConnectionState
       );
+      if (e.iceConnectionState === "failed") {
+        pc.restartIce();
+      }
     };
 
     const sendUser = users[meetId].filter((user) => user.id === senderSocketID);
