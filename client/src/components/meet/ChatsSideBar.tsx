@@ -1,30 +1,74 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CloseIcon } from "assets/icons";
 import styled, { css } from "styled-components";
 import UserItem from "./UserItem";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { palette } from "lib/styles/palette";
 import { IChat } from "./Meet";
+import { IUserState } from "atoms/userState";
 
 interface ChatsSideBarProps {
   visible: boolean;
   onToggleSidebar: () => void;
-  chatMessages: IChat[];
-  messagesEndRef: any;
-  onSendChatMessage: (e: React.FormEvent<HTMLFormElement>) => void;
-  onChangeMessage: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  message: string;
+  meetId: string;
+  user: IUserState;
+  newSocket: SocketIOClient.Socket;
 }
 
 const ChatsSideBar = ({
   visible,
   onToggleSidebar,
-  chatMessages,
-  messagesEndRef,
-  onSendChatMessage,
-  onChangeMessage,
-  message,
+  meetId,
+  user,
+  newSocket,
 }: ChatsSideBarProps) => {
+  const [chatMessages, setChatMessages] = useState<IChat[]>([]);
+  const [message, setMessage] = useState("");
+  const [receiveMessage, setReceiveMessage] = useState({
+    meetId: "",
+    message: "",
+    name: "",
+  });
+
+  const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const onSendChatMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const messageObject = {
+      meetId,
+      message,
+      name: user.name,
+    };
+
+    newSocket.emit("sendChatMessage", messageObject);
+    setMessage("");
+  };
+
+  // 채팅 스크롤 고정
+  const messagesEndRef = useRef<any>(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    newSocket.on("receiveChatMessage", (messageObject: IChat) => {
+      console.log("get Chat Effect Rendering");
+      setReceiveMessage(messageObject);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("set Chat Effect Rendering");
+    const setChat = async () => {
+      (await receiveMessage.name.length) > 0 &&
+        setChatMessages((chat) => chat.concat(receiveMessage));
+      scrollToBottom();
+    };
+    setChat();
+  }, [receiveMessage]);
+
   return (
     <Aside visible={visible}>
       <div className="content">
