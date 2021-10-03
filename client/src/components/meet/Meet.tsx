@@ -306,12 +306,13 @@ const Meet = ({ meetInfo }: MeetProps) => {
         });
       }
     };
-
+  
     pc.oniceconnectionstatechange = (e: any) => {
       console.log(
         "Sender oniceconnectionstatechange",
         e.target.iceConnectionState
       );
+      
     };
 
     if (localStream) {

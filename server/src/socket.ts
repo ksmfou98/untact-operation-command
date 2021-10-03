@@ -51,14 +51,11 @@ export default function (server: http.Server) {
     };
 
     pc.oniceconnectionstatechange = (e) => {
-      console.log(e);
-      console.log(
-        "Receiver oniceconnectionstatechange",
-        e.target.iceConnectionState
-      );
-      if (e.target.iceConnectionState === "failed") {
-        pc.restartIce();
-      }
+      // console.log(e);
+      // console.log(
+      //   "Receiver oniceconnectionstatechange",
+      //   e.target.iceConnectionState
+      // );
     };
 
     pc.ontrack = (e) => {
@@ -114,14 +111,11 @@ export default function (server: http.Server) {
     };
 
     pc.oniceconnectionstatechange = (e) => {
-      console.log(e);
-      console.log(
-        "Sender oniceconnectionstatechange",
-        e.target.iceConnectionState
-      );
-      if (e.target.iceConnectionState === "failed") {
-        pc.restartIce();
-      }
+      // console.log(e);
+      // console.log(
+      //   "Sender oniceconnectionstatechange",
+      //   e.target.iceConnectionState
+      // );
     };
 
     const sendUser = users[meetId].filter((user) => user.id === senderSocketID);
@@ -155,8 +149,8 @@ export default function (server: http.Server) {
     try {
       const meet = await Meet.findOne({ _id: meetId });
       if (meet.host.toString() === userId) {
-        // io.to(meetId).emit("hostLeave", { message: "호스트가 종료했습니다." });
-        // meet.deleteOne();
+        io.to(meetId).emit("hostLeave", { message: "호스트가 종료했습니다." });
+        meet.deleteOne();
       }
     } catch (e) {
       console.log("deleteUser 에러", e);
