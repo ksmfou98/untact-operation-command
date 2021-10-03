@@ -12,6 +12,7 @@ import UsersButton from "./UsersButton";
 import { IMeetState } from "atoms/meetState";
 import ChatsSideBar from "./ChatsSideBar";
 import ChatsButton from "./ChatsButton";
+import EndMeetModal from "./EndMeetModal";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
@@ -32,6 +33,9 @@ export interface IChat {
 const Meet = ({ meetInfo }: MeetProps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
+
+  // 회의 상태
+  const [isEnd, setIsEnd] = useState(false);
 
   const [mySessionId, setMySessionId] = useState<string>("");
   const [{ muted, videoDisabled }, setMediaState] = useState({
@@ -219,7 +223,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
     );
 
     newSocket.on("hostLeave", async (data: { message: string }) => {
-      alert(data.message);
+      setIsEnd(true);
     });
   }, []);
 
@@ -439,6 +443,8 @@ const Meet = ({ meetInfo }: MeetProps) => {
         console.log(`getDisplayMedia error: ${error}`);
       });
   };
+
+  if (isEnd) return <EndMeetModal />;
 
   return (
     <MeetPageBlock>
