@@ -67,6 +67,11 @@ const Meet = ({ meetInfo }: MeetProps) => {
   const pc_config = {
     iceServers: [
       {
+        urls: "turn:numb.viagenie.ca",
+        credential: "dlehgus98-",
+        username: "ksmfou98@naver.com",
+      },
+      {
         urls: "stun:stun.l.google.com:19302",
       },
     ],

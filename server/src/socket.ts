@@ -13,6 +13,11 @@ export default function (server: http.Server) {
   const pc_config = {
     iceServers: [
       {
+        urls: "turn:numb.viagenie.ca",
+        credential: "dlehgus98-",
+        username: "ksmfou98@naver.com",
+      },
+      {
         urls: "stun:stun.l.google.com:19302",
       },
     ],
@@ -144,8 +149,8 @@ export default function (server: http.Server) {
     try {
       const meet = await Meet.findOne({ _id: meetId });
       if (meet.host.toString() === userId) {
-        io.to(meetId).emit("hostLeave", { message: "호스트가 종료했습니다." });
-        meet.deleteOne();
+        // io.to(meetId).emit("hostLeave", { message: "호스트가 종료했습니다." });
+        // meet.deleteOne();
       }
     } catch (e) {
       console.log("deleteUser 에러", e);
