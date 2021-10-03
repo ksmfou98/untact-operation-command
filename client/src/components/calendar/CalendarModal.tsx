@@ -2,10 +2,11 @@ import { scheduleState } from "atoms/calendarState";
 import Modal from "components/common/Modal";
 import useCalendarForm from "hooks/calendar/useCalendarForm";
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useCalendarEditEffect from "hooks/calendar/useCalendarEditEffect";
 
 interface CalendarModalProps {
   onToggleModal: () => void;
@@ -23,9 +24,11 @@ const CalendarModal = ({
 }: CalendarModalProps) => {
   const { onChangeSchedule, onCreateSchedule, onChangeScheduleDate } =
     useCalendarForm();
+  const resetSchedule = useResetRecoilState(scheduleState);
   const schedule = useRecoilValue(scheduleState);
   const { title, start, end, date } = schedule;
-  console.log(isEdit, scheduleId);
+  useCalendarEditEffect(scheduleId);
+  console.log(isEdit, scheduleId, title,start);
   return (
     <div>
       {isModal ? (
@@ -34,7 +37,15 @@ const CalendarModal = ({
           buttonName={isEdit === false ? "생성" : "수정"}
           onClick={onCreateSchedule}
           onToggleModal={
-            isEdit === false ? () => onToggleModal() : () => onEditToggleModal()
+            isEdit === false
+              ? () => {
+                  onToggleModal();
+                  resetSchedule();
+                }
+              : () => {
+                  onEditToggleModal();
+                  resetSchedule();
+                }
           }
           isModal={true}
           size="big"

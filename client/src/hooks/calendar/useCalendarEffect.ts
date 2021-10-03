@@ -4,9 +4,10 @@ import { useRecoilState } from "recoil";
 import { schedulesState, scheduleState } from "atoms/calendarState";
 import { EventClickArg } from "@fullcalendar/common";
 import useCalendarModal from "hooks/common/useCalendarModal";
+import { useParams } from "react-router-dom";
 
 export default function useCalendarEffect() {
-  // const [schedules, setSchedules] = useState([]);
+  const params = useParams();
   const [schedules, setSchedules] = useRecoilState(schedulesState);
   const [schedule, setSchedule] = useRecoilState(scheduleState);
   const { isModal, onToggleModal, isEdit, onEditToggleModal } =
@@ -17,8 +18,8 @@ export default function useCalendarEffect() {
       setSchedules(schedules);
       console.log(schedules);
     };
-    getData();
-  }, [setSchedules]);
+    if (schedules) getData();
+  }, [params]);
 
   //fullcalendar 에서 이벤트 클릭시
   const onEventClick = (clickInfo: EventClickArg) => {
@@ -26,7 +27,7 @@ export default function useCalendarEffect() {
       ...prev,
       _id: clickInfo.event._def.extendedProps._id,
     })); //_id값을 리코일에 저장
-    
+
     onEditToggleModal();
   };
 
