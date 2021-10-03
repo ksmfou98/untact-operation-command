@@ -33,14 +33,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
 
-  const [chatMessages, setChatMessages] = useState<IChat[]>([]);
-  const [message, setMessage] = useState("");
-  const [receiveMessage, setReceiveMessage] = useState({
-    meetId: "",
-    message: "",
-    name: "",
-  });
-
   const [mySessionId, setMySessionId] = useState<string>("");
   const [{ muted, videoDisabled }, setMediaState] = useState({
     muted: false,
@@ -66,11 +58,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
 
   const pc_config = {
     iceServers: [
-      {
-        urls: "turn:numb.viagenie.ca",
-        credential: "dlehgus98-",
-        username: "ksmfou98@naver.com",
-      },
       {
         urls: "stun:stun.l.google.com:19302",
       },
@@ -216,22 +203,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
     });
   }, []);
 
-  // 채팅 스크롤 고정
-  const messagesEndRef = useRef<any>(null);
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    console.log("set Chat Effect Rendering");
-    const setChat = async () => {
-      (await receiveMessage.name.length) > 0 &&
-        setChatMessages((chat) => chat.concat(receiveMessage));
-      scrollToBottom();
-    };
-    setChat();
-  }, [receiveMessage]);
-
   const createReceivePC = (
     id: string,
     newSocket: SocketIOClient.Socket,
@@ -306,13 +277,12 @@ const Meet = ({ meetInfo }: MeetProps) => {
         });
       }
     };
-  
+
     pc.oniceconnectionstatechange = (e: any) => {
       console.log(
         "Sender oniceconnectionstatechange",
         e.target.iceConnectionState
       );
-      
     };
 
     if (localStream) {
@@ -448,6 +418,14 @@ const Meet = ({ meetInfo }: MeetProps) => {
 
   // 채팅 부분
 
+  const [chatMessages, setChatMessages] = useState<IChat[]>([]);
+  const [message, setMessage] = useState("");
+  const [receiveMessage, setReceiveMessage] = useState({
+    meetId: "",
+    message: "",
+    name: "",
+  });
+
   const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
@@ -463,6 +441,22 @@ const Meet = ({ meetInfo }: MeetProps) => {
     newSocket.emit("sendChatMessage", messageObject);
     setMessage("");
   };
+
+  // 채팅 스크롤 고정
+  const messagesEndRef = useRef<any>(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    console.log("set Chat Effect Rendering");
+    const setChat = async () => {
+      (await receiveMessage.name.length) > 0 &&
+        setChatMessages((chat) => chat.concat(receiveMessage));
+      scrollToBottom();
+    };
+    setChat();
+  }, [receiveMessage]);
 
   return (
     <MeetPageBlock>
