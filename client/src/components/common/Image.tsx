@@ -20,7 +20,6 @@ const Image = ({ text, img, size }: ImageProps) => {
 };
 
 const ImageBlock = styled.div<{ size: "big" | "small" }>`
-  padding: 40px 0 15px;
   .Image-img {
     margin: 0 auto;
     margin-bottom: 20px;
