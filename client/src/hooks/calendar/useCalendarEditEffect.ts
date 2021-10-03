@@ -1,5 +1,6 @@
 import { scheduleState } from "atoms/calendarState";
 import { readScheduleDetailAPI } from "lib/api/claendar";
+import moment from "moment";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
@@ -10,7 +11,13 @@ export default function useCalendarEditEffect(scheduleId: string) {
     const getData = async () => {
       try {
         const response = await readScheduleDetailAPI(scheduleId);
-        setSchedule(response);
+        setSchedule((prev) => ({
+          ...prev,
+          title: response.title,
+          date: new Date(moment(response.start).format("yyyy-MM-DD")),
+          start: moment(response.start).format("HH:mm:ss"),
+          end: moment(response.end).format("HH:mm:ss"),
+        }));
       } catch (error) {
         alert("스케쥴 상세보기를 불러오는데 실패했습니다.");
       }
