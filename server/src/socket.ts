@@ -193,8 +193,6 @@ export default function (server: http.Server) {
   const closeSenderPCs = (socketID: string) => {
     if (!senderPCs[socketID]) return;
 
-    console.log(senderPCs);
-
     for (const sPC of senderPCs[socketID]) {
       sPC.pc.close();
       const _senderPCs = senderPCs[sPC.id];
@@ -205,7 +203,6 @@ export default function (server: http.Server) {
       }
     }
     delete senderPCs[socketID];
-    console.log(senderPCs);
   };
 
   // socket 서버 생성
