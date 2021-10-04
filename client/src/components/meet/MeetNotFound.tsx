@@ -1,8 +1,5 @@
 import React from "react";
-import styled from "styled-components";
 import { notExistMeet } from "assets/image";
-import Image from "components/common/Image";
-import Button from "components/common/Button";
 import { useHistory } from "react-router";
 import ErrorScreenTemplate from "components/common/ErrorScreenTemplate";
 

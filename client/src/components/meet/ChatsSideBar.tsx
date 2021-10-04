@@ -56,7 +56,7 @@ const ChatsSideBar = ({
       console.log("get Chat Effect Rendering");
       setReceiveMessage(messageObject);
     });
-  }, []);
+  }, [newSocket]);
 
   useEffect(() => {
     console.log("set Chat Effect Rendering");

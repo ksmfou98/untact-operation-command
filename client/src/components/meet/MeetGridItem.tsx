@@ -1,5 +1,5 @@
 import useFullscreen from "hooks/common/useFullscreen";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 interface Props {

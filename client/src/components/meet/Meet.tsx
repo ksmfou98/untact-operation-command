@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import io, { Socket } from "socket.io-client";
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 import { useParams } from "react-router";
 import MeetGrid from "components/meet/MeetGrid";
 import styled from "styled-components";
