@@ -1,5 +1,6 @@
 import http from "http";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import wrtc from "wrtc";
 import Meet from "./models/meet";
 
@@ -11,12 +12,16 @@ interface IUserState {
   muted: boolean;
 }
 
+interface IUsers {
+  [key: string]: IUserState[];
+}
+
 export default function (server: http.Server) {
   let receiverPCs = {};
   let senderPCs = {};
   // 유저 목록
-  let users = {};
-  let socketToRoom = {};
+  const users: IUsers = {};
+  const socketToRoom = {};
 
   const pc_config = {
     iceServers: [
@@ -33,35 +38,25 @@ export default function (server: http.Server) {
     return false;
   };
 
-  // const isIncluded = (array, id) => {
-  //   let len = array.length;
-  //   for (let i = 0; i < len; i++) {
-  //     if (array[i].id === id) return true;
-  //   }
-  //   return false;
-  // };
-
   const createReceiverPeerConnection = (
-    socketID,
-    socket,
-    meetId,
-    userId,
-    name
+    socketID: string,
+    socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>,
+    meetId: string,
+    userId: string,
+    name: string
   ): RTCPeerConnection => {
-    let pc = new wrtc.RTCPeerConnection(pc_config);
+    let pc: RTCPeerConnection = new wrtc.RTCPeerConnection(pc_config);
 
     if (receiverPCs[socketID]) receiverPCs[socketID] = pc;
     else receiverPCs = { ...receiverPCs, [socketID]: pc };
 
     pc.onicecandidate = (e: RTCPeerConnectionIceEvent) => {
-      //console.log(`socketID: ${socketID}'s receiverPeerConnection icecandidate`);
       socket.to(socketID).emit("getSenderCandidate", {
         candidate: e.candidate,
       });
     };
 
     pc.oniceconnectionstatechange = (e) => {
-      // console.log(e);
       // console.log(
       //   "Receiver oniceconnectionstatechange",
       //   e.target.iceConnectionState
@@ -69,10 +64,6 @@ export default function (server: http.Server) {
     };
 
     pc.ontrack = (e: RTCTrackEvent) => {
-      e.streams[0].getTracks().forEach((track: MediaStreamTrack) => {
-        // console.log(track.kind, track.muted);
-      });
-
       if (users[meetId]) {
         if (!isIncluded(users[meetId], socketID)) {
           users[meetId].push({
@@ -120,7 +111,6 @@ export default function (server: http.Server) {
       };
 
     pc.onicecandidate = (e) => {
-      //console.log(`socketID: ${receiverSocketID}'s senderPeerConnection icecandidate`);
       socket.to(receiverSocketID).emit("getReceiverCandidate", {
         id: senderSocketID,
         candidate: e.candidate,
@@ -128,7 +118,6 @@ export default function (server: http.Server) {
     };
 
     pc.oniceconnectionstatechange = (e) => {
-      // console.log(e);
       // console.log(
       //   "Sender oniceconnectionstatechange",
       //   e.target.iceConnectionState
@@ -143,21 +132,18 @@ export default function (server: http.Server) {
     return pc;
   };
 
-  const getOtherUsersInRoom = (socketID, meetId) => {
-    let allUsers = [];
-
+  const getOtherUsersInRoom = (socketID: string, meetId: string) => {
+    const allUsers = [];
     if (!users[meetId]) return allUsers;
 
-    let len = users[meetId].length;
-    for (let i = 0; i < len; i++) {
-      if (users[meetId][i].id === socketID) continue;
+    for (const user of users[meetId]) {
+      if (user.id === socketID) continue;
       allUsers.push({
-        id: users[meetId][i].id,
-        name: users[meetId][i].name,
-        muted: users[meetId][i].muted,
+        id: user.id,
+        name: user.name,
+        muted: user.muted,
       });
     }
-
     return allUsers;
   };
 
