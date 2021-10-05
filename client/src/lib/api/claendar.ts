@@ -42,13 +42,15 @@ export const deleteScheduleAPI = async (scheduleId: string) => {
 // 일정 수정
 export const updateScheduleAPI = async (
   title: string,
-  start: Date,
+  date: Date,
+  start: string,
   scheduleId: string,
-  end?: Date
+  end?: string
 ) => {
   const body = {
     title,
     start,
+    date,
     scheduleId,
     end,
   };

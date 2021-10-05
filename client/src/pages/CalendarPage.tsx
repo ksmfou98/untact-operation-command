@@ -19,7 +19,7 @@ const CalendarPage = () => {
     isEdit,
     onEditToggleModal,
   } = useCalendarEffect();
-
+  console.log("렌더링");
   return (
     <CalendarPageBlock>
       <Calendar>

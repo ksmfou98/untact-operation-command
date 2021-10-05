@@ -80,7 +80,7 @@ const ListEle = styled.div`
   .profile {
     width: 30px;
     height: 30px;
-    background-color: #d5d3d3;
+    background-color: #eeeeee;
     border-radius: 100%;
     text-align: center;
     margin: 0px 15px;
