@@ -3,7 +3,6 @@ import { CloseIcon } from "assets/icons";
 import styled, { css } from "styled-components";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { palette } from "lib/styles/palette";
-import { IChat } from "./Meet";
 import { IUserState } from "atoms/userState";
 
 interface ChatsSideBarProps {
@@ -12,6 +11,13 @@ interface ChatsSideBarProps {
   meetId: string;
   user: IUserState;
   newSocket: SocketIOClient.Socket;
+}
+
+interface IChat {
+  meetId: string;
+  message: string;
+  name: string;
+  userId: string;
 }
 
 const ChatsSideBar = ({
@@ -27,6 +33,7 @@ const ChatsSideBar = ({
     meetId: "",
     message: "",
     name: "",
+    userId: "",
   });
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +46,10 @@ const ChatsSideBar = ({
       meetId,
       message,
       name: user.name,
+      userId: user._id,
     };
+
+    if (messageObject.message.length <= 0) return;
 
     newSocket.emit("sendChatMessage", messageObject);
     setMessage("");
@@ -80,7 +90,18 @@ const ChatsSideBar = ({
         <div className="chats">
           <div className="scroll">
             {chatMessages.map((chat, index) => (
-              <div key={index}>{chat.message}</div>
+              <ChatStyled key={index}>
+                <div className={user._id === chat.userId ? "right" : "left"}>
+                  <div className="talk">
+                    {user._id !== chat.userId && (
+                      <div className="name">{chat.name}</div>
+                    )}
+                    <div className="message">
+                      <div className="txt">{chat.message}</div>
+                    </div>
+                  </div>
+                </div>
+              </ChatStyled>
             ))}
             <div ref={messagesEndRef}></div>
           </div>
@@ -184,6 +205,80 @@ const MessageInput = styled.div`
     }
     svg {
       color: ${palette.mainColor};
+    }
+  }
+`;
+
+const ChatStyled = styled.div`
+  overflow: hidden;
+  padding: 8px 0;
+  .left {
+    float: left;
+    position: relative;
+    max-width: 60%;
+    .talk {
+      position: relative;
+      box-sizing: border-box;
+      padding-top: 23px;
+      margin-left: 7px;
+      .name {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        font-size: 14px;
+        line-height: 13px;
+        vertical-align: top;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .message {
+        overflow: hidden;
+        background-color: #f5f3f3;
+        display: inline-block;
+        position: relative;
+        z-index: 0;
+        max-width: 100%;
+        border-radius: 3px 16px 16px;
+        font-size: 14px;
+        line-height: 1.33;
+        word-break: break-word;
+        word-wrap: break-word;
+        vertical-align: bottom;
+        .txt {
+          margin: 10px 12px 9px;
+          white-space: pre-wrap;
+        }
+      }
+    }
+  }
+  .right {
+    float: right;
+    .talk {
+      float: right;
+      margin: 0;
+      padding: 0;
+      text-align: right;
+      position: relative;
+    }
+    .message {
+      overflow: hidden;
+      display: inline-block;
+      background-color: #f5f3f3;
+      position: relative;
+      z-index: 0;
+      max-width: 100%;
+      border-radius: 16px 16px 3px;
+      font-size: 14px;
+      line-height: 1.33;
+      word-break: break-word;
+      word-wrap: break-word;
+      vertical-align: bottom;
+      text-align: left;
+      .txt {
+        margin: 10px 12px 9px;
+        white-space: pre-wrap;
+      }
     }
   }
 `;

@@ -24,12 +24,6 @@ interface MeetProps {
   meetInfo: IMeetState;
 }
 
-export interface IChat {
-  meetId: string;
-  message: string;
-  name: string;
-}
-
 const Meet = ({ meetInfo }: MeetProps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
