@@ -195,7 +195,9 @@ export const deleteFriend = async (req: Request, res: Response) => {
 //친구 목록 불러오기
 export const readFriendList = async (req: Request, res: Response) => {
   try {
-    const me = await User.findOne({ _id: res.locals.user._id });
+    const me = await User.findOne({ _id: res.locals.user._id }).populate(
+      "friends"
+    );
 
     //내 친구목록을 return
     const myFriends = me.friends;
