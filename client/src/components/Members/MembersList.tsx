@@ -1,32 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
+import useMemberListEffect from "hooks/Member/useMemberListEffect";
+import media from "lib/styles/media";
 
 const MembersList = () => {
-  const fakeDatas = [
-    {
-      email: "string",
-      password: "string",
-      name: "string",
-      role: "string",
-      thumbnail: "string",
-      friends: "string",
-      token: "string",
-    },
-    {
-      email: "string",
-      password: "string",
-      name: "string",
-      role: "string",
-      thumbnail: "string",
-      friends: "string",
-      token: "string",
-    },
-  ];
+  const { friends } = useMemberListEffect();
+  console.log(friends);
   return (
     <MenberListBlock>
-      {fakeDatas &&
-        fakeDatas.map((data, index) => (
+      {friends &&
+        friends.map((friend, index) => (
           <div key={index}>
             <List>
               <ListEle>
@@ -34,7 +18,7 @@ const MembersList = () => {
                   <BsFillPersonFill />
                   {/* 여기에 프로필사진 */}
                 </div>
-                <div className="friendName">{data.name}</div>
+                <div className="friendName">{friend.name}</div>
               </ListEle>
               <ListEle>
                 <div className="call">1:1 채팅신청</div>
@@ -57,6 +41,9 @@ const MembersList = () => {
 
 const MenberListBlock = styled.div`
   margin: 50px 150px 0px 25px;
+  ${media.small} {
+    margin: 50px 90px 0px 25px;
+  }
 `;
 
 const List = styled.div`
@@ -102,7 +89,7 @@ const ListEle = styled.div`
     margin-right: 15px;
   }
   .call {
-    width: 7rem;
+    width: 7em;
     height: 2rem;
     text-align: center;
     line-height: 2rem;
@@ -116,6 +103,12 @@ const ListEle = styled.div`
     color: white;
     margin-right: 25px;
     cursor: pointer;
+  }
+
+  ${media.small} {
+    .call {
+      font-size: 13px;
+    }
   }
 `;
 export default MembersList;
