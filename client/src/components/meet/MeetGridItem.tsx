@@ -1,5 +1,5 @@
 import useFullscreen from "hooks/common/useFullscreen";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 
 const MeetGridItem = ({ stream, muted, width }: Props) => {
   const ref = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
 
   const { element, onFullScreen } = useFullscreen();
 
@@ -18,11 +17,8 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
     if (ref.current) {
       ref.current.srcObject = stream;
       console.log("muted", ref.current.muted);
-      ref.current.muted = true;
-      setIsMuted(true);
     }
     console.log("랄라", stream.getTracks());
-    if (muted) setIsMuted(muted);
   }, [muted, stream]);
 
   return (
@@ -30,7 +26,7 @@ const MeetGridItem = ({ stream, muted, width }: Props) => {
       <VideoContainer
         ref={ref}
         onDoubleClick={onFullScreen}
-        muted={isMuted}
+        muted={muted}
         playsInline
         autoPlay
       />
