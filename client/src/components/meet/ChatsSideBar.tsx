@@ -93,9 +93,10 @@ const ChatsSideBar = ({
               <ChatStyled key={index}>
                 <div className={user._id === chat.userId ? "right" : "left"}>
                   <div className="talk">
-                    {user._id !== chat.userId && (
-                      <div className="name">{chat.name}</div>
-                    )}
+                    <div className="name">
+                      {user._id === chat.userId ? "나" : chat.name}
+                    </div>
+
                     <div className="message">
                       <div className="txt">{chat.message}</div>
                     </div>
@@ -212,54 +213,19 @@ const MessageInput = styled.div`
 const ChatStyled = styled.div`
   overflow: hidden;
   padding: 8px 0;
-  .left {
-    float: left;
+  .talk {
     position: relative;
-    max-width: 60%;
-    .talk {
-      position: relative;
-      box-sizing: border-box;
-      padding-top: 23px;
-      margin-left: 7px;
-      .name {
-        position: absolute;
-        top: 2px;
-        left: 0;
-        font-size: 14px;
-        line-height: 13px;
-        vertical-align: top;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .message {
-        overflow: hidden;
-        background-color: #f5f3f3;
-        display: inline-block;
-        position: relative;
-        z-index: 0;
-        max-width: 100%;
-        border-radius: 3px 16px 16px;
-        font-size: 14px;
-        line-height: 1.33;
-        word-break: break-word;
-        word-wrap: break-word;
-        vertical-align: bottom;
-        .txt {
-          margin: 10px 12px 9px;
-          white-space: pre-wrap;
-        }
-      }
-    }
-  }
-  .right {
-    float: right;
-    .talk {
-      float: right;
-      margin: 0;
-      padding: 0;
-      text-align: right;
-      position: relative;
+    padding-top: 23px;
+    .name {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      font-size: 14px;
+      line-height: 13px;
+      vertical-align: top;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .message {
       overflow: hidden;
@@ -268,16 +234,40 @@ const ChatStyled = styled.div`
       position: relative;
       z-index: 0;
       max-width: 100%;
-      border-radius: 16px 16px 3px;
       font-size: 14px;
       line-height: 1.33;
       word-break: break-word;
       word-wrap: break-word;
       vertical-align: bottom;
-      text-align: left;
       .txt {
         margin: 10px 12px 9px;
         white-space: pre-wrap;
+      }
+    }
+  }
+
+  .left {
+    float: left;
+    position: relative;
+    max-width: 60%;
+    .talk {
+      box-sizing: border-box;
+      padding-top: 23px;
+      margin-left: 7px;
+      .message {
+        border-radius: 3px 16px 16px;
+      }
+    }
+  }
+  .right {
+    float: right;
+    .talk {
+      float: right;
+      margin: 0;
+      text-align: right;
+      .message {
+        border-radius: 16px 16px 3px;
+        text-align: left;
       }
     }
   }
