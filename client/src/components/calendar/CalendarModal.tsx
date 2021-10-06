@@ -28,17 +28,22 @@ const CalendarModal = ({
     onChangeScheduleDate,
     onUpdateSchedule,
   } = useCalendarForm();
+
+  const onToggle = () => {
+    isEdit ? onToggleModal() : onEditToggleModal();
+    resetSchedule();
+  };
   const resetSchedule = useResetRecoilState(scheduleState);
   const schedule = useRecoilValue(scheduleState);
-  const { title, start, end, date,_id } = schedule;
+  const { title, start, end, date, _id } = schedule;
   useCalendarEditEffect(scheduleId);
   console.log(_id);
   return (
     <div>
       {isModal ? (
         <Modal
-          title={isEdit === false ? "일정 생성" : "일정 수정"}
-          buttonName={isEdit === false ? "생성" : "수정"}
+          title={!isEdit ? "일정 생성" : "일정 수정"}
+          buttonName={!isEdit ? "생성" : "수정"}
           onClick={
             isEdit === false
               ? () => {
@@ -48,17 +53,7 @@ const CalendarModal = ({
                   onUpdateSchedule();
                 }
           }
-          onToggleModal={
-            isEdit === false
-              ? () => {
-                  onToggleModal();
-                  resetSchedule();
-                }
-              : () => {
-                  onEditToggleModal();
-                  resetSchedule();
-                }
-          }
+          onToggleModal={onToggle}
           isModal={true}
           size="big"
         >

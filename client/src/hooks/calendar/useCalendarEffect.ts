@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { readScheduleLinstAPI } from "lib/api/claendar";
+import { readScheduleLinstAPI } from "lib/api/calendar";
 import { useRecoilState } from "recoil";
 import { schedulesState, scheduleState } from "atoms/calendarState";
 import { EventClickArg } from "@fullcalendar/common";

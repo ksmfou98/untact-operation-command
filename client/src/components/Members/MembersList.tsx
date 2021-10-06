@@ -9,26 +9,25 @@ const MembersList = () => {
   console.log(friends);
   return (
     <MenberListBlock>
-      {friends &&
-        friends.map((friend, index) => (
-          <div key={index}>
-            <List>
-              <ListEle>
-                <div className="profile">
-                  <BsFillPersonFill />
-                  {/* 여기에 프로필사진 */}
-                </div>
-                <div className="friendName">{friend.name}</div>
-              </ListEle>
-              <ListEle>
-                <div className="call">1:1 채팅신청</div>
-                <div className="delFriend">
-                  <BsTrash size="22" />
-                </div>
-              </ListEle>
-            </List>
-          </div>
-        ))}
+      {friends?.map((friend, index) => (
+        <div key={index}>
+          <List>
+            <ListEle>
+              <div className="profile">
+                <BsFillPersonFill />
+                {/* 여기에 프로필사진 */}
+              </div>
+              <div className="friendName">{friend.name}</div>
+            </ListEle>
+            <ListEle>
+              <div className="call">1:1 채팅신청</div>
+              <div className="delFriend">
+                <BsTrash size="22" />
+              </div>
+            </ListEle>
+          </List>
+        </div>
+      ))}
       <List>
         <ListEle>
           <div className="emptyProfile"></div>

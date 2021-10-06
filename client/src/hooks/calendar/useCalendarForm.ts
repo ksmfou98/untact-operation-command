@@ -1,12 +1,12 @@
 import { schedulesState, scheduleState } from "atoms/calendarState";
-import { createScheduleAPI, updateScheduleAPI } from "lib/api/claendar";
+import { createScheduleAPI, updateScheduleAPI } from "lib/api/calendar";
 
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 
 export default function useCalendarForm() {
   const setSchedules = useSetRecoilState(schedulesState);
   const [schedule, setSchedule] = useRecoilState(scheduleState);
-  const { start, date, title, end,_id } = schedule;
+  const { start, date, title, end, _id } = schedule;
   const onChangeSchedule = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSchedule((prev) => ({ ...prev, [name]: value }));
@@ -30,13 +30,14 @@ export default function useCalendarForm() {
     }
   };
   const onUpdateSchedule = async () => {
+    const scheduleId = _id;
     try {
       const response = await updateScheduleAPI(
         title,
         date,
         start,
         end,
-        _id
+        scheduleId
       );
       setSchedules((prev) => prev.concat(response));
       console.log(response);

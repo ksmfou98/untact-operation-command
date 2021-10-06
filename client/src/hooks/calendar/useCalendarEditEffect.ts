@@ -1,5 +1,5 @@
 import { scheduleState } from "atoms/calendarState";
-import { readScheduleDetailAPI } from "lib/api/claendar";
+import { readScheduleDetailAPI } from "lib/api/calendar";
 import moment from "moment";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
