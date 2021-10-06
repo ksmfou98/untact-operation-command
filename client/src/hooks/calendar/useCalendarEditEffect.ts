@@ -23,5 +23,5 @@ export default function useCalendarEditEffect(scheduleId: string) {
       }
     };
     if (scheduleId) getData();
-  }, [scheduleId]);
+  }, [setSchedule, scheduleId]);
 }

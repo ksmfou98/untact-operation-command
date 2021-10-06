@@ -1,44 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { readScheduleLinstAPI } from "lib/api/calendar";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { schedulesState, scheduleState } from "atoms/calendarState";
-import { EventClickArg } from "@fullcalendar/common";
 import useCalendarModal from "hooks/common/useCalendarModal";
-import { useParams } from "react-router-dom";
 
 export default function useCalendarEffect() {
-  const params = useParams();
+  const [loading, setLoading] = useState(false);
   const [schedules, setSchedules] = useRecoilState(schedulesState);
-  const [schedule, setSchedule] = useRecoilState(scheduleState);
+  const schedule = useRecoilValue(scheduleState);
   const { isModal, onToggleModal, isEdit, onEditToggleModal } =
     useCalendarModal();
   useEffect(() => {
     const getData = async () => {
-      const schedules = await readScheduleLinstAPI();
-      setSchedules(schedules);
-      console.log(schedules);
+      try {
+        setLoading(true);
+        const schedules = await readScheduleLinstAPI();
+        setSchedules(schedules);
+        console.log(schedules);
+      } catch (error) {
+        alert("스케쥴 목록을 불러오는데 실패했습니다.");
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
-    if (schedules) getData();
-  }, [params]);
-
-  //fullcalendar 에서 이벤트 클릭시
-  const onEventClick = (clickInfo: EventClickArg) => {
-    setSchedule((prev) => ({
-      ...prev,
-      _id: clickInfo.event._def.extendedProps._id,
-    })); //_id값을 리코일에 저장
-
-    onEditToggleModal();
-  };
+    getData();
+  }, [setSchedules]);
 
   return {
     schedules,
     setSchedules,
-    onEventClick,
     schedule,
     isModal,
     onToggleModal,
     isEdit,
     onEditToggleModal,
+    loading,
   };
 }

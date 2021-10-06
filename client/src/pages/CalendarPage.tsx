@@ -8,17 +8,21 @@ import listPlugin from "@fullcalendar/list";
 import media from "lib/styles/media";
 import CalendarModal from "components/calendar/CalendarModal";
 import useCalendarEffect from "hooks/calendar/useCalendarEffect";
+import Loading from "components/common/Loading";
+import useHandleCalendar from "hooks/calendar/useHandleCalendar";
 
 const CalendarPage = () => {
   const {
     schedules,
-    onEventClick,
     schedule,
     isModal,
     onToggleModal,
     isEdit,
     onEditToggleModal,
+    loading,
   } = useCalendarEffect();
+  const { onEventClick } = useHandleCalendar();
+  if (loading) return <Loading />;
   console.log("렌더링");
   return (
     <CalendarPageBlock>

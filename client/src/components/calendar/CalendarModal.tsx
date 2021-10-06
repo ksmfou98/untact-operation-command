@@ -33,6 +33,7 @@ const CalendarModal = ({
     isEdit ? onToggleModal() : onEditToggleModal();
     resetSchedule();
   };
+
   const resetSchedule = useResetRecoilState(scheduleState);
   const schedule = useRecoilValue(scheduleState);
   const { title, start, end, date, _id } = schedule;
@@ -42,17 +43,11 @@ const CalendarModal = ({
     <div>
       {isModal ? (
         <Modal
-          title={!isEdit ? "일정 생성" : "일정 수정"}
-          buttonName={!isEdit ? "생성" : "수정"}
-          onClick={
-            isEdit === false
-              ? () => {
-                  onCreateSchedule();
-                }
-              : () => {
-                  onUpdateSchedule();
-                }
-          }
+          title={isEdit ? "일정 수정" : "일정 생성"}
+          buttonName={isEdit ? "수정" : "생성"}
+          onClick={() => {
+            isEdit ? onCreateSchedule() : onUpdateSchedule();
+          }}
           onToggleModal={onToggle}
           isModal={true}
           size="big"
