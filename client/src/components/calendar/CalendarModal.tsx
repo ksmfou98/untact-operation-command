@@ -2,29 +2,53 @@ import { scheduleState } from "atoms/calendarState";
 import Modal from "components/common/Modal";
 import useCalendarForm from "hooks/calendar/useCalendarForm";
 import React from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useCalendarEditEffect from "hooks/calendar/useCalendarEditEffect";
 
 interface CalendarModalProps {
   onToggleModal: () => void;
+  onEditToggleModal: () => void;
   isModal: boolean;
+  isEdit: boolean;
+  scheduleId: string;
 }
-const CalendarModal = ({ isModal, onToggleModal }: CalendarModalProps) => {
-  const { onChangeSchedule, onCreateSchedule, onChangeScheduleDate } =
-    useCalendarForm();
-  const schedule = useRecoilValue(scheduleState);
-  const { title, start, end, date } = schedule;
+const CalendarModal = ({
+  isModal,
+  onToggleModal,
+  isEdit,
+  scheduleId,
+  onEditToggleModal,
+}: CalendarModalProps) => {
+  const {
+    onChangeSchedule,
+    onCreateSchedule,
+    onChangeScheduleDate,
+    onUpdateSchedule,
+  } = useCalendarForm();
 
+  const onToggle = () => {
+    isEdit ? onToggleModal() : onEditToggleModal();
+    resetSchedule();
+  };
+
+  const resetSchedule = useResetRecoilState(scheduleState);
+  const schedule = useRecoilValue(scheduleState);
+  const { title, start, end, date, _id } = schedule;
+  useCalendarEditEffect(scheduleId);
+  console.log(_id);
   return (
     <div>
       {isModal ? (
         <Modal
-          title="일정 생성"
-          buttonName="생성"
-          onClick={onCreateSchedule}
-          onToggleModal={() => onToggleModal()}
+          title={isEdit ? "일정 수정" : "일정 생성"}
+          buttonName={isEdit ? "수정" : "생성"}
+          onClick={() => {
+            isEdit ? onCreateSchedule() : onUpdateSchedule();
+          }}
+          onToggleModal={onToggle}
           isModal={true}
           size="big"
         >

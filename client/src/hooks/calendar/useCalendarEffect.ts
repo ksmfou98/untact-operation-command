@@ -1,19 +1,40 @@
-import { useEffect } from "react";
-import { readScheduleLinstAPI } from "lib/api/claendar";
-import { useRecoilState } from "recoil";
-import { schedulesState } from "atoms/calendarState";
+import { useEffect, useState } from "react";
+import { readScheduleLinstAPI } from "lib/api/calendar";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { schedulesState, scheduleState } from "atoms/calendarState";
+import useCalendarModal from "hooks/common/useCalendarModal";
 
 export default function useCalendarEffect() {
-  // const [schedules, setSchedules] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [schedules, setSchedules] = useRecoilState(schedulesState);
+  const schedule = useRecoilValue(scheduleState);
+  const { isModal, onToggleModal, isEdit, onEditToggleModal } =
+    useCalendarModal();
   useEffect(() => {
     const getData = async () => {
-      const schedules = await readScheduleLinstAPI();
-      setSchedules(schedules);
-      console.log(schedules);
+      try {
+        setLoading(true);
+        const schedules = await readScheduleLinstAPI();
+        setSchedules(schedules);
+        console.log(schedules);
+      } catch (error) {
+        alert("스케쥴 목록을 불러오는데 실패했습니다.");
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
     getData();
-  }, [setSchedules]); //나중에 조건 달거임.
+  }, [setSchedules]);
 
-  return { schedules, setSchedules };
+  return {
+    schedules,
+    setSchedules,
+    schedule,
+    isModal,
+    onToggleModal,
+    isEdit,
+    onEditToggleModal,
+    loading,
+  };
 }

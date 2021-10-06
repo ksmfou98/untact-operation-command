@@ -6,6 +6,14 @@ export const readScheduleLinstAPI = async () => {
   return response.data.schedules;
 };
 
+// 일정 상세보기
+export const readScheduleDetailAPI = async (scheduleId: string) => {
+  const response = await client.get(
+    `/calendar/readScheduleDetail/${scheduleId}`
+  );
+  return response.data.schedule;
+};
+
 // 일정 추가
 export const createScheduleAPI = async (
   title: string,
@@ -34,13 +42,15 @@ export const deleteScheduleAPI = async (scheduleId: string) => {
 // 일정 수정
 export const updateScheduleAPI = async (
   title: string,
-  start: Date,
+  date: Date,
+  start: string,
   scheduleId: string,
-  end?: Date
+  end?: string
 ) => {
   const body = {
     title,
     start,
+    date,
     scheduleId,
     end,
   };

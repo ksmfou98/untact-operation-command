@@ -5,19 +5,25 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import useModal from "hooks/common/useModal";
 import media from "lib/styles/media";
 import CalendarModal from "components/calendar/CalendarModal";
 import useCalendarEffect from "hooks/calendar/useCalendarEffect";
-import { useRecoilValue } from "recoil";
-import { schedulesState } from "atoms/calendarState";
+import Loading from "components/common/Loading";
+import useHandleCalendar from "hooks/calendar/useHandleCalendar";
 
 const CalendarPage = () => {
-  const { isModal, onToggleModal } = useModal();
-  useCalendarEffect();
-  const schedules = useRecoilValue(schedulesState);
-  console.log("asd");
-
+  const {
+    schedules,
+    schedule,
+    isModal,
+    onToggleModal,
+    isEdit,
+    onEditToggleModal,
+    loading,
+  } = useCalendarEffect();
+  const { onEventClick } = useHandleCalendar();
+  if (loading) return <Loading />;
+  console.log("렌더링");
   return (
     <CalendarPageBlock>
       <Calendar>
@@ -45,9 +51,16 @@ const CalendarPage = () => {
             listPlugin,
           ]}
           events={schedules}
+          eventClick={onEventClick}
         />
       </Calendar>
-      <CalendarModal isModal={isModal} onToggleModal={onToggleModal} />
+      <CalendarModal
+        isModal={isModal}
+        onToggleModal={onToggleModal}
+        isEdit={isEdit}
+        scheduleId={schedule._id}
+        onEditToggleModal={onEditToggleModal}
+      />
     </CalendarPageBlock>
   );
 };

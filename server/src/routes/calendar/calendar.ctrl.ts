@@ -41,10 +41,26 @@ export const readSchedule = async (req: Request, res: Response) => {
     });
   }
 };
+//일정 상세보기
+export const readScheduleDetail = async (req: Request, res: Response) => {
+  const { scheduleId } = req.params;
+  try {
+    const schedule = await Calendar.findById({ _id: scheduleId });
+    return res.status(200).json({
+      success: true,
+      schedule,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    });
+  }
+};
 
 //일정 수정
 export const updateSchedule = async (req: Request, res: Response) => {
-  const { title, start, end, scheduleId } = req.body;
+  const { title, date, start, end, scheduleId } = req.body;
+
   const userId = res.locals.user._id;
   try {
     let schedule = await Calendar.findById({ _id: scheduleId });
