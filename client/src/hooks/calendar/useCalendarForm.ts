@@ -43,7 +43,7 @@ export default function useCalendarForm() {
       console.log(response);
       return response.data;
     } catch (e) {
-      alert("게시물 작성에 실패했습니다");
+      alert("게시물 수정에 실패했습니다");
       console.log(e);
     }
   };

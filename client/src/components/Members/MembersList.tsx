@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
 import useMemberListEffect from "hooks/Member/useMemberListEffect";
 import media from "lib/styles/media";
+import useMemberHandleEffect from "hooks/Member/useMemberHandleEffect";
 
 const MembersList = () => {
   const { friends } = useMemberListEffect();
+  const { onDeleteFriend } = useMemberHandleEffect();
   console.log(friends);
   return (
     <MenberListBlock>
@@ -21,7 +23,10 @@ const MembersList = () => {
             </ListEle>
             <ListEle>
               <div className="call">1:1 채팅신청</div>
-              <div className="delFriend">
+              <div
+                className="delFriend"
+                onClick={() => onDeleteFriend(friend._id)}
+              >
                 <BsTrash size="22" />
               </div>
             </ListEle>

@@ -172,13 +172,17 @@ export const deleteFriend = async (req: Request, res: Response) => {
     let friend = await User.findOne({ _id: friendId });
 
     //삭제할 친구의 id를 배열에서 삭제
-    me.friends.filter((f) => f !== friendId);
+    console.log(friendId);
+
+    me.friends = me.friends.filter((f) => f.toString() !== friendId);
     await me.save();
+    console.log(me.friends, "ASd");
 
     //친구한테도 동일하게 적용
-    friend.friends.filter((f) => f !== res.locals.user._id);
+    friend.friends = friend.friends.filter(
+      (f) => f.toString() !== res.locals.user._id
+    );
     await friend.save();
-
     const myFriends = me.friends;
 
     return res.status(200).json({
