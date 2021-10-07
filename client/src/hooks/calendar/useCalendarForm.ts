@@ -10,12 +10,12 @@ export default function useCalendarForm() {
   const onChangeSchedule = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSchedule((prev) => ({ ...prev, [name]: value }));
-    console.log(schedule);
+
   };
 
   const onChangeScheduleDate = (dates: Date) => {
     setSchedule((prev) => ({ ...prev, date: dates }));
-    console.log(schedule);
+
   };
 
   const onCreateSchedule = async () => {

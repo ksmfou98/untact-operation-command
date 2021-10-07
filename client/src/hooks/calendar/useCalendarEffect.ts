@@ -7,7 +7,6 @@ import useCalendarModal from "hooks/common/useCalendarModal";
 export default function useCalendarEffect() {
   const [loading, setLoading] = useState(false);
   const [schedules, setSchedules] = useRecoilState(schedulesState);
-  const schedule = useRecoilValue(scheduleState);
   const { isModal, onToggleModal, isEdit, onEditToggleModal } =
     useCalendarModal();
   useEffect(() => {
@@ -16,7 +15,6 @@ export default function useCalendarEffect() {
         setLoading(true);
         const schedules = await readScheduleLinstAPI();
         setSchedules(schedules);
-        console.log(schedules);
       } catch (error) {
         alert("스케쥴 목록을 불러오는데 실패했습니다.");
         console.log(error);
@@ -30,7 +28,6 @@ export default function useCalendarEffect() {
   return {
     schedules,
     setSchedules,
-    schedule,
     isModal,
     onToggleModal,
     isEdit,

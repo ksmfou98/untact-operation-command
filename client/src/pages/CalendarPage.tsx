@@ -24,7 +24,6 @@ const CalendarPage = () => {
   const { onEventClick } = useHandleCalendar(onEditToggleModal);
 
   if (loading) return <Loading />;
-  // console.log("렌더링");
   return (
     <CalendarPageBlock>
       <Calendar>
@@ -96,11 +95,17 @@ const Calendar = styled.div`
       background-color: rgb(0, 73, 176);
     }
   }
+
   ${media.medium} {
     .fc {
       .fc-button {
-        font-size: 12px;
+        font-size: 11px;
       }
+    }
+  }
+  ${media.small} {
+    .fc-toolbar-title {
+      font-size: 13px;
     }
   }
 `;
