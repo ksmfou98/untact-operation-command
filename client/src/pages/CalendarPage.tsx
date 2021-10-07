@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -10,20 +10,21 @@ import CalendarModal from "components/calendar/CalendarModal";
 import useCalendarEffect from "hooks/calendar/useCalendarEffect";
 import Loading from "components/common/Loading";
 import useHandleCalendar from "hooks/calendar/useHandleCalendar";
+import useModal from "hooks/common/useModal";
 
 const CalendarPage = () => {
-  const {
-    schedules,
-    isModal,
-    onToggleModal,
-    isEdit,
-    onEditToggleModal,
-    loading,
-  } = useCalendarEffect();
-
-  const { onEventClick } = useHandleCalendar(onEditToggleModal);
+  const { schedules, loading } = useCalendarEffect();
+  const { isModal, onToggleModal } = useModal();
+  const [isEdit, setIsEdit] = useState(false);
+  const { onEventClick } = useHandleCalendar();
 
   if (loading) return <Loading />;
+
+  const onToggle = () => {
+    onToggleModal();
+    setIsEdit(false);
+  };
+
   return (
     <CalendarPageBlock>
       <Calendar>
@@ -51,14 +52,17 @@ const CalendarPage = () => {
             listPlugin,
           ]}
           events={schedules}
-          eventClick={onEventClick}
+          eventClick={(e) => {
+            onEventClick(e);
+            onToggleModal();
+            setIsEdit(true);
+          }}
         />
       </Calendar>
       <CalendarModal
         isModal={isModal}
-        onToggleModal={onToggleModal}
+        onToggleModal={onToggle}
         isEdit={isEdit}
-        onEditToggleModal={onEditToggleModal}
       />
     </CalendarPageBlock>
   );
@@ -95,22 +99,13 @@ const Calendar = styled.div`
       background-color: rgb(0, 73, 176);
     }
   }
-
   ${media.medium} {
     .fc {
       .fc-button {
-        font-size: 11px;
+        font-size: 12px;
       }
-    }
-  }
-  ${media.small} {
-    .fc-toolbar-title {
-      font-size: 13px;
     }
   }
 `;
 
 export default CalendarPage;
-
-//#777dce
-//rgb(194,204,255)

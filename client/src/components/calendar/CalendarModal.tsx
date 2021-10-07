@@ -10,7 +10,6 @@ import useCalendarEditEffect from "hooks/calendar/useCalendarEditEffect";
 
 interface CalendarModalProps {
   onToggleModal: () => void;
-  onEditToggleModal: () => void;
   isModal: boolean;
   isEdit: boolean;
 }
@@ -18,7 +17,6 @@ const CalendarModal = ({
   isModal,
   onToggleModal,
   isEdit,
-  onEditToggleModal,
 }: CalendarModalProps) => {
   const {
     onChangeSchedule,
@@ -28,7 +26,7 @@ const CalendarModal = ({
   } = useCalendarForm();
 
   const onToggle = () => {
-    isEdit ? onEditToggleModal() : onToggleModal();
+    onToggleModal();
     resetSchedule();
   };
 
