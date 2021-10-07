@@ -10,36 +10,40 @@ import media from "lib/styles/media";
 import useModal from "hooks/common/useModal";
 import MeetCreateModal from "./MeetCreateModal";
 
+export const HomeNavList = [
+  {
+    name: "행사",
+    icon: <IoPeopleOutline size="22" />,
+  },
+  {
+    name: "강의",
+    icon: <BsPencil size="22" />,
+  },
+  {
+    name: "종교",
+    icon: <BiBuilding size="22" />,
+  },
+  {
+    name: "상담",
+    icon: <IoEarthOutline size="22" />,
+  },
+];
+
 const HomeNav = () => {
   const { isModal, onToggleModal } = useModal();
-  const navList = [
+
+  const AllNavList = [
     {
       name: "전체",
       icon: <RiBarChartHorizontalLine size="22" />,
     },
-    {
-      name: "행사",
-      icon: <IoPeopleOutline size="22" />,
-    },
-    {
-      name: "강의",
-      icon: <BsPencil size="22" />,
-    },
-    {
-      name: "종교",
-      icon: <BiBuilding size="22" />,
-    },
-    {
-      name: "상담",
-      icon: <IoEarthOutline size="22" />,
-    },
-  ];
+  ].concat(HomeNavList);
 
   return (
     <HomeNavBlock>
       <div className="nav-list">
         <LeftBox>
-          {navList.map((item, index) => (
+          {AllNavList.map((item, index) => (
             <div className="item" key={index}>
               <div className="ico">{item.icon}</div>
               <div className="name">{item.name}</div>

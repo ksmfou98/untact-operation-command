@@ -4,6 +4,7 @@ import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import styled from "styled-components";
 import useHandleMeet from "hooks/meet/useHandleMeet";
+import { HomeNavList } from "./HomeNav";
 
 interface MeetCreateModalProps {
   onToggleModal: () => void;
@@ -19,7 +20,8 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
     onCreateMeet,
     onThumbnailUpload,
   } = useHandleMeet();
-  const { title, description, thumbnail, password, muted, videoOff } = meetForm;
+  const { title, description, thumbnail, password, menu, muted, videoOff } =
+    meetForm;
 
   return (
     <Modal
@@ -62,6 +64,18 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
             </label>
             <input type="file" id="img-upload" onChange={onThumbnailUpload} />
           </div>
+        </div>
+
+        <div className="create-form">
+          <label>메뉴</label>
+          <select name="menu" value={menu} onChange={onChange}>
+            <option value="">메뉴를 선택해주세요</option>
+            {HomeNavList.map((item, index) => (
+              <option key={index} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="create-form">

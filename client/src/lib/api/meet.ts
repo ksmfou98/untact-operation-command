@@ -6,6 +6,7 @@ export const createMeetAPI = async (
   description: string,
   thumbnail: string,
   password: string,
+  menu: string,
   muted: boolean,
   videoOff: boolean
 ) => {
@@ -15,6 +16,7 @@ export const createMeetAPI = async (
     description,
     thumbnail,
     password,
+    menu,
     muted,
     videoOff,
   };
