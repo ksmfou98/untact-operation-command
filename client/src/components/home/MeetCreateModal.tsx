@@ -56,17 +56,6 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
         </div>
 
         <div className="create-form">
-          <label>회의 썸네일</label>
-          <div className="img-upload">
-            <label htmlFor="img-upload">
-              <span>{thumbnail}</span>
-              <AiOutlineCloudUpload size="30" />
-            </label>
-            <input type="file" id="img-upload" onChange={onThumbnailUpload} />
-          </div>
-        </div>
-
-        <div className="create-form">
           <label>메뉴</label>
           <select name="menu" value={menu} onChange={onChange}>
             <option value="">메뉴를 선택해주세요</option>
@@ -76,6 +65,17 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="create-form">
+          <label>회의 썸네일</label>
+          <div className="img-upload">
+            <label htmlFor="img-upload">
+              <span>{thumbnail}</span>
+              <AiOutlineCloudUpload size="30" />
+            </label>
+            <input type="file" id="img-upload" onChange={onThumbnailUpload} />
+          </div>
         </div>
 
         <div className="create-form">
@@ -125,7 +125,8 @@ const MeetCreateModalBlock = styled.div`
     label {
       margin-bottom: 10px;
     }
-    input[type="text"] {
+    input[type="text"],
+    select {
       height: 40px;
       border: 1px solid #d5d3d3;
       border-radius: 5px;
