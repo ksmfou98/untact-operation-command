@@ -9,6 +9,8 @@ import Button from "components/common/Button";
 import media from "lib/styles/media";
 import useModal from "hooks/common/useModal";
 import MeetCreateModal from "./MeetCreateModal";
+import { useRecoilState } from "recoil";
+import { homeMenuState } from "atoms/homeMenuState";
 
 export const HomeNavList = [
   {
@@ -31,20 +33,32 @@ export const HomeNavList = [
 
 const HomeNav = () => {
   const { isModal, onToggleModal } = useModal();
+  const [isMenu, setIsMenu] = useRecoilState(homeMenuState);
 
-  const AllNavList = [
-    {
-      name: "전체",
-      icon: <RiBarChartHorizontalLine size="22" />,
-    },
-  ].concat(HomeNavList);
+  const onChangeMenu = (name: string) => {
+    setIsMenu(name);
+  };
 
   return (
     <HomeNavBlock>
       <div className="nav-list">
         <LeftBox>
-          {AllNavList.map((item, index) => (
-            <div className="item" key={index}>
+          <div
+            className={`item ${isMenu === "전체" ? "menu-active" : ""}`}
+            onClick={() => onChangeMenu("전체")}
+          >
+            <div className="ico">
+              <RiBarChartHorizontalLine size="22" />
+            </div>
+            <div className="name">전체</div>
+          </div>
+
+          {HomeNavList.map((item, index) => (
+            <div
+              className={`item ${isMenu === item.name ? "menu-active" : ""}`}
+              onClick={() => onChangeMenu(item.name)}
+              key={index}
+            >
               <div className="ico">{item.icon}</div>
               <div className="name">{item.name}</div>
             </div>
@@ -90,8 +104,13 @@ const LeftBox = styled.div`
   .item {
     display: flex;
     align-items: center;
-    padding: 5px 30px 5px 5px;
+    padding: 10px 20px;
     cursor: pointer;
+    margin-right: 8px;
+    &:hover {
+      background-color: #f5f5f5;
+      border-radius: 10px;
+    }
     .ico {
       margin-right: 5px;
       color: #424242;
@@ -111,6 +130,11 @@ const LeftBox = styled.div`
     ${media.xsmall} {
       flex-direction: column;
     }
+  }
+
+  .menu-active {
+    background-color: #f5f5f5;
+    border-radius: 10px;
   }
 `;
 
