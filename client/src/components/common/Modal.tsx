@@ -12,6 +12,7 @@ interface ModalProps {
   size: "small" | "big";
   isModal: boolean;
   onClick?: () => void;
+  isClose?: boolean;
 }
 
 const Modal = ({
@@ -22,6 +23,7 @@ const Modal = ({
   size,
   isModal,
   onClick,
+  isClose = true,
 }: ModalProps) => {
   return (
     <ModalBlock size={size} isModal={isModal} onMouseDown={onToggleModal}>
@@ -45,7 +47,9 @@ const Modal = ({
               className="message-btn"
               onClick={() => {
                 onClick();
-                onToggleModal();
+                if (isClose) {
+                  onToggleModal();
+                }
               }}
             >
               {buttonName}

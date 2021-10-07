@@ -36,3 +36,13 @@ export const findMeetAPI = async (meetId: string) => {
   const response = await client.get(`/meet/findMeet/${meetId}`);
   return response.data;
 };
+
+export const meetCheckPasswordAPI = async (
+  meetId: string,
+  password: string
+) => {
+  const body = { meetId, password };
+  const response = await client.post(`/meet/checkPassword`, body);
+
+  return response.data;
+};

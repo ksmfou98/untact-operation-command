@@ -53,7 +53,11 @@ const MeetListItem = ({ meet }: MeetListItemProps) => {
         </div>
       </MeetInfo>
       {isModal && (
-        <PasswordModal isModal={isModal} onToggleModal={onToggleModal} />
+        <PasswordModal
+          isModal={isModal}
+          onToggleModal={onToggleModal}
+          meetId={_id}
+        />
       )}
     </MeetListItemBlock>
   );
