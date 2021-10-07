@@ -1,32 +1,44 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { BsFillPeopleFill } from "react-icons/bs";
 import media from "lib/styles/media";
 import { IMeetState } from "atoms/meetState";
 import { SERVER_URL } from "lib/config";
+import useModal from "hooks/common/useModal";
+import PasswordModal from "./PasswordModal";
 
 interface MeetListItemProps {
   meet: IMeetState;
 }
 
 const MeetListItem = ({ meet }: MeetListItemProps) => {
-  const { _id, title, description, host, thumbnail } = meet;
+  const { _id, title, description, host, thumbnail, password } = meet;
+  const history = useHistory();
+  const { isModal, onToggleModal } = useModal();
+
+  const onEnterMeet = () => {
+    if (password) {
+      onToggleModal();
+    } else {
+      history.push(`/meet/${_id}`);
+    }
+  };
 
   return (
     <MeetListItemBlock>
-      <MeetThumbnail to={`/meet/${_id}`}>
+      <MeetThumbnail onClick={onEnterMeet}>
         <div className="thumbnail">
           <img src={`${SERVER_URL}/${thumbnail}`} alt="" />
         </div>
       </MeetThumbnail>
       <MeetContent>
-        <Link to={`/meet/${_id}`}>
+        <button onClick={onEnterMeet}>
           <h4>{title}</h4>
           <div className="description-wrapper">
             <p>{description}</p>
           </div>
-        </Link>
+        </button>
       </MeetContent>
       <MeetInfo>
         <div className="userinfo">
@@ -40,6 +52,9 @@ const MeetListItem = ({ meet }: MeetListItemProps) => {
           <BsFillPeopleFill size="15" /> 3
         </div>
       </MeetInfo>
+      {isModal && (
+        <PasswordModal isModal={isModal} onToggleModal={onToggleModal} />
+      )}
     </MeetListItemBlock>
   );
 };
@@ -63,7 +78,7 @@ const MeetListItemBlock = styled.div`
   }
 `;
 
-const MeetThumbnail = styled(Link)`
+const MeetThumbnail = styled.button`
   display: block;
   color: inherit;
   text-decoration: none;
@@ -88,10 +103,11 @@ const MeetContent = styled.div`
   display: flex;
   flex: 1 1 0%;
   flex-direction: column;
-  a {
+  button {
     display: block;
     color: inherit;
     text-decoration: none;
+    text-align: left;
     h4 {
       font-size: 16px;
       margin: 0px 0px 0.25rem;
