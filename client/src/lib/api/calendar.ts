@@ -41,10 +41,10 @@ export const deleteScheduleAPI = async (scheduleId: string) => {
 
 // 일정 수정
 export const updateScheduleAPI = async (
+  scheduleId: string,
   title: string,
   date: Date,
   start: string,
-  scheduleId: string,
   end?: string
 ) => {
   const body = {
@@ -54,6 +54,7 @@ export const updateScheduleAPI = async (
     scheduleId,
     end,
   };
+
   const response = await client.patch("/calendar/updateSchedule/", body);
   return response.data.schedules;
 };

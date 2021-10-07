@@ -33,15 +33,16 @@ export default function useCalendarForm() {
     const scheduleId = _id;
     try {
       const response = await updateScheduleAPI(
+        scheduleId,
         title,
         date,
         start,
         end,
-        scheduleId
+
       );
-      setSchedules((prev) => prev.concat(response));
-      console.log(response);
-      return response.data;
+      console.log("이거 나오면 성공");
+      setSchedules(response)
+      return response
     } catch (e) {
       alert("게시물 수정에 실패했습니다");
       console.log(e);

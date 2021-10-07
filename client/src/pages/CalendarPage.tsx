@@ -14,16 +14,17 @@ import useHandleCalendar from "hooks/calendar/useHandleCalendar";
 const CalendarPage = () => {
   const {
     schedules,
-    schedule,
     isModal,
     onToggleModal,
     isEdit,
     onEditToggleModal,
     loading,
   } = useCalendarEffect();
-  const { onEventClick } = useHandleCalendar();
+
+  const { onEventClick } = useHandleCalendar(onEditToggleModal);
+
   if (loading) return <Loading />;
-  console.log("렌더링");
+  // console.log("렌더링");
   return (
     <CalendarPageBlock>
       <Calendar>
@@ -58,7 +59,6 @@ const CalendarPage = () => {
         isModal={isModal}
         onToggleModal={onToggleModal}
         isEdit={isEdit}
-        scheduleId={schedule._id}
         onEditToggleModal={onEditToggleModal}
       />
     </CalendarPageBlock>

@@ -3,8 +3,7 @@ import { scheduleState } from "atoms/calendarState";
 import useCalendarModal from "hooks/common/useCalendarModal";
 import { useSetRecoilState } from "recoil";
 
-export default function useHandleCalendar() {
-  const { onEditToggleModal } = useCalendarModal();
+export default function useHandleCalendar(onEditToggleModal: { (): void }) {
   const setSchedule = useSetRecoilState(scheduleState);
   //fullcalendar 에서 이벤트 클릭시
   const onEventClick = (clickInfo: EventClickArg) => {
