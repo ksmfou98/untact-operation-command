@@ -4,10 +4,12 @@ import React from "react";
 import styled from "styled-components";
 
 const MembersPage = () => {
+
   return (
     <MenberPageBlock>
       <MembersNav />
       <MembersList />
+ 
     </MenberPageBlock>
   );
 };
