@@ -11,6 +11,7 @@ import useModal from "hooks/common/useModal";
 import MeetCreateModal from "./MeetCreateModal";
 import { useRecoilState } from "recoil";
 import { homeMenuState } from "atoms/homeMenuState";
+import SearchBar from "./SearchBar";
 
 export const HomeNavList = [
   {
@@ -65,12 +66,7 @@ const HomeNav = () => {
           ))}
         </LeftBox>
         <RightBox>
-          <div className="search">
-            <input type="text" placeholder="회의를 검색해주세요" />
-            <button>
-              <AiOutlineSearch size="22" />
-            </button>
-          </div>
+          <SearchBar />
           <StyledButton onClick={onToggleModal} color="true">
             회의 생성
           </StyledButton>
@@ -140,32 +136,7 @@ const LeftBox = styled.div`
 
 const RightBox = styled.div`
   display: flex;
-  .search {
-    position: relative;
-    margin-right: 20px;
-    input {
-      width: 242px;
-      height: 36px;
-      padding: 0 60px 0 14px;
-      border: 1px solid #f7f7f6;
-      border-radius: 18px;
-      background-color: #f7f7f7;
-      font-weight: 400;
-      font-size: 12px;
-      color: #666;
-      line-height: 16px;
-      outline: none;
-      ${media.custom(980)} {
-        width: 175px;
-        height: 36px;
-      }
-    }
-    button {
-      position: absolute;
-      right: 3px;
-      top: 5px;
-    }
-  }
+
   ${media.small} {
     display: none;
   }
