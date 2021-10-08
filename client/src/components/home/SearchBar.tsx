@@ -1,4 +1,5 @@
 import useInput from "hooks/common/useInput";
+import useSearchForm from "hooks/home/useSearchForm";
 import media from "lib/styles/media";
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -6,13 +7,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 
 const SearchBar = () => {
-  const [searchForm, searchFormOnChange] = useInput("");
-  const history = useHistory();
-
-  const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    history.push(`/search?q=${searchForm}`);
-  };
+  const { onSearch, searchForm, searchFormOnChange } = useSearchForm();
 
   return (
     <SeachBarBlock onSubmit={onSearch}>
