@@ -122,3 +122,28 @@ export const meetPasswordCheck = async (req: Request, res: Response) => {
     });
   }
 };
+
+// 회의 검색
+
+export const searchMeet = async (req: Request, res: Response) => {
+  const { keyword } = req.params;
+
+  try {
+    const meets = await Meet.find({
+      $or: [
+        { title: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ],
+    });
+
+    return res.status(200).json({
+      success: true,
+      meets,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      e,
+    });
+  }
+};

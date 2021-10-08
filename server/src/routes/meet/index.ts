@@ -10,5 +10,6 @@ router.post("/uploadMeetThumb", meetCtrl.uploadMeetThumb); // 회의 썸네일 �
 router.get("/readMeetList", meetCtrl.readMeetList); // 회의 목록 조회
 router.get("/findMeet/:meetId", checkLoggedIn, meetCtrl.findMeet); // 회의 조회
 router.post("/checkPassword", checkLoggedIn, meetCtrl.meetPasswordCheck); // 회의 비밀번호 확인
+router.get("/searchMeet/:keyword", checkLoggedIn, meetCtrl.searchMeet); // 회의 검색
 
 export default router;
