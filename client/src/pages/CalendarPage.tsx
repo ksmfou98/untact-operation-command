@@ -29,7 +29,6 @@ const CalendarPage = () => {
     <CalendarPageBlock>
       <Calendar>
         <FullCalendar
-          timeZone="UTC"
           aspectRatio={1.75}
           customButtons={{
             createSchedule: {
