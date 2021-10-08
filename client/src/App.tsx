@@ -11,6 +11,7 @@ import RegisterPage from "pages/RegisterPage";
 import LoginPage from "pages/LoginPage";
 import MembersPage from "pages/MembersPage";
 import MeetPage from "pages/MeetPage";
+import SearchPage from "pages/SearchPage";
 const App = () => {
   useChannelPluginEffect();
   return (
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/" exact component={MeetListPage} />
             <Route path="/schedule" exact component={CalendarPage} />
             <Route path="/members" exact component={MembersPage} />
+            <Route path="/search" component={SearchPage} />
           </MainLayout>
         </AsideLayout>
       </Switch>
