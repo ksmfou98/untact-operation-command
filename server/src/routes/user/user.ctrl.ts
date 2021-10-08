@@ -215,3 +215,19 @@ export const readFriendList = async (req: Request, res: Response) => {
     });
   }
 };
+
+//친구를 email 검색하여 찾기
+export const searchFriendEmail = async (req: Request, res: Response) => {
+  const { friendEmail } = req.params;
+  try {
+    const members = await User.find({ email: friendEmail });
+    return res.status(200).json({
+      success: true,
+      members,
+    });
+  } catch (e) {
+    res.status(500).json({
+      error: e,
+    });
+  }
+};

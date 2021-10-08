@@ -11,5 +11,9 @@ router.post("/addFriend", checkLoggedIn, userCtrl.addFriend);
 router.delete("/deleteFriend/:friendId", checkLoggedIn, userCtrl.deleteFriend);
 router.get("/readFriendList", checkLoggedIn, userCtrl.readFriendList);
 router.post("/uploadImg", userCtrl.uploadImg);
-
+router.get(
+  "/searchFriendEmail/:friendEmail",
+  checkLoggedIn,
+  userCtrl.searchFriendEmail
+);
 export default router;
