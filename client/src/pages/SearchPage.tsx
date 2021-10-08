@@ -1,6 +1,9 @@
 import qs from "qs";
 import React, { useMemo } from "react";
 import { RouteComponentProps } from "react-router";
+import { useRecoilValue } from "recoil";
+import { meetsState } from "atoms/meetState";
+import MeetListItem from "components/home/MeetListItem";
 
 export interface SearchPageProps extends RouteComponentProps {}
 
@@ -12,7 +15,16 @@ const SearchPage = ({ location }: SearchPageProps) => {
     return parsed;
   }, [location.search]);
 
-  return <div>SearchPage</div>;
+  const meets = useRecoilValue(meetsState);
+
+  return (
+    <>
+      <input type="text" />
+      {meets.map((meet) => (
+        <MeetListItem meet={meet} />
+      ))}
+    </>
+  );
 };
 
 export default SearchPage;
