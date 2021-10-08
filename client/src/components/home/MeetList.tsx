@@ -31,13 +31,14 @@ const MeetList = () => {
     <MeetListBlock>
       <div className="meet-list">
         {meets.map((meet, index) => (
-          <div key={index}>
+          //<> </>로 감싸면 key를 못주는데 Fragment는 가능
+          <React.Fragment key={index}>
             {homeMenu === "전체" ? (
               <MeetListItem meet={meet} />
             ) : (
               homeMenu === meet.menu && <MeetListItem meet={meet} />
             )}
-          </div>
+          </React.Fragment>
         ))}
       </div>
     </MeetListBlock>
