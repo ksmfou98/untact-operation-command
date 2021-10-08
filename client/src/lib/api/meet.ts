@@ -48,3 +48,8 @@ export const meetCheckPasswordAPI = async (
 
   return response.data;
 };
+
+export const searchMeetAPI = async <T>(keyword: T) => {
+  const response = await client.get(`/meet/searchMeet/${keyword}`);
+  return response.data.meets;
+};
