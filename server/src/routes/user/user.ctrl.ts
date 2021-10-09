@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import multer from "multer";
 import User from "../../models/user";
+import fs from "fs";
 
-// multer
-var storage = multer.diskStorage({
+// multer 유저 프로필 사진 저장
+
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/profile/");
   },
@@ -11,15 +13,17 @@ var storage = multer.diskStorage({
     cb(null, `${Date.now()}_${file.originalname}`);
   },
 });
-var upload = multer({ storage: storage }).single("user_img");
+
+const upload = multer({ storage: storage }).single("user_img");
 
 export const uploadImg = (req: Request, res: Response) => {
+  const dir = "./uploads/profile";
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+
   upload(req, res, (err) => {
-    console.log("req.body");
     if (err) {
       return res.json({ success: false, err });
     }
-    console.log("asd2");
     return res.json({
       success: true,
       image: res.req.file.path,
