@@ -120,6 +120,31 @@ export const logout = async (req: Request, res: Response) => {
   });
 };
 
+//회원 정보 수정
+//지금은 프로필 사진만 변경 가능
+export const updateUserInfo = async (req: Request, res: Response) => {
+  const { thumbnail } = req.body;
+  const userId = res.locals.user._id;
+
+  try {
+    let me = await User.findOne({ _id: userId });
+    me = await User.findByIdAndUpdate(
+      { _id: userId },
+      { thumbnail },
+      { new: true }
+    );
+    console.log(me);
+    return res.status(200).json({
+      success: true,
+      me,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    });
+  }
+};
+
 //친구 추가
 export const addFriend = async (req: Request, res: Response) => {
   const { friendId } = req.body;
