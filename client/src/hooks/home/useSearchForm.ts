@@ -1,10 +1,20 @@
 import useInput from "hooks/common/useInput";
-import { useHistory } from "react-router";
+import qs from "qs";
+import { useMemo } from "react";
+import { useHistory, useLocation } from "react-router";
 
 export default function useSearchForm() {
-  const [searchForm, searchFormOnChange] = useInput("");
   const history = useHistory();
+  const location = useLocation();
 
+  const query = useMemo(() => {
+    const parsed = qs.parse(location.search, {
+      ignoreQueryPrefix: true,
+    }) as { q: string };
+    return parsed;
+  }, [location.search]);
+
+  const [searchForm, searchFormOnChange] = useInput(query.q ? query.q : "");
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchForm.length === 0) return false;
