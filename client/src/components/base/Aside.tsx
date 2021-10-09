@@ -7,15 +7,21 @@ import media from "lib/styles/media";
 import { useRecoilValue } from "recoil";
 import { userState } from "atoms/userState";
 import { Link } from "react-router-dom";
+import { SERVER_URL } from "lib/config";
 
 const Aside = () => {
   const user = useRecoilValue(userState);
-
+  console.log(user)
   return (
     <AsideBlock>
       <AsideTitle>
         <div className="profile-img">
-          <BsPeopleCircle size="40" />
+          
+          {user.thumbnail ? (
+            <img src={`${SERVER_URL}/${user.thumbnail}`} alt="" />
+          ) : (
+            <BsPeopleCircle size="40" />
+          )}
         </div>
         {user?.name ? (
           <div className="user-name">{user.name}</div>
