@@ -4,7 +4,6 @@ import { IoPeopleOutline, IoEarthOutline } from "react-icons/io5";
 import { BsPencil } from "react-icons/bs";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
 import { BiBuilding } from "react-icons/bi";
-import { AiOutlineSearch } from "react-icons/ai";
 import Button from "components/common/Button";
 import media from "lib/styles/media";
 import useModal from "hooks/common/useModal";

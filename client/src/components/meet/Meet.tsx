@@ -75,7 +75,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
       .then((stream) => {
         localStream = stream;
         // stream 정보에 내 데이터도 추가
-        console.log("my stream : ", stream);
+
         const myStream = {
           id: newSocket.id,
           stream,
