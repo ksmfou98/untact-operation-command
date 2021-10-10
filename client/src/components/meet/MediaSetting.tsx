@@ -1,10 +1,14 @@
+import { videoState } from "atoms/deviceState";
 import React, { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 const MediaSetting = () => {
   const [videos, setVideos] = useState<MediaDeviceInfo[]>();
   const [audios, setAudios] = useState<MediaDeviceInfo[]>();
   const [speakers, setSpeakers] = useState<MediaDeviceInfo[]>();
+
+  const setAudioState = useSetRecoilState(videoState);
 
   useEffect(() => {
     async function getConnectedDevices() {
@@ -36,6 +40,12 @@ const MediaSetting = () => {
     console.log(speaker);
   };
 
+  const onChangeVideo = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const video = e.target.value;
+    setAudioState(video);
+    console.log(video);
+  };
+
   return (
     <MediaSettingBlock>
       <div>
@@ -60,7 +70,7 @@ const MediaSetting = () => {
       </div>
       <div>
         <label>비디오</label>
-        <select>
+        <select onChange={onChangeVideo}>
           {videos?.map((video) => (
             <option key={video.deviceId} value={video.deviceId}>
               {video.label}
