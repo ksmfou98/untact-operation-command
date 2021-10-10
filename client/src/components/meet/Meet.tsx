@@ -462,7 +462,14 @@ const Meet = ({ meetInfo }: MeetProps) => {
         .find((sender) => sender.track?.kind === "video");
       if (videoTrack) {
         videoSender?.replaceTrack(videoTrack);
-        setUsers((prev) => prev.map((user) => ({ ...user, stream: myStream })));
+        setUsers((prev) =>
+          prev.map((u) => {
+            if (u.id === newSocket.id) {
+              u.stream = myStream;
+            }
+            return u;
+          })
+        );
       }
     }
   };
