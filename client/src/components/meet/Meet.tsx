@@ -66,15 +66,14 @@ const Meet = ({ meetInfo }: MeetProps) => {
   useEffect(() => {
     let localStream: MediaStream;
 
-    // 사용자에게 미디어 입력 장치 사용권한을 가져온 후 스트림을 생성한다.
-    navigator.mediaDevices
-      .getUserMedia({
-        audio: true,
-        video: true,
-      })
-      .then((stream) => {
+    async function getMedia() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+
         localStream = stream;
-        // stream 정보에 내 데이터도 추가
 
         const myStream = {
           id: newSocket.id,
@@ -94,10 +93,45 @@ const Meet = ({ meetInfo }: MeetProps) => {
           id: newSocket.id,
           meetId,
         });
-      })
-      .catch((error) => {
-        console.log(`getUserMedia error: ${error}`);
-      });
+      } catch (e) {
+        console.log(`getUserMedia error: ${e}`);
+      }
+    }
+
+    getMedia();
+
+    // 사용자에게 미디어 입력 장치 사용권한을 가져온 후 스트림을 생성한다.
+    // navigator.mediaDevices
+    //   .getUserMedia({
+    //     audio: true,
+    //     video: true,
+    //   })
+    //   .then((stream) => {
+    //     localStream = stream;
+    //     // stream 정보에 내 데이터도 추가
+
+    //     const myStream = {
+    //       id: newSocket.id,
+    //       stream,
+    //       name: user.name,
+    //       muted: false,
+    //       videoOff: false,
+    //     };
+    //     setUsers(users.concat(myStream));
+    //     setMySessionId(myStream.id);
+
+    //     // eslint-disable-next-line
+    //     sendPC = createSenderPeerConnection(newSocket, localStream);
+    //     createSenderOffer(newSocket);
+
+    //     newSocket.emit("joinRoom", {
+    //       id: newSocket.id,
+    //       meetId,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(`getUserMedia error: ${error}`);
+    //   });
 
     // //화면공유 테스트 여기부터
     // navigator.mediaDevices
