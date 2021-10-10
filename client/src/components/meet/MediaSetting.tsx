@@ -1,6 +1,4 @@
-import { videoState } from "atoms/deviceState";
 import React, { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 interface MediaSettingProps {
