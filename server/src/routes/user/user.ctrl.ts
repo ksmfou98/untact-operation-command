@@ -127,16 +127,14 @@ export const updateUserInfo = async (req: Request, res: Response) => {
   const userId = res.locals.user._id;
 
   try {
-    let me = await User.findOne({ _id: userId });
-    me = await User.findByIdAndUpdate(
+    let user = await User.findByIdAndUpdate(
       { _id: userId },
       { thumbnail },
       { new: true }
     );
-    console.log(me);
     return res.status(200).json({
       success: true,
-      me,
+      user,
     });
   } catch (error) {
     return res.status(500).json({

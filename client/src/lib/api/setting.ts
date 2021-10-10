@@ -10,5 +10,5 @@ export const updateUserInfoAPI = async (thumbnail: string) => {
     thumbnail,
   };
   const response = await client.patch("/user/updateUserInfo", body);
-  return response;
+  return response.data.user;
 };

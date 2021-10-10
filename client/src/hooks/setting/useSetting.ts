@@ -1,9 +1,16 @@
+import { userState } from "atoms/userState";
 import { updateUserInfoAPI, userProfileAPI } from "lib/api/setting";
+import userStorage from "lib/userStorage";
 import { useState } from "react";
+import { useHistory } from "react-router";
+import { useRecoilState } from "recoil";
 
 export default function useSetting() {
   const [imgURL, setImgURL] = useState("");
+  const [user, setUser] = useRecoilState(userState);
+  const history = useHistory();
 
+  //이미지 업로드
   const imgUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setImgURL(e.target.value);
     //빈파일이 아닌 경우 함수 진행
@@ -25,7 +32,10 @@ export default function useSetting() {
   const onUpdateUserInfo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await updateUserInfoAPI(imgURL);
+      const user = await updateUserInfoAPI(imgURL);
+      setUser(user);
+      userStorage.set(user);
+      history.push("/");
     } catch (e) {
       alert("정보수정에 실패했습니다");
     }
