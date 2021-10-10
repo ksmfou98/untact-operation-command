@@ -1,4 +1,5 @@
 import { noMeetingGoingOn } from "assets/image";
+import { homeMenuState } from "atoms/homeMenuState";
 import { meetsState } from "atoms/meetState";
 import Image from "components/common/Image";
 import Loading from "components/common/Loading";
@@ -10,6 +11,7 @@ import MeetListItem from "./MeetListItem";
 
 const MeetList = () => {
   const meets = useRecoilValue(meetsState);
+  const homeMenu = useRecoilValue(homeMenuState);
   const { loading } = useMeetListEffect();
 
   if (loading) return <Loading />;
@@ -29,7 +31,14 @@ const MeetList = () => {
     <MeetListBlock>
       <div className="meet-list">
         {meets.map((meet, index) => (
-          <MeetListItem meet={meet} key={index} />
+          //<> </>로 감싸면 key를 못주는데 Fragment는 가능
+          <React.Fragment key={index}>
+            {homeMenu === "전체" ? (
+              <MeetListItem meet={meet} />
+            ) : (
+              homeMenu === meet.menu && <MeetListItem meet={meet} />
+            )}
+          </React.Fragment>
         ))}
       </div>
     </MeetListBlock>

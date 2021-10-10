@@ -36,6 +36,10 @@ const MeetSchema: Schema<IMeetMethod> = new Schema(
       type: String,
       trim: true,
     },
+    menu: {
+      type: String,
+      trim: true,
+    },
     muted: {
       type: Boolean,
       required: true,

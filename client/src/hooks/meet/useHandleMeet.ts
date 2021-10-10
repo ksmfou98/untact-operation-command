@@ -6,7 +6,8 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
 export default function useHandleMeet() {
   const [meetForm, setMeetForm] = useRecoilState(meetState);
-  const { title, description, thumbnail, password, muted, videoOff } = meetForm;
+  const { title, description, thumbnail, password, menu, muted, videoOff } =
+    meetForm;
   const history = useHistory();
   const resetMeetState = useResetRecoilState(meetState);
 
@@ -28,7 +29,9 @@ export default function useHandleMeet() {
     }
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setMeetForm((prev) => ({ ...prev, [name]: value }));
   };
@@ -50,6 +53,7 @@ export default function useHandleMeet() {
         description,
         thumbnail,
         password,
+        menu,
         muted,
         videoOff
       );

@@ -12,6 +12,7 @@ import LoginPage from "pages/LoginPage";
 import MembersPage from "pages/MembersPage";
 import MeetPage from "pages/MeetPage";
 import SettimgPage from "pages/SettingPage";
+import SearchPage from "pages/SearchPage";
 const App = () => {
   useChannelPluginEffect();
   return (
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/schedule" exact component={CalendarPage} />
             <Route path="/members" exact component={MembersPage} />
             <Route path="/setting" exact component={SettimgPage} />
+            <Route path="/search" component={SearchPage} />
           </MainLayout>
         </AsideLayout>
       </Switch>

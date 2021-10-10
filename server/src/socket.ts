@@ -298,7 +298,12 @@ export default function (server: http.Server) {
 
     socket.on(
       "sendChatMessage",
-      (messageObject: { meetId: string; message: string; name: string }) => {
+      (messageObject: {
+        meetId: string;
+        message: string;
+        name: string;
+        userId: string;
+      }) => {
         io.to(messageObject.meetId).emit("receiveChatMessage", messageObject);
       }
     );

@@ -6,6 +6,7 @@ export const createMeetAPI = async (
   description: string,
   thumbnail: string,
   password: string,
+  menu: string,
   muted: boolean,
   videoOff: boolean
 ) => {
@@ -15,6 +16,7 @@ export const createMeetAPI = async (
     description,
     thumbnail,
     password,
+    menu,
     muted,
     videoOff,
   };
@@ -35,4 +37,19 @@ export const meetThumbnailAPI = async (fd: FormData) => {
 export const findMeetAPI = async (meetId: string) => {
   const response = await client.get(`/meet/findMeet/${meetId}`);
   return response.data;
+};
+
+export const meetCheckPasswordAPI = async (
+  meetId: string,
+  password: string
+) => {
+  const body = { meetId, password };
+  const response = await client.post(`/meet/checkPassword`, body);
+
+  return response.data;
+};
+
+export const searchMeetAPI = async <T>(keyword: T) => {
+  const response = await client.get(`/meet/searchMeet/${keyword}`);
+  return response.data.meets;
 };

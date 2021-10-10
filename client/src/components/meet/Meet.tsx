@@ -24,12 +24,6 @@ interface MeetProps {
   meetInfo: IMeetState;
 }
 
-export interface IChat {
-  meetId: string;
-  message: string;
-  name: string;
-}
-
 const Meet = ({ meetInfo }: MeetProps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
@@ -81,7 +75,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
       .then((stream) => {
         localStream = stream;
         // stream 정보에 내 데이터도 추가
-        console.log("my stream : ", stream);
+
         const myStream = {
           id: newSocket.id,
           stream,

@@ -92,3 +92,58 @@ export const findMeet = async (req: Request, res: Response) => {
     });
   }
 };
+
+// 회의 비밀번호 체크
+export const meetPasswordCheck = async (req: Request, res: Response) => {
+  const { meetId, password } = req.body;
+  try {
+    const meet = await Meet.findById(meetId);
+    if (!meet) {
+      return res.status(404).json({
+        success: false,
+        message: "회의가 존재하지 않습니다.",
+      });
+    }
+
+    if (meet.password !== password) {
+      return res.status(400).json({
+        success: false,
+        message: "비밀번호가 일치하지 않습니다.",
+      });
+    }
+
+    return res.status(200).json({
+      message: "회의 비밀번호 체크 성공",
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      e,
+    });
+  }
+};
+
+// 회의 검색
+
+export const searchMeet = async (req: Request, res: Response) => {
+  const { keyword } = req.params;
+
+  try {
+    const meets = await Meet.find({
+      $or: [
+        { title: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ],
+    });
+
+    return res.status(200).json({
+      success: true,
+      meets,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      e,
+    });
+  }
+};

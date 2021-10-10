@@ -4,6 +4,7 @@ import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import styled from "styled-components";
 import useHandleMeet from "hooks/meet/useHandleMeet";
+import { HomeNavList } from "./HomeNav";
 
 interface MeetCreateModalProps {
   onToggleModal: () => void;
@@ -19,7 +20,8 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
     onCreateMeet,
     onThumbnailUpload,
   } = useHandleMeet();
-  const { title, description, thumbnail, password, muted, videoOff } = meetForm;
+  const { title, description, thumbnail, password, menu, muted, videoOff } =
+    meetForm;
 
   return (
     <Modal
@@ -51,6 +53,18 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
             onChange={onChange}
             placeholder="회의 설명을 입력해주세요"
           />
+        </div>
+
+        <div className="create-form">
+          <label>메뉴</label>
+          <select name="menu" value={menu} onChange={onChange}>
+            <option value="">메뉴를 선택해주세요</option>
+            {HomeNavList.map((item, index) => (
+              <option key={index} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="create-form">
@@ -111,7 +125,8 @@ const MeetCreateModalBlock = styled.div`
     label {
       margin-bottom: 10px;
     }
-    input[type="text"] {
+    input[type="text"],
+    select {
       height: 40px;
       border: 1px solid #d5d3d3;
       border-radius: 5px;

@@ -8,6 +8,7 @@ export interface IMeetState {
   description: string;
   thumbnail: string;
   password: string;
+  menu: string;
   muted: boolean;
   videoOff: boolean;
 }
@@ -19,6 +20,7 @@ export const initialMeetState: IMeetState = {
   description: "",
   thumbnail: "회의 썸네일을 업로드 해주세요",
   password: "",
+  menu: "",
   muted: false,
   videoOff: false,
 };
