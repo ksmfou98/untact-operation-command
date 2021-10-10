@@ -9,7 +9,7 @@ interface ModalProps {
   buttonName: string;
   onToggleModal: () => void;
   children: React.ReactNode;
-  size: "small" | "big";
+  size: "small" | "middle" | "big";
   isModal: boolean;
   onClick?: () => void;
   isClose?: boolean;
@@ -85,8 +85,26 @@ const ModalBlock = styled.div<{ size: string; isModal: boolean }>`
     right: 0;
     left: 0;
     margin: auto;
-    width: ${(props) => (props.size === "small" ? "435px" : "550px")};
-    height: ${(props) => (props.size === "small" ? "250px" : "640px")};
+    width: ${(props) => {
+      switch (props.size) {
+        case "small":
+          return "435px";
+        case "middle":
+          return "700px";
+        case "big":
+          return "550px";
+      }
+    }};
+    height: ${(props) => {
+      switch (props.size) {
+        case "small":
+          return "250px";
+        case "middle":
+          return "500px";
+        case "big":
+          return "640px";
+      }
+    }};
     display: flex;
     flex-direction: column;
     border-radius: 10px;
