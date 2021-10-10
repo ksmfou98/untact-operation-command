@@ -1,4 +1,5 @@
 import Modal from "components/common/Modal";
+import { palette } from "lib/styles/palette";
 import React, { useState } from "react";
 import styled from "styled-components";
 import MediaSetting from "./MediaSetting";
@@ -32,12 +33,18 @@ const MeetSettingModal = ({
       onToggleModal={onToggleModal}
     >
       <ContentBox>
-        <LeftNav>
-          <ul>
-            <li onClick={onSetMenuMedia}>음성 및 비디오</li>
-            <li onClick={onSetMenuRoom}>방 설정</li>
-          </ul>
-        </LeftNav>
+        <LeftMenu>
+          <MenuList>
+            <MenuItem onClick={onSetMenuMedia}>
+              <span className={menu === "media" ? "active" : ""}>
+                음성 및 비디오
+              </span>
+            </MenuItem>
+            <MenuItem onClick={onSetMenuRoom}>
+              <span className={menu === "room" ? "active" : ""}>방 설정</span>
+            </MenuItem>
+          </MenuList>
+        </LeftMenu>
         <RightContent>
           {menu === "media" && <MediaSetting />}
           {menu === "room" && <RoomSetting />}
@@ -54,15 +61,39 @@ const ContentBox = styled.div`
   height: 100%;
 `;
 
-const LeftNav = styled.div`
-  background-color: blue;
+const LeftMenu = styled.div`
   height: 100%;
   width: 160px;
+  border-right: 1px solid #dadce0;
+`;
+
+const MenuList = styled.ul``;
+
+const MenuItem = styled.li`
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  span {
+    color: #484747;
+    display: block;
+    padding: 15px 20px;
+    border-radius: 10px;
+    &:hover {
+      background-color: #f1efef;
+      font-weight: 500;
+      color: ${palette.mainColor};
+    }
+  }
+  .active {
+    background-color: #f1efef;
+    font-weight: 500;
+    color: ${palette.mainColor};
+  }
 `;
 
 const RightContent = styled.div`
-  background-color: yellow;
   flex: 1;
+  padding: 10px;
 `;
 
 export default MeetSettingModal;
