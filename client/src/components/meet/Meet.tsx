@@ -98,21 +98,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
 
     getMedia();
 
-    // //화면공유 테스트 여기부터
-    // navigator.mediaDevices
-    //   .getDisplayMedia({
-    //     video: true,
-    //     audio: true,
-    //   })
-    //   .then((stream) => {
-    //     console.log("getDisplayMedia", stream);
-    //   })
-    //   .catch((error) => {
-    //     console.log(`getDisplayMedia error: ${error}`);
-    //   });
-
-    // //화면 공유 테스트 여기까지
-
     newSocket.on(
       "userEnter",
       (data: { id: string; name: string; muted: boolean }) => {
@@ -397,48 +382,41 @@ const Meet = ({ meetInfo }: MeetProps) => {
     window.location.replace("/");
   };
 
-  // 화면 공유
-
-  const onScreenShare = () => {
-    navigator.mediaDevices
-      .getDisplayMedia({
+  // 화면 공유 스트림 받기
+  const getDisplay = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
         audio: true,
-      })
-      .then((stream) => {
-        console.log("getDisplayMedia", stream);
-        const myStream = {
-          id: "1asdasd6789",
-          stream,
-          name: user.name,
-          muted: false,
-          videoOff: false,
-        };
-
-        setUsers((oldUsers) => [...oldUsers, myStream]);
-        // eslint-disable-next-line
-
-        // todo : 화면 공유 했을때 상대방도 보이게 설정 해줘야됌.
-        // 아마 displayMedia 를 따로 사용하는법이 있을 거 같은데 낼 일어나서 해보자
-
-        let ScreenSocket = newSocket;
-        ScreenSocket.id = "1asdasd6789";
-
-        sendPC = createSenderPeerConnection(ScreenSocket, stream);
-        createSenderOffer(ScreenSocket);
-
-        newSocket.emit("joinRoom", {
-          id: "1asdasd6789",
-          meetId,
-        });
-      })
-      .catch((error) => {
-        console.log(`getDisplayMedia error: ${error}`);
       });
+      return stream;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  if (isEnd) return <EndMeetModal />;
+  const onScreenShare = async () => {
+    const myStream = await getDisplay();
+    if (myPeerConnection) {
+      const videoTrack = myStream?.getVideoTracks()[0];
+      const videoSender = myPeerConnection
+        .getSenders()
+        .find((sender) => sender.track?.kind === "video");
+      if (videoTrack) {
+        videoSender?.replaceTrack(videoTrack);
+        setUsers((prev) =>
+          prev.map((u) => {
+            if (u.id === newSocket.id) {
+              u.stream = myStream;
+            }
+            return u;
+          })
+        );
+      }
+    }
+  };
 
+  // 해당 deviedId로 video 스트림 받기
   const getMedia = async (deviceId: string) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -453,6 +431,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
     }
   };
 
+  // video 변경
   const onChangeVideo = async (videoId: string) => {
     const myStream = await getMedia(videoId);
     if (myPeerConnection) {
@@ -473,6 +452,8 @@ const Meet = ({ meetInfo }: MeetProps) => {
       }
     }
   };
+
+  if (isEnd) return <EndMeetModal />;
 
   return (
     <MeetPageBlock>
