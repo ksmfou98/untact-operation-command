@@ -8,11 +8,13 @@ import RoomSetting from "./RoomSetting";
 interface MeetSettingModalProps {
   isModal: boolean;
   onToggleModal: () => void;
+  onChangeVideo: (videoId: string) => void;
 }
 
 const MeetSettingModal = ({
   isModal,
   onToggleModal,
+  onChangeVideo,
 }: MeetSettingModalProps) => {
   const [menu, setMenu] = useState("media");
 
@@ -46,7 +48,7 @@ const MeetSettingModal = ({
           </MenuList>
         </LeftMenu>
         <RightContent>
-          {menu === "media" && <MediaSetting />}
+          {menu === "media" && <MediaSetting onChangeVideo={onChangeVideo} />}
           {menu === "room" && <RoomSetting />}
         </RightContent>
       </ContentBox>

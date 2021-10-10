@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-const MediaSetting = () => {
+interface MediaSettingProps {
+  onChangeVideo: (videoId: string) => void;
+}
+
+const MediaSetting = ({ onChangeVideo }: MediaSettingProps) => {
   const [videos, setVideos] = useState<MediaDeviceInfo[]>();
   const [audios, setAudios] = useState<MediaDeviceInfo[]>();
   const [speakers, setSpeakers] = useState<MediaDeviceInfo[]>();
-
-  const setAudioState = useSetRecoilState(videoState);
 
   useEffect(() => {
     async function getConnectedDevices() {
@@ -30,27 +32,26 @@ const MediaSetting = () => {
     getConnectedDevices();
   }, []);
 
-  const onChangeAudio = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeAudioId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const audio = e.target.value;
     console.log(audio);
   };
 
-  const onChangeSpeaker = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeSpeakerId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const speaker = e.target.value;
     console.log(speaker);
   };
 
-  const onChangeVideo = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const video = e.target.value;
-    setAudioState(video);
-    console.log(video);
+  const onChangeVideoId = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const videoId = e.target.value;
+    onChangeVideo(videoId);
   };
 
   return (
     <MediaSettingBlock>
       <div>
         <label>마이크</label>
-        <select onChange={onChangeAudio}>
+        <select onChange={onChangeAudioId}>
           {audios?.map((audio) => (
             <option key={audio.deviceId} value={audio.deviceId}>
               {audio.label}
@@ -60,7 +61,7 @@ const MediaSetting = () => {
       </div>
       <div>
         <label>스피커</label>
-        <select onChange={onChangeSpeaker}>
+        <select onChange={onChangeSpeakerId}>
           {speakers?.map((speaker) => (
             <option key={speaker.deviceId} value={speaker.deviceId}>
               {speaker.label}
@@ -70,7 +71,7 @@ const MediaSetting = () => {
       </div>
       <div>
         <label>비디오</label>
-        <select onChange={onChangeVideo}>
+        <select onChange={onChangeVideoId}>
           {videos?.map((video) => (
             <option key={video.deviceId} value={video.deviceId}>
               {video.label}

@@ -13,7 +13,6 @@ import { IMeetState } from "atoms/meetState";
 import ChatsSideBar from "./ChatsSideBar";
 import ChatsButton from "./ChatsButton";
 import EndMeetModal from "./EndMeetModal";
-import { videoState } from "atoms/deviceState";
 
 let newSocket = io.connect(SERVER_URL); // 소켓 연결
 
@@ -29,7 +28,6 @@ const Meet = ({ meetInfo }: MeetProps) => {
   const user = useRecoilValue(userState);
   const [users, setUsers] = useState<Array<IWebRTCUser>>([]);
   const [myPeerConnection, setMyPeerConnection] = useState<RTCPeerConnection>();
-  const videoId = useRecoilValue(videoState);
 
   // 회의 상태
   const [isEnd, setIsEnd] = useState(false);
@@ -455,10 +453,8 @@ const Meet = ({ meetInfo }: MeetProps) => {
     }
   };
 
-  const onClick = async () => {
-    console.log(myPeerConnection?.getSenders());
+  const onChangeVideo = async (videoId: string) => {
     const myStream = await getMedia(videoId);
-    console.log(myStream);
     if (myPeerConnection) {
       const videoTrack = myStream?.getVideoTracks()[0];
       const videoSender = myPeerConnection
@@ -466,12 +462,13 @@ const Meet = ({ meetInfo }: MeetProps) => {
         .find((sender) => sender.track?.kind === "video");
       if (videoTrack) {
         videoSender?.replaceTrack(videoTrack);
+        setUsers((prev) => prev.map((user) => ({ ...user, stream: myStream })));
       }
     }
   };
 
   return (
-    <MeetPageBlock onClick={onClick}>
+    <MeetPageBlock>
       <Wrapper>
         <main>
           <MeetGrid users={users} sidebarOpen={usersSidebarOpen} />
@@ -504,6 +501,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
             onToggleVideoDisabled={onToggleVideoDisabled}
             onHangOff={onHangOff}
             onScreenShare={onScreenShare}
+            onChangeVideo={onChangeVideo}
           />
         </div>
         <div className="right">

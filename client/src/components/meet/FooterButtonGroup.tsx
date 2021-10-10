@@ -20,6 +20,7 @@ interface FooterButtonGroupProps {
   onToggleVideoDisabled: () => void;
   onHangOff: () => void;
   onScreenShare: () => void;
+  onChangeVideo: (videoId: string) => void;
 }
 
 const FooterButtonGroup = ({
@@ -29,6 +30,7 @@ const FooterButtonGroup = ({
   onToggleVideoDisabled,
   onHangOff,
   onScreenShare,
+  onChangeVideo,
 }: FooterButtonGroupProps) => {
   const { isModal, onToggleModal } = useModal();
 
@@ -67,7 +69,11 @@ const FooterButtonGroup = ({
       </Group>
 
       {isModal && (
-        <MeetSettingModal isModal={isModal} onToggleModal={onToggleModal} />
+        <MeetSettingModal
+          isModal={isModal}
+          onToggleModal={onToggleModal}
+          onChangeVideo={onChangeVideo}
+        />
       )}
     </>
   );
