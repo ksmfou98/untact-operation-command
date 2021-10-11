@@ -1,6 +1,6 @@
 import Modal from "components/common/Modal";
 import useMemberSearchEffect from "hooks/member/useMemberSearchEffect";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 interface MemberSearchModalProps {
@@ -12,6 +12,17 @@ const MemberSearchModal = ({
   isModal,
   onToggleModal,
 }: MemberSearchModalProps) => {
+  const {
+    onSearchMember,
+    members,
+    searchEmail,
+    onChangeSearchEmail,
+    selectedMember,
+    onClickMember,
+  } = useMemberSearchEffect();
+
+  const [isSelected, setIsSelected] = useState(false);
+
   return (
     <div>
       <Modal
@@ -25,11 +36,36 @@ const MemberSearchModal = ({
         <MenberSearchModalMain>
           <div className="searchBox">
             <div>이메일 검색</div>
-            <input className="searchInput" type="text" />
-            <div className="searchBtn">검색</div>
+            <input
+              className="searchInput"
+              type="text"
+              value={searchEmail}
+              onChange={onChangeSearchEmail}
+            />
+            <button className="searchBtn" onClick={onSearchMember}>
+              검색
+            </button>
           </div>
           <SearchListBox>
-            <SearchList>asd</SearchList>
+            {members &&
+              members.map((member, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setIsSelected(!isSelected);
+                  }}
+                >
+                  <SearchList isSelected={isSelected}>
+                    <div
+                      onClick={() => {
+                        onClickMember(member._id);
+                      }}
+                    >
+                      {member.name}
+                    </div>
+                  </SearchList>
+                </div>
+              ))}
           </SearchListBox>
         </MenberSearchModalMain>
       </Modal>
@@ -65,11 +101,13 @@ const SearchListBox = styled.div`
   overflow-y: scroll;
   border: #d5d3d3 1px solid;
 `;
-const SearchList = styled.div`
+const SearchList = styled.div<{ isSelected: boolean }>`
   height: 50px;
   border-bottom: 1px solid #d5d3d3;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  background-color: ${(props) => (props.isSelected ? "#00196424" : "white")};
 `;
 
 export default MemberSearchModal;
