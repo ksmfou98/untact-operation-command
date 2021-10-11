@@ -62,6 +62,8 @@ export const updateSchedule = async (req: Request, res: Response) => {
   const { title, date, start, end, scheduleId } = req.body;
 
   const userId = res.locals.user._id;
+  const startTime = new Date(date.substr(0, 10) + "T" + start);
+  const endTime = new Date(date.substr(0, 10) + "T" + end);
   try {
     let schedule = await Calendar.findById({ _id: scheduleId });
     if (!schedule) {
@@ -76,14 +78,17 @@ export const updateSchedule = async (req: Request, res: Response) => {
         message: "일정 작성자가 아닙니다.",
       });
     }
+
     schedule = await Calendar.findByIdAndUpdate(
       { _id: scheduleId },
-      { title, scheduleId, start, end },
+      { title, scheduleId, start: startTime, end: endTime },
       { new: true }
     );
+
+    const schedules = await Calendar.find();
     return res.status(200).json({
       success: true,
-      schedule,
+      schedules,
     });
   } catch (error) {
     return res.status(500).json({
@@ -110,6 +115,7 @@ export const deleteSchedule = async (req: Request, res: Response) => {
         message: "일정 작성자가 아닙니다.",
       });
     }
+
     schedule = await Calendar.findByIdAndDelete({ _id: scheduleId });
     const schedules = await Calendar.find().populate("user");
     return res.status(200).json({

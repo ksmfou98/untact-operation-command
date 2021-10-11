@@ -7,15 +7,25 @@ import media from "lib/styles/media";
 import { useRecoilValue } from "recoil";
 import { userState } from "atoms/userState";
 import { Link } from "react-router-dom";
+import { SERVER_URL } from "lib/config";
 
 const Aside = () => {
   const user = useRecoilValue(userState);
-
+  console.log(user);
   return (
     <AsideBlock>
       <AsideTitle>
         <div className="profile-img">
-          <BsPeopleCircle size="40" />
+          {/* <BsPeopleCircle size="40" /> */}
+          {user.thumbnail ? (
+            <img
+              src={`${SERVER_URL}/${user.thumbnail}`}
+              alt=""
+              className="userProfile"
+            />
+          ) : (
+            <BsPeopleCircle size="40" />
+          )}
         </div>
         {user?.name ? (
           <div className="user-name">{user.name}</div>
@@ -59,11 +69,18 @@ const AsideTitle = styled.div`
   margin-bottom: 65px;
 
   .profile-img {
+    display: inline-block;
     margin-right: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    .userProfile {
+      max-width: 40px;
+      border-radius: 30%;
+      object-fit: fill;
+    }
   }
+
   .user-name {
     font-size: 20px;
     font-weight: 400;

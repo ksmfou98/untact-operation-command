@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import multer from "multer";
 import User from "../../models/user";
+import fs from "fs";
 
-// multer
-var storage = multer.diskStorage({
+// multer 유저 프로필 사진 저장
+
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/profile/");
   },
@@ -11,15 +13,17 @@ var storage = multer.diskStorage({
     cb(null, `${Date.now()}_${file.originalname}`);
   },
 });
-var upload = multer({ storage: storage }).single("user_img");
+
+const upload = multer({ storage: storage }).single("user_img");
 
 export const uploadImg = (req: Request, res: Response) => {
+  const dir = "./uploads/profile";
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+
   upload(req, res, (err) => {
-    console.log("req.body");
     if (err) {
       return res.json({ success: false, err });
     }
-    console.log("asd2");
     return res.json({
       success: true,
       image: res.req.file.path,
@@ -116,6 +120,29 @@ export const logout = async (req: Request, res: Response) => {
   });
 };
 
+//회원 정보 수정
+//지금은 프로필 사진만 변경 가능
+export const updateUserInfo = async (req: Request, res: Response) => {
+  const { thumbnail } = req.body;
+  const userId = res.locals.user._id;
+
+  try {
+    let user = await User.findByIdAndUpdate(
+      { _id: userId },
+      { thumbnail },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    });
+  }
+};
+
 //친구 추가
 export const addFriend = async (req: Request, res: Response) => {
   const { friendId } = req.body;
@@ -208,6 +235,22 @@ export const readFriendList = async (req: Request, res: Response) => {
     return res.status(200).json({
       success: true,
       myFriends,
+    });
+  } catch (e) {
+    res.status(500).json({
+      error: e,
+    });
+  }
+};
+
+//친구를 email 검색하여 찾기
+export const searchFriendEmail = async (req: Request, res: Response) => {
+  const { friendEmail } = req.params;
+  try {
+    const members = await User.find({ email: friendEmail });
+    return res.status(200).json({
+      success: true,
+      members,
     });
   } catch (e) {
     res.status(500).json({

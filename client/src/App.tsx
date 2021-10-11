@@ -11,6 +11,7 @@ import RegisterPage from "pages/RegisterPage";
 import LoginPage from "pages/LoginPage";
 import MembersPage from "pages/MembersPage";
 import MeetPage from "pages/MeetPage";
+import SettingPage from "pages/SettingPage";
 import SearchPage from "pages/SearchPage";
 import MobileHeader from "components/base/MobileHeader";
 import { useRecoilValue } from "recoil";
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/" exact component={MeetListPage} />
             <Route path="/schedule" exact component={CalendarPage} />
             <Route path="/members" exact component={MembersPage} />
+            <Route path="/setting" exact component={SettingPage} />
             <Route path="/search" component={SearchPage} />
           </MainLayout>
         </AsideLayout>

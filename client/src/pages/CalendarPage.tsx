@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -10,25 +10,25 @@ import CalendarModal from "components/calendar/CalendarModal";
 import useCalendarEffect from "hooks/calendar/useCalendarEffect";
 import Loading from "components/common/Loading";
 import useHandleCalendar from "hooks/calendar/useHandleCalendar";
+import useModal from "hooks/common/useModal";
 
 const CalendarPage = () => {
-  const {
-    schedules,
-    schedule,
-    isModal,
-    onToggleModal,
-    isEdit,
-    onEditToggleModal,
-    loading,
-  } = useCalendarEffect();
+  const { schedules, loading } = useCalendarEffect();
+  const { isModal, onToggleModal } = useModal();
+  const [isEdit, setIsEdit] = useState(false);
   const { onEventClick } = useHandleCalendar();
+
   if (loading) return <Loading />;
-  console.log("렌더링");
+
+  const onToggle = () => {
+    onToggleModal();
+    setIsEdit(false);
+  };
+
   return (
     <CalendarPageBlock>
       <Calendar>
         <FullCalendar
-          timeZone="UTC"
           aspectRatio={1.75}
           customButtons={{
             createSchedule: {
@@ -51,15 +51,17 @@ const CalendarPage = () => {
             listPlugin,
           ]}
           events={schedules}
-          eventClick={onEventClick}
+          eventClick={(e) => {
+            onEventClick(e);
+            onToggleModal();
+            setIsEdit(true);
+          }}
         />
       </Calendar>
       <CalendarModal
         isModal={isModal}
-        onToggleModal={onToggleModal}
+        onToggleModal={onToggle}
         isEdit={isEdit}
-        scheduleId={schedule._id}
-        onEditToggleModal={onEditToggleModal}
       />
     </CalendarPageBlock>
   );
@@ -106,6 +108,3 @@ const Calendar = styled.div`
 `;
 
 export default CalendarPage;
-
-//#777dce
-//rgb(194,204,255)

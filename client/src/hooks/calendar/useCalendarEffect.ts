@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { schedulesState } from "atoms/calendarState";
 import { readScheduleLinstAPI } from "lib/api/calendar";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { schedulesState, scheduleState } from "atoms/calendarState";
-import useCalendarModal from "hooks/common/useCalendarModal";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
 export default function useCalendarEffect() {
   const [loading, setLoading] = useState(false);
   const [schedules, setSchedules] = useRecoilState(schedulesState);
-  const schedule = useRecoilValue(scheduleState);
-  const { isModal, onToggleModal, isEdit, onEditToggleModal } =
-    useCalendarModal();
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -30,11 +27,6 @@ export default function useCalendarEffect() {
   return {
     schedules,
     setSchedules,
-    schedule,
-    isModal,
-    onToggleModal,
-    isEdit,
-    onEditToggleModal,
     loading,
   };
 }

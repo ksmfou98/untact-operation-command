@@ -1,14 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
-import useMemberListEffect from "hooks/Member/useMemberListEffect";
+import useMemberListEffect from "hooks/member/useMemberListEffect";
 import media from "lib/styles/media";
-import useMemberHandleEffect from "hooks/Member/useMemberHandleEffect";
+import useMemberHandleEffect from "hooks/member/useMemberHandleEffect";
+import useModal from "hooks/common/useModal";
+import MemberSearchModal from "./MemberSearchModal";
 
 const MembersList = () => {
+  const { isModal, onToggleModal } = useModal();
   const { friends } = useMemberListEffect();
   const { onDeleteFriend } = useMemberHandleEffect();
-  console.log(friends);
+
   return (
     <MenberListBlock>
       {friends?.map((friend, index) => (
@@ -34,11 +38,15 @@ const MembersList = () => {
         </div>
       ))}
       <List>
-        <ListEle>
+        <ListEle onClick={onToggleModal}>
           <div className="emptyProfile"></div>
           <div className="addName">Add New</div>
         </ListEle>
       </List>
+
+      {isModal && (
+        <MemberSearchModal isModal={isModal} onToggleModal={onToggleModal} />
+      )}
     </MenberListBlock>
   );
 };
