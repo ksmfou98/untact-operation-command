@@ -6,6 +6,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import MobileSideBar from "./MobileSidebar";
 import { useRecoilState } from "recoil";
 import { sideBarState } from "atoms/sideBarState";
+import { colorLogo } from "assets/image";
 
 const MobileHeader = () => {
   const [isSideBar, setIsSideBar] = useRecoilState(sideBarState);
@@ -17,7 +18,9 @@ const MobileHeader = () => {
   return (
     <MobileHeaderBlock>
       <MobileHeaderInner>
-        <Title>U O C</Title>
+        <Title>
+          <img src={colorLogo} alt="logo" />
+        </Title>
         <MenuButton onClick={onToggleSideBar}>
           <AiOutlineMenu size="28" />
         </MenuButton>
@@ -50,8 +53,12 @@ const MobileHeaderInner = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 18px;
-  font-weight: 400;
+  width: 100px;
+  height: 79px;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
 `;
 
 const MenuButton = styled.button`
