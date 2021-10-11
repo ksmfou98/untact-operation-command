@@ -84,18 +84,13 @@ const HomeNavBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    ${media.xsmall} {
-    }
   }
 `;
 
 const LeftBox = styled.div`
   display: flex;
   align-items: center;
-  ${media.xsmall} {
-    flex: 1;
-    justify-content: space-around;
-  }
+  flex: 1;
   .item {
     display: flex;
     align-items: center;
@@ -113,17 +108,18 @@ const LeftBox = styled.div`
     .name {
       font-size: 18px;
     }
-    ${media.custom(980)} {
-      padding-right: 10px;
+    ${media.custom(1050)} {
+      padding: 10px;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
       .ico {
-        margin-right: 3px;
+        margin-right: 0;
+        margin-bottom: 4px;
       }
       .name {
         font-size: 14px;
       }
-    }
-    ${media.xsmall} {
-      flex-direction: column;
     }
   }
 
@@ -135,7 +131,6 @@ const LeftBox = styled.div`
 
 const RightBox = styled.div`
   display: flex;
-
   ${media.small} {
     display: none;
   }
