@@ -69,7 +69,7 @@ const MainLayout = styled.div`
 `;
 
 const PageTitle = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   .left {
     font-size: 22px;
     font-weight: 500;
