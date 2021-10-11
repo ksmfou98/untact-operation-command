@@ -65,7 +65,9 @@ const SettingProfileImg = () => {
         </InfoBox>
 
         <div className="create-btn">
-          <button type="submit">정보수정</button>
+          <button type="submit" className="btn">
+            정보수정
+          </button>
         </div>
       </form>
     </ProfileBlock>
@@ -82,6 +84,19 @@ const ProfileBlock = styled.div`
   }
   .title {
     font-size: 20px;
+  }
+  .create-btn {
+    text-align: center;
+    margin: 40px;
+    .btn {
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      background-color: ${palette.mainColor};
+      border-radius: 5px;
+      width: 6rem;
+      height: 2rem;
+    }
   }
 `;
 
