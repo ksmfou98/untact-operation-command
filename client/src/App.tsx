@@ -13,8 +13,11 @@ import MembersPage from "pages/MembersPage";
 import MeetPage from "pages/MeetPage";
 import SearchPage from "pages/SearchPage";
 import MobileHeader from "components/base/MobileHeader";
+import { useRecoilValue } from "recoil";
+import { sideBarState } from "atoms/sideBarState";
 const App = () => {
   useChannelPluginEffect();
+  const sideBar = useRecoilValue(sideBarState);
   return (
     <>
       <Switch>
@@ -22,7 +25,7 @@ const App = () => {
         <Route path="/register" exact component={RegisterPage} />
         <Route path="/login" exact component={LoginPage} />
 
-        <AsideLayout>
+        <AsideLayout sideBar={sideBar}>
           <MobileHeader />
           <Aside />
           <MainLayout>
@@ -42,7 +45,7 @@ const App = () => {
 
 export default App;
 
-const AsideLayout = styled.div`
+const AsideLayout = styled.div<{ sideBar: boolean }>`
   margin-left: 260px;
   height: 100%;
   ${media.xlarge} {
@@ -52,6 +55,7 @@ const AsideLayout = styled.div`
     margin-left: 0;
     padding-top: 50px;
   }
+  ${(props) => props.sideBar && `overflow: hidden;`}
 `;
 
 const MainLayout = styled.div`

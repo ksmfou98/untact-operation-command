@@ -3,16 +3,27 @@ import media from "lib/styles/media";
 import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 import { AiOutlineMenu } from "react-icons/ai";
+import MobileSideBar from "./MobileSidebar";
+import { useRecoilState } from "recoil";
+import { sideBarState } from "atoms/sideBarState";
 
 const MobileHeader = () => {
+  const [isSideBar, setIsSideBar] = useRecoilState(sideBarState);
+
+  const onToggleSideBar = () => {
+    setIsSideBar(!isSideBar);
+  };
+
   return (
     <MobileHeaderBlock>
       <MobileHeaderInner>
         <Title>U O C</Title>
-        <MenuButton>
+        <MenuButton onClick={onToggleSideBar}>
           <AiOutlineMenu size="28" />
         </MenuButton>
       </MobileHeaderInner>
+
+      <MobileSideBar isSideBar={isSideBar} onToggleSideBar={onToggleSideBar} />
     </MobileHeaderBlock>
   );
 };
