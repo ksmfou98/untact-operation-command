@@ -12,6 +12,7 @@ import LoginPage from "pages/LoginPage";
 import MembersPage from "pages/MembersPage";
 import MeetPage from "pages/MeetPage";
 import SearchPage from "pages/SearchPage";
+import MobileHeader from "components/base/MobileHeader";
 const App = () => {
   useChannelPluginEffect();
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/login" exact component={LoginPage} />
 
         <AsideLayout>
+          <MobileHeader />
           <Aside />
           <MainLayout>
             <PageTitle>
@@ -48,6 +50,7 @@ const AsideLayout = styled.div`
   }
   ${media.small} {
     margin-left: 0;
+    padding-top: 50px;
   }
 `;
 
@@ -66,6 +69,9 @@ const MainLayout = styled.div`
   ${media.medium} {
     width: calc(100% - 32px);
   }
+  ${media.small} {
+    padding: 0;
+  }
 `;
 
 const PageTitle = styled.div`
@@ -73,5 +79,8 @@ const PageTitle = styled.div`
   .left {
     font-size: 22px;
     font-weight: 500;
+  }
+  ${media.small} {
+    display: none;
   }
 `;
