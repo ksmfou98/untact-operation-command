@@ -1,4 +1,5 @@
 import { userState } from "atoms/userState";
+import useAuth from "hooks/auth/useAuth";
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
@@ -15,6 +16,7 @@ interface MobileSideBarProps {
 
 const MobileSideBar = ({ isSideBar, onToggleSideBar }: MobileSideBarProps) => {
   const user = useRecoilValue(userState);
+  const { onLogout } = useAuth();
 
   return (
     <MobileSideBarBlock isSideBar={isSideBar} onMouseDown={onToggleSideBar}>
@@ -38,7 +40,7 @@ const MobileSideBar = ({ isSideBar, onToggleSideBar }: MobileSideBarProps) => {
         <MobileSideMenu />
 
         {user._id && (
-          <AuthButton type="button">
+          <AuthButton type="button" onClick={onLogout}>
             <div className="ico">
               <BiLogOut size="22" />
             </div>

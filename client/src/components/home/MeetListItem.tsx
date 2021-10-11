@@ -48,7 +48,8 @@ const MeetListItemBlock = styled.div`
   width: 320px;
   background: white;
   border-radius: 4px;
-  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
+  /* box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px; */
+  box-shadow: rgb(0 0 0 / 10%) 4px 6px 16px 4px;
   transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
   margin: 16px;
   overflow: hidden;
