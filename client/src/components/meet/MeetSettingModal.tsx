@@ -9,12 +9,14 @@ interface MeetSettingModalProps {
   isModal: boolean;
   onToggleModal: () => void;
   onChangeVideo: (videoId: string) => void;
+  onChangeAudio: (audioId: string) => void;
 }
 
 const MeetSettingModal = ({
   isModal,
   onToggleModal,
   onChangeVideo,
+  onChangeAudio,
 }: MeetSettingModalProps) => {
   const [menu, setMenu] = useState("media");
 
@@ -48,7 +50,12 @@ const MeetSettingModal = ({
           </MenuList>
         </LeftMenu>
         <RightContent>
-          {menu === "media" && <MediaSetting onChangeVideo={onChangeVideo} />}
+          {menu === "media" && (
+            <MediaSetting
+              onChangeVideo={onChangeVideo}
+              onChangeAudio={onChangeAudio}
+            />
+          )}
           {menu === "room" && <RoomSetting />}
         </RightContent>
       </ContentBox>

@@ -417,7 +417,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
   };
 
   // 해당 deviedId로 video 스트림 받기
-  const getMedia = async (deviceId: string) => {
+  const getVideoStream = async (deviceId: string) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -431,9 +431,24 @@ const Meet = ({ meetInfo }: MeetProps) => {
     }
   };
 
+  // 해당 deviedId로 audio 스트림 받기
+  const getAudioStream = async (deviceId: string) => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          deviceId,
+        },
+        video: true,
+      });
+      return stream;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   // video 변경
   const onChangeVideo = async (videoId: string) => {
-    const myStream = await getMedia(videoId);
+    const myStream = await getVideoStream(videoId);
     if (myPeerConnection) {
       const videoTrack = myStream?.getVideoTracks()[0];
       const videoSender = myPeerConnection
@@ -441,6 +456,28 @@ const Meet = ({ meetInfo }: MeetProps) => {
         .find((sender) => sender.track?.kind === "video");
       if (videoTrack) {
         videoSender?.replaceTrack(videoTrack);
+        setUsers((prev) =>
+          prev.map((u) => {
+            if (u.id === newSocket.id) {
+              u.stream = myStream;
+            }
+            return u;
+          })
+        );
+      }
+    }
+  };
+
+  // audio 변경
+  const onChangeAudio = async (audioId: string) => {
+    const myStream = await getAudioStream(audioId);
+    if (myPeerConnection) {
+      const audioTrack = myStream?.getAudioTracks()[0];
+      const audioSender = myPeerConnection
+        .getSenders()
+        .find((sender) => sender.track?.kind === "audio");
+      if (audioTrack) {
+        audioSender?.replaceTrack(audioTrack);
         setUsers((prev) =>
           prev.map((u) => {
             if (u.id === newSocket.id) {
@@ -490,6 +527,7 @@ const Meet = ({ meetInfo }: MeetProps) => {
             onHangOff={onHangOff}
             onScreenShare={onScreenShare}
             onChangeVideo={onChangeVideo}
+            onChangeAudio={onChangeAudio}
           />
         </div>
         <div className="right">
