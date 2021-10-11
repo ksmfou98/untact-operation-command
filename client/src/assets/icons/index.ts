@@ -8,3 +8,4 @@ export { ReactComponent as CloseIcon } from "./close.svg";
 export { ReactComponent as CallEndIcon } from "./call_end.svg";
 export { ReactComponent as ScreenShareIcon } from "./screen_share.svg";
 export { ReactComponent as ChatsIcon } from "./chats.svg";
+export { ReactComponent as SettingIcon } from "./setting.svg";

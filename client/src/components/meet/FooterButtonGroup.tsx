@@ -5,10 +5,13 @@ import {
   VideocamIcon,
   VideocamOffIcon,
   ScreenShareIcon,
+  SettingIcon,
 } from "assets/icons";
+import useModal from "hooks/common/useModal";
 import React from "react";
 import styled from "styled-components";
 import IconCircleButton from "./IconCircleButton";
+import MeetSettingModal from "./MeetSettingModal";
 
 interface FooterButtonGroupProps {
   muted: boolean;
@@ -17,6 +20,8 @@ interface FooterButtonGroupProps {
   onToggleVideoDisabled: () => void;
   onHangOff: () => void;
   onScreenShare: () => void;
+  onChangeVideo: (videoId: string) => void;
+  onChangeAudio: (audioId: string) => void;
 }
 
 const FooterButtonGroup = ({
@@ -26,35 +31,54 @@ const FooterButtonGroup = ({
   onToggleVideoDisabled,
   onHangOff,
   onScreenShare,
+  onChangeVideo,
+  onChangeAudio,
 }: FooterButtonGroupProps) => {
-  return (
-    <Group>
-      {muted ? (
-        <RedButton onClick={onToggleMuted}>
-          <MicOffIcon />
-        </RedButton>
-      ) : (
-        <IconCircleButton onClick={onToggleMuted}>
-          <MicIcon />
-        </IconCircleButton>
-      )}
-      {videoDisabled ? (
-        <RedButton onClick={onToggleVideoDisabled}>
-          <VideocamOffIcon />
-        </RedButton>
-      ) : (
-        <IconCircleButton onClick={onToggleVideoDisabled}>
-          <VideocamIcon />
-        </IconCircleButton>
-      )}
-      <IconCircleButton onClick={onScreenShare}>
-        <ScreenShareIcon />
-      </IconCircleButton>
+  const { isModal, onToggleModal } = useModal();
 
-      <CallEndButton onClick={onHangOff}>
-        <CallEndIcon />
-      </CallEndButton>
-    </Group>
+  return (
+    <>
+      <Group>
+        {muted ? (
+          <RedButton onClick={onToggleMuted}>
+            <MicOffIcon />
+          </RedButton>
+        ) : (
+          <IconCircleButton onClick={onToggleMuted}>
+            <MicIcon />
+          </IconCircleButton>
+        )}
+        {videoDisabled ? (
+          <RedButton onClick={onToggleVideoDisabled}>
+            <VideocamOffIcon />
+          </RedButton>
+        ) : (
+          <IconCircleButton onClick={onToggleVideoDisabled}>
+            <VideocamIcon />
+          </IconCircleButton>
+        )}
+        <IconCircleButton onClick={onScreenShare}>
+          <ScreenShareIcon />
+        </IconCircleButton>
+
+        <IconCircleButton onClick={onToggleModal}>
+          <SettingIcon />
+        </IconCircleButton>
+
+        <CallEndButton onClick={onHangOff}>
+          <CallEndIcon />
+        </CallEndButton>
+      </Group>
+
+      {isModal && (
+        <MeetSettingModal
+          isModal={isModal}
+          onToggleModal={onToggleModal}
+          onChangeVideo={onChangeVideo}
+          onChangeAudio={onChangeAudio}
+        />
+      )}
+    </>
   );
 };
 
