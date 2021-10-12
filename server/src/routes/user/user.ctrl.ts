@@ -177,11 +177,9 @@ export const addFriend = async (req: Request, res: Response) => {
     friend.friends.push(res.locals.user._id);
     await friend.save();
 
-    const myfriends = me.friends;
-
     return res.status(200).json({
       success: true,
-      myfriends,
+      friendId,
     });
   } catch (e) {
     res.status(500).json({

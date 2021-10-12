@@ -22,10 +22,7 @@ export default function useMemberSearchEffect() {
 
   const onClickMember = (userId: string) => {
     setSelectedMember(userId);
-    console.log(selectedMember);
   };
-
-  const onSubmitMember = () => {};
   return {
     onSearchMember,
     searchEmail,
@@ -35,5 +32,6 @@ export default function useMemberSearchEffect() {
     selectedMember,
     setSelectedMember,
     onClickMember,
+    setMembers
   };
 }
