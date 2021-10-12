@@ -34,7 +34,7 @@ export const createScheduleAPI = async (
 // 일정 삭제
 export const deleteScheduleAPI = async (scheduleId: string) => {
   const response = await client.delete(
-    `/calendar/createSchedule/${scheduleId}`
+    `/calendar/deleteSchedule/${scheduleId}`
   );
   return response.data.schedules;
 };
