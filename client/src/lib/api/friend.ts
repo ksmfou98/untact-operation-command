@@ -20,9 +20,9 @@ export const friendSearchAPI = async (friendEmail: string) => {
 
 //친구 추가하기
 export const friendAddAPI = async (friendId: string) => {
-  const body ={
-    friendId
-  }
+  const body = {
+    friendId,
+  };
   const response = await client.post(`/user/addFriend/`, body);
-  return response.data.friendId;
+  return response.data.friend;
 };

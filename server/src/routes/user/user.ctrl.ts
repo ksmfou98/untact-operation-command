@@ -179,7 +179,7 @@ export const addFriend = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       success: true,
-      friendId,
+      friend,
     });
   } catch (e) {
     res.status(500).json({
