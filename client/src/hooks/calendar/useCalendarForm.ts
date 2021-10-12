@@ -10,12 +10,10 @@ export default function useCalendarForm() {
   const onChangeSchedule = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSchedule((prev) => ({ ...prev, [name]: value }));
-
   };
 
   const onChangeScheduleDate = (dates: Date) => {
     setSchedule((prev) => ({ ...prev, date: dates }));
-
   };
 
   const onCreateSchedule = async () => {
@@ -37,12 +35,10 @@ export default function useCalendarForm() {
         title,
         date,
         start,
-        end,
-
+        end
       );
-      console.log("이거 나오면 성공");
-      setSchedules(response)
-      return response
+      setSchedules(response);
+      return response;
     } catch (e) {
       alert("게시물 수정에 실패했습니다");
       console.log(e);

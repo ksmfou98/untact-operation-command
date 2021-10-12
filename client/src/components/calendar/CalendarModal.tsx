@@ -14,7 +14,6 @@ interface CalendarModalProps {
   isEdit: boolean;
 }
 
-
 const CalendarModal = ({
   isModal,
   onToggleModal,

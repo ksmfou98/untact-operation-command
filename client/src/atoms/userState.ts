@@ -22,3 +22,8 @@ export const userState = atom<IUserState>({
   key: "userState",
   default: initialUserState,
 });
+
+export const friendsState = atom<IUserState[]>({
+  key: "friendsState",
+  default: [],
+});

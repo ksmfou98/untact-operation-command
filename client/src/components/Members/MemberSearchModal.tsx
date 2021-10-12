@@ -20,7 +20,6 @@ const MemberSearchModal = ({
     onChangeSearchEmail,
     selectedMember,
     onClickMember,
-    setMembers,
   } = useMemberSearchEffect();
   const { onAddFriend } = useMemberHandleEffect();
 
