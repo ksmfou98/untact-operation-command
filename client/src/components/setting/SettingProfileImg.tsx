@@ -1,75 +1,106 @@
 import useSetting from "hooks/setting/useSetting";
 import { SERVER_URL } from "lib/config";
-import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import NoIMG from "assets/image/notExistMeet.png";
 import styled from "styled-components";
-import media from "lib/styles/media";
 import { palette } from "lib/styles/palette";
+import { useRecoilValue } from "recoil";
+import { userState } from "atoms/userState";
 
 const SettingProfileImg = () => {
-  const { imgUpload, imgURL, onUpdateUserInfo } = useSetting();
+  const {
+    imgUpload,
+    imgURL,
+    onUpdateUserInfo,
+    updateName,
+    onChangeUpdateName,
+    newPassword,
+    onChangeNewPassword,
+    oldPassword,
+    onChangeOldPassword,
+    newPasswordCheck,
+    onChangeNewPasswordCheck,
+  } = useSetting();
+  const user = useRecoilValue(userState);
   return (
     <ProfileBlock>
-      <form onSubmit={onUpdateUserInfo}>
-        <div className="profileImg">
-          <ImgPreview>
-            {!imgURL && <img src={NoIMG} alt="" className="img-preview" />}
-            {imgURL && (
-              <img
-                src={`${SERVER_URL}/${imgURL}`}
-                alt=""
-                className="img-preview"
-              />
-            )}
-          </ImgPreview>
-          <ImgBox>
-            <div className="inner-input">
-              <label htmlFor="img-upload">
-                <AiOutlineCloudUpload size="25" />
-              </label>
-              <input
-                type="file"
-                id="img-upload"
-                className="image-upload"
-                onChange={imgUpload}
-              />
-            </div>
-          </ImgBox>
+      <div className="profileImg">
+        <ImgPreview>
+          {!imgURL && <img src={NoIMG} alt="" className="img-preview" />}
+          {imgURL && (
+            <img
+              src={`${SERVER_URL}/${imgURL}`}
+              alt=""
+              className="img-preview"
+            />
+          )}
+        </ImgPreview>
+        <ImgBox>
+          <div className="inner-input">
+            <label htmlFor="img-upload">
+              <AiOutlineCloudUpload size="25" />
+            </label>
+            <input
+              type="file"
+              id="img-upload"
+              className="image-upload"
+              onChange={imgUpload}
+            />
+          </div>
+        </ImgBox>
+      </div>
+      <InfoBox>
+        <div className="nameDescrip">이름</div>
+        <div>
+          <input
+            type="text"
+            className="inputEle"
+            value={updateName}
+            onChange={onChangeUpdateName}
+          />
         </div>
-        <InfoBox>
-          <div className="nameDescrip">이름</div>
-          <div>
-            <input type="text" className="inputEle" />
-          </div>
-        </InfoBox>
-        <InfoBox>
-          <div className="nameDescrip">이메일</div>
-          <div>
-            <input type="text" className="inputEle" readOnly />
-          </div>
-        </InfoBox>
-        <InfoBox>
-          <div className="nameDescrip">현재 비밀번호</div>
-          <div>
-            <input type="text" className="inputEle" />
-          </div>
-          <div className="nameDescrip">변경할 비밀번호</div>
-          <div>
-            <input type="text" className="inputEle" />
-          </div>
-          <div className="nameDescrip">비밀번호 확인</div>
-          <div>
-            <input type="text" className="inputEle" />
-          </div>
-        </InfoBox>
+      </InfoBox>
+      <InfoBox>
+        <div className="nameDescrip">이메일</div>
+        <div>
+          <input type="text" className="inputEle" value={user.email} readOnly />
+        </div>
+      </InfoBox>
+      <InfoBox>
+        <div className="nameDescrip">현재 비밀번호</div>
+        <div>
+          <input
+            type="text"
+            className="inputEle"
+            value={oldPassword}
+            onChange={onChangeOldPassword}
+          />
+        </div>
+        <div className="nameDescrip">변경할 비밀번호</div>
+        <div>
+          <input
+            type="text"
+            className="inputEle"
+            value={newPassword}
+            onChange={onChangeNewPassword}
+          />
+        </div>
+        <div className="nameDescrip">비밀번호 확인</div>
+        <div>
+          <input
+            type="text"
+            className="inputEle"
+            value={newPasswordCheck}
+            onChange={onChangeNewPasswordCheck}
+          />
+        </div>
+      </InfoBox>
 
-        <div className="create-btn">
-          <button type="submit" className="btn">
-            정보수정
-          </button>
-        </div>
-      </form>
+      <div className="create-btn">
+        <button className="btn" onClick={onUpdateUserInfo}>
+          정보수정
+        </button>
+      </div>
     </ProfileBlock>
   );
 };
@@ -78,10 +109,9 @@ export default SettingProfileImg;
 
 const ProfileBlock = styled.div`
   margin-top: 50px;
-  form {
-    width: 350px;
-    margin: 0 auto;
-  }
+  width: 350px;
+  margin: 0 auto;
+
   .title {
     font-size: 20px;
   }
@@ -131,8 +161,9 @@ const InfoBox = styled.div`
     margin-top: 10px;
   }
   .inputEle {
-    height: 30px;
+    height: 33px;
     border-radius: 5px;
     width: 100%;
+    border: 1px solid ${palette.mainColor};
   }
 `;

@@ -1,4 +1,5 @@
 import { userState } from "atoms/userState";
+import useInput from "hooks/common/useInput";
 import { updateUserInfoAPI, userProfileAPI } from "lib/api/setting";
 import userStorage from "lib/userStorage";
 import { useState } from "react";
@@ -8,6 +9,7 @@ import { useRecoilState } from "recoil";
 export default function useSetting() {
   const [imgURL, setImgURL] = useState("");
   const [user, setUser] = useRecoilState(userState);
+  const { name } = user;
   const history = useHistory();
 
   //이미지 업로드
@@ -29,20 +31,40 @@ export default function useSetting() {
     }
   };
 
-  const onUpdateUserInfo = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  //유저 정보 수정
+  const [updateName, onChangeUpdateName] = useInput("");
+  const [newPassword, onChangeNewPassword] = useInput("");
+  const [newPasswordCheck, onChangeNewPasswordCheck] = useInput("");
+  const [oldPassword, onChangeOldPassword] = useInput("");
+  const onUpdateUserInfo = async () => {
     try {
-      const user = await updateUserInfoAPI(imgURL);
+      // const isMatch =; 추후에 추가
+      console.log(updateName, oldPassword, newPassword);
+      const user = await updateUserInfoAPI(
+        imgURL,
+        updateName,
+        oldPassword,
+        newPassword
+      );
       setUser(user);
       userStorage.set(user);
-      history.push("/");
+
+      alert("유저 정보가 수정되었습니다.");
     } catch (e) {
-      alert("정보수정에 실패했습니다");
+      alert("유저 정보 수정에 실패했습니다");
     }
   };
   return {
     imgUpload,
     imgURL,
     onUpdateUserInfo,
+    updateName,
+    onChangeUpdateName,
+    newPassword,
+    onChangeNewPassword,
+    oldPassword,
+    onChangeOldPassword,
+    newPasswordCheck,
+    onChangeNewPasswordCheck,
   };
 }
