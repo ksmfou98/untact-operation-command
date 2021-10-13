@@ -115,7 +115,7 @@ export const deleteSchedule = async (req: Request, res: Response) => {
         message: "일정 작성자가 아닙니다.",
       });
     }
-
+   
     schedule = await Calendar.findByIdAndDelete({ _id: scheduleId });
     const schedules = await Calendar.find().populate("user");
     return res.status(200).json({

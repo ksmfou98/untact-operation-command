@@ -14,7 +14,6 @@ interface CalendarModalProps {
   isEdit: boolean;
 }
 
-
 const CalendarModal = ({
   isModal,
   onToggleModal,
@@ -25,6 +24,7 @@ const CalendarModal = ({
     onCreateSchedule,
     onChangeScheduleDate,
     onUpdateSchedule,
+    onDeleteSchedule,
   } = useCalendarForm();
 
   const onToggle = () => {
@@ -32,11 +32,15 @@ const CalendarModal = ({
     resetSchedule();
   };
 
+  const onDeleteAndToggle = (scheduleId: string) => {
+    onToggleModal();
+    onDeleteSchedule(scheduleId);
+  };
+
   const resetSchedule = useResetRecoilState(scheduleState);
   const schedule = useRecoilValue(scheduleState);
   const { title, start, end, date, _id } = schedule;
   useCalendarEditEffect(_id);
-  console.log("수정 모달: ", isEdit);
   return (
     <div>
       {isModal ? (
@@ -47,10 +51,20 @@ const CalendarModal = ({
             isEdit ? onUpdateSchedule() : onCreateSchedule();
           }}
           onToggleModal={onToggle}
-          isModal={true}
+          isModal={isModal}
           size="big"
         >
           <ModalStyled>
+            {isEdit ? (
+              <button
+                className="deleteBtn"
+                onClick={() => {
+                  onDeleteAndToggle(_id);
+                }}
+              >
+                삭제
+              </button>
+            ) : null}
             <div className="infoEle">
               <div className="infoQutn">제목</div>
               <input
@@ -98,7 +112,17 @@ const CalendarModal = ({
 
 const ModalStyled = styled.div`
   margin-left: 4.5%;
-
+  .deleteBtn {
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    margin: 20px 50px 0px 0px;
+    width: 5rem;
+    background-color: #0c1b2f;
+    color: #ffffff;
+    border-radius: 20px;
+    float: right;
+  }
   .infoEle {
     margin: 30px 0px;
     .flex {
@@ -128,4 +152,5 @@ const MyDatePicker = styled(DatePicker)`
   border: 1px solid;
   text-align: center;
 `;
+
 export default CalendarModal;

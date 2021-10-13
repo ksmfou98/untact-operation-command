@@ -1,16 +1,25 @@
-import { IUserState } from "atoms/userState";
+import { friendsState } from "atoms/userState";
 import { readFriendListAPI } from "lib/api/friend";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 
 export default function useMemberListEffect() {
-  const [friends, setFriends] = useState<IUserState[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [friends, setFriends] = useRecoilState(friendsState);
   useEffect(() => {
     const getData = async () => {
-      const friendsList = await readFriendListAPI();
-      setFriends(friendsList);
+      try {
+        setLoading(true);
+        const friendsList = await readFriendListAPI();
+        setFriends(friendsList);
+      } catch (error) {
+        alert("친구 목록을 불러오는데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
     };
     getData();
   }, [setFriends]);
 
-  return { friends };
+  return { friends, setFriends, loading };
 }

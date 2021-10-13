@@ -11,7 +11,6 @@ export default function useMemberSearchEffect() {
   const onSearchMember = async () => {
     try {
       const members = await friendSearchAPI(searchEmail);
-      console.log(searchEmail);
       setMembers(members);
     } catch (e) {
       alert("친구 검색에 실패했습니다.");
@@ -22,10 +21,7 @@ export default function useMemberSearchEffect() {
 
   const onClickMember = (userId: string) => {
     setSelectedMember(userId);
-    console.log(selectedMember);
   };
-
-  const onSubmitMember = () => {};
   return {
     onSearchMember,
     searchEmail,
