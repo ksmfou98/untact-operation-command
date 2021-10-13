@@ -4,7 +4,6 @@ import User from "../../models/user";
 import fs from "fs";
 
 // multer 유저 프로필 사진 저장
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/profile/");
@@ -123,13 +122,25 @@ export const logout = async (req: Request, res: Response) => {
 //회원 정보 수정
 //지금은 프로필 사진만 변경 가능
 export const updateUserInfo = async (req: Request, res: Response) => {
-  const { thumbnail } = req.body;
+  const { thumbnail, name, password } = req.body;
   const userId = res.locals.user._id;
 
   try {
-    let user = await User.findByIdAndUpdate(
+    let user = await User.findOne({ _id: userId });
+
+    // //입력받은 password 와 DB의 password를 비교
+    // const valid = await user.checkPassword(oldPassword);
+    // if (!valid) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: "잘못된 비밀번호 입니다",
+    //   });
+    // } //이부분 백엔드에서 안해도 된다는데 일단 넣긴함.
+    const newPassword = await user.returnHashPassword(password);
+
+    user = await User.findByIdAndUpdate(
       { _id: userId },
-      { thumbnail },
+      { thumbnail, name, password: newPassword },
       { new: true }
     );
     return res.status(200).json({
