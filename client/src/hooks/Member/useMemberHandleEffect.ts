@@ -1,7 +1,6 @@
 import { friendsState, IUserState } from "atoms/userState";
 import { friendAddAPI, friendDeleteAPI } from "lib/api/friend";
 import { useRecoilState } from "recoil";
-import useMemberListEffect from "./useMemberListEffect";
 
 export default function useMemberHandleEffect() {
   const [friends, setFriends] = useRecoilState(friendsState);
@@ -12,7 +11,6 @@ export default function useMemberHandleEffect() {
       setFriends(myFriends);
     } catch (e) {
       alert("친구 삭제에 실패했습니다");
-      console.log(e);
     }
   };
 
@@ -22,7 +20,6 @@ export default function useMemberHandleEffect() {
       setFriends(friends.concat(friend));
     } catch (e) {
       alert("친구 추가에 실패했습니다");
-      console.log(e);
     }
   };
   return { onDeleteFriend, onAddFriend };

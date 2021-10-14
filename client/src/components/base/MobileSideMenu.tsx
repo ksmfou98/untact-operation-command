@@ -6,7 +6,11 @@ import { NavLink } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-const MobileSideMenu = () => {
+interface MobileSideMenuProps {
+  onToggleSideBar: () => void;
+}
+
+const MobileSideMenu = ({ onToggleSideBar }: MobileSideMenuProps) => {
   const asideMenus = [
     {
       name: "Home",
@@ -37,6 +41,7 @@ const MobileSideMenu = () => {
           to={asideMenu.link}
           key={index}
           exact
+          onClick={onToggleSideBar}
           activeStyle={activeStyle}
         >
           <div className="ico">{asideMenu.icon}</div>
@@ -45,7 +50,12 @@ const MobileSideMenu = () => {
       ))}
 
       {user._id && (
-        <NavLink to="/setting" exact activeStyle={activeStyle}>
+        <NavLink
+          to="/setting"
+          exact
+          onClick={onToggleSideBar}
+          activeStyle={activeStyle}
+        >
           <div className="ico">
             <IoSettingsOutline size="22" />
           </div>
