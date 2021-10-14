@@ -103,6 +103,9 @@ const Calendar = styled.div`
       .fc-button {
         font-size: 12px;
       }
+      .fc-toolbar-title{
+        font-size: 18px;
+      }
     }
   }
 `;

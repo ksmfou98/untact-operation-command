@@ -1,15 +1,13 @@
-import MembersList from "components/Members/MembersList";
-import MembersNav from "components/Members/MembersNav";
+import MembersList from "components/members/MembersList";
+import MembersNav from "components/members/MembersNav";
 import React from "react";
 import styled from "styled-components";
 
 const MembersPage = () => {
-
   return (
     <MenberPageBlock>
       <MembersNav />
       <MembersList />
- 
     </MenberPageBlock>
   );
 };
