@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose, { Document, Model, Schema } from "mongoose";
 import validator from "validator";
+import { resourceLimits } from "worker_threads";
 
 const saltRounds: number = 10;
 
@@ -20,6 +21,7 @@ export interface IUserMethod extends IUser, Document {
   generateToken: () => Promise<string>;
   serialize: () => Promise<JSON>;
   checkPassword: (password: string) => Promise<boolean>;
+  returnHashPassword: (password: string) => Promise<string>;
 }
 
 export interface IUserStatics extends Model<IUserMethod> {
@@ -84,6 +86,11 @@ UserSchema.methods.setPassword = async function (password: string) {
   this.password = result;
 };
 
+UserSchema.methods.returnHashPassword = async function (password: string) {
+  const result = await bcrypt.hash(password, saltRounds);
+  return result;
+};
+
 // 입력받은 비번이 db에 있는 비번이랑 같은지 확인
 UserSchema.methods.checkPassword = async function (password: string) {
   const result = await bcrypt.compare(password, this.password);
@@ -113,7 +120,7 @@ UserSchema.methods.generateToken = async function () {
 // 응답할 데이터에서 password 필드 제거
 UserSchema.methods.serialize = function () {
   let data = this.toJSON();
-  const {password : temp, ...userWithoutPassword} = data
+  const { password: temp, ...userWithoutPassword } = data;
   return userWithoutPassword;
 };
 
