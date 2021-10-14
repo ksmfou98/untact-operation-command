@@ -51,12 +51,7 @@ const MembersList = () => {
   );
 };
 
-const MenberListBlock = styled.div`
-  margin: 50px 150px 0px 25px;
-  ${media.small} {
-    margin: 50px 90px 0px 25px;
-  }
-`;
+const MenberListBlock = styled.div``;
 
 const List = styled.div`
   display: flex;
@@ -120,6 +115,12 @@ const ListEle = styled.div`
   ${media.small} {
     .call {
       font-size: 13px;
+    }
+    .friendName {
+      font-size: 13px;
+    }
+    .delFriend {
+      color: rgb(142, 155, 164);
     }
   }
 `;
