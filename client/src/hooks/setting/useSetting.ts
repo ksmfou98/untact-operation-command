@@ -7,9 +7,9 @@ import { useHistory } from "react-router";
 import { useRecoilState } from "recoil";
 
 export default function useSetting() {
-  const [imgURL, setImgURL] = useState("");
   const [user, setUser] = useRecoilState(userState);
-  const { name } = user;
+  const { thumbnail, name } = user;
+  const [imgURL, setImgURL] = useState(thumbnail);
   const history = useHistory();
 
   //이미지 업로드
@@ -32,7 +32,7 @@ export default function useSetting() {
   };
 
   //유저 정보 수정
-  const [updateName, onChangeUpdateName] = useInput("");
+  const [updateName, onChangeUpdateName] = useInput(name);
   const [newPassword, onChangeNewPassword] = useInput("");
   const [newPasswordCheck, onChangeNewPasswordCheck] = useInput("");
   const [oldPassword, onChangeOldPassword] = useInput("");
