@@ -128,26 +128,26 @@ const ModalStyled = styled.div`
     .flex {
       display: flex;
       justify-content: space-between;
-      width: 430px;
+      width: 98%;
     }
     .infoQutn {
       font-size: 17px;
       padding: 15px 15px 9px 5px;
     }
     .infoInput {
-      width: 90%;
+      width: 98%;
       height: 3rem;
       text-align: center;
     }
     .infoInputShort {
-      width: 180px;
+      width: 45%;
       height: 3rem;
       text-align: center;
     }
   }
 `;
 const MyDatePicker = styled(DatePicker)`
-  width: 90%;
+  width: 98%;
   height: 3rem;
   border: 1px solid;
   text-align: center;
