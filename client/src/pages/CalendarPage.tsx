@@ -45,7 +45,7 @@ const CalendarPage = () => {
           headerToolbar={{
             left: "prev,next today createSchedule",
             center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+            right: "dayGridMonth,listWeek",
           }}
           plugins={[
             dayGridPlugin,
