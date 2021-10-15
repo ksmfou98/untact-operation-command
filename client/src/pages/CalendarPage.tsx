@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import media from "lib/styles/media";
+import media, { mediaQuery } from "lib/styles/media";
 import CalendarModal from "components/calendar/CalendarModal";
 import useCalendarEffect from "hooks/calendar/useCalendarEffect";
 import Loading from "components/common/Loading";
@@ -19,7 +19,6 @@ const CalendarPage = () => {
   const { onEventClick } = useHandleCalendar();
 
   if (loading) return <Loading />;
-
   const onToggle = () => {
     onToggleModal();
     setIsEdit(false);
@@ -29,7 +28,7 @@ const CalendarPage = () => {
     <CalendarPageBlock>
       <Calendar>
         <FullCalendar
-          aspectRatio={1.75}
+          aspectRatio={0.6}
           customButtons={{
             createSchedule: {
               text: "일정생성",
@@ -38,6 +37,10 @@ const CalendarPage = () => {
               },
             },
           }}
+          // 1160 = 780
+          height={
+            window.innerWidth > 1500 ? 780 : window.innerWidth > 768 ? 600 : 550
+          }
           initialView="dayGridMonth"
           headerToolbar={{
             left: "prev,next today createSchedule",
@@ -68,7 +71,7 @@ const CalendarPage = () => {
 };
 
 const CalendarPageBlock = styled.div`
-  width: 90%;
+  width: 98%;
 `;
 
 const Calendar = styled.div`
@@ -102,7 +105,24 @@ const Calendar = styled.div`
     .fc {
       .fc-button {
         font-size: 12px;
+        margin-top: 2px;
       }
+      .fc-createSchedule-button {
+        width: 4rem;
+        margin: 2px 5px 0px 0px;
+      }
+      .fc-toolbar-title {
+        font-size: 18px;
+        margin-right: 3px;
+      }
+    }
+  }
+  ${media.small} {
+    .fc-view-harness {
+      line-height: -5px;
+    }
+    .fc-today-button {
+      display: none;
     }
   }
 `;

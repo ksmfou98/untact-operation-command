@@ -1,3 +1,4 @@
+import media from "lib/styles/media";
 import { palette } from "lib/styles/palette";
 import transitions from "lib/styles/transitions";
 import React from "react";
@@ -174,6 +175,11 @@ const ModalBlock = styled.div<{ size: string; isModal: boolean }>`
     left: 0;
     top: 0;
     opacity: 0.5;
+  }
+  ${media.small} {
+    .modal-alert {
+      width: 360px;
+    }
   }
 `;
 

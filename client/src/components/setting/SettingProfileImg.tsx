@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 import { useRecoilValue } from "recoil";
 import { userState } from "atoms/userState";
+import media from "lib/styles/media";
 
 const SettingProfileImg = () => {
   const {
@@ -163,7 +164,13 @@ const InfoBox = styled.div`
   .inputEle {
     height: 33px;
     border-radius: 5px;
-    width: 100%;
+    width: 90%;
     border: 1px solid ${palette.mainColor};
   }
+
+  /* ${media.small} {
+    .inputEle {
+      width: 90%;
+    }
+  } */
 `;
