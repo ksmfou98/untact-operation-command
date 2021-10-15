@@ -3,12 +3,11 @@ import { loginAPI, logoutAPI, registerAPI } from "lib/api/auth";
 import userStorage from "lib/userStorage";
 import { useCallback, useState } from "react";
 import { useHistory } from "react-router";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 export default function useAuth() {
   const history = useHistory();
   const setUserState = useSetRecoilState(userState);
-  const resetUserState = useResetRecoilState(userState);
 
   const [form, setForm] = useState({
     email: "",
@@ -58,11 +57,11 @@ export default function useAuth() {
     try {
       await logoutAPI();
       userStorage.remove();
-      resetUserState();
+      window.location.replace("/");
     } catch (e) {
       alert("로그아웃에 실패했습니다.");
     }
-  }, [resetUserState]);
+  }, []);
 
   return {
     form,

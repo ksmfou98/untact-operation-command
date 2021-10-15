@@ -1,6 +1,6 @@
 import Modal from "components/common/Modal";
-import useMemberHandleEffect from "hooks/Member/useMemberHandleEffect";
-import useMemberSearchEffect from "hooks/Member/useMemberSearchEffect";
+import useMemberHandleEffect from "hooks/member/useMemberHandleEffect";
+import useMemberSearchEffect from "hooks/member/useMemberSearchEffect";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -22,7 +22,6 @@ const MemberSearchModal = ({
     onClickMember,
   } = useMemberSearchEffect();
   const { onAddFriend } = useMemberHandleEffect();
-
   const [isSelected, setIsSelected] = useState(false);
   const onClick = (memberId: string) => {
     setIsSelected(!isSelected);
@@ -34,7 +33,7 @@ const MemberSearchModal = ({
         title="친구 추가"
         buttonName="추가"
         onClick={() => {
-        onAddFriend(selectedMember);
+          onAddFriend(selectedMember);
         }}
         onToggleModal={onToggleModal}
         isModal={isModal}

@@ -7,6 +7,8 @@ import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { palette } from "lib/styles/palette";
 import useAuth from "hooks/auth/useAuth";
+import GoogleLogin from "react-google-login";
+import useGoogleLogin from "hooks/auth/useGoogleLogin";
 
 interface AuthFormProps {
   AuthType: "login" | "register";
@@ -14,6 +16,7 @@ interface AuthFormProps {
 
 const AuthForm = ({ AuthType }: AuthFormProps) => {
   const { form, onChange, onRegister, onLogin } = useAuth();
+  const { clientId, onFailure, onSuccess } = useGoogleLogin();
 
   const { email, password, passwordConfirm, name } = form;
   return (
@@ -75,6 +78,11 @@ const AuthForm = ({ AuthType }: AuthFormProps) => {
             <FcGoogle size="24" />
             <span>Google로 로그인</span>
             <div></div>
+            <GoogleLogin
+              clientId={clientId}
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+            />
           </SocialButton>
 
           <SocialButton socialType="kakao" color="false">

@@ -37,7 +37,7 @@ const MobileSideBar = ({ isSideBar, onToggleSideBar }: MobileSideBarProps) => {
           </button>
         </Title>
         <MobileSearchBar />
-        <MobileSideMenu />
+        <MobileSideMenu onToggleSideBar={onToggleSideBar} />
 
         {user._id && (
           <AuthButton type="button" onClick={onLogout}>
