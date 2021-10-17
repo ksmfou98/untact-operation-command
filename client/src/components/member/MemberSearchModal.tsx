@@ -1,6 +1,6 @@
 import Modal from "components/common/Modal";
-import useMemberHandleEffect from "hooks/Member/useMemberHandleEffect";
-import useMemberSearchEffect from "hooks/Member/useMemberSearchEffect";
+import useMemberHandleEffect from "hooks/member/useMemberHandleEffect";
+import useMemberSearchEffect from "hooks/member/useMemberSearchEffect";
 import React, { useState } from "react";
 import styled from "styled-components";
 
