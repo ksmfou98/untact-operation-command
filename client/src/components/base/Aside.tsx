@@ -11,14 +11,17 @@ import { SERVER_URL } from "lib/config";
 
 const Aside = () => {
   const user = useRecoilValue(userState);
-  console.log(user);
   return (
     <AsideBlock>
       <AsideTitle>
         <div className="profile-img">
           {user.thumbnail ? (
             <img
-              src={`${SERVER_URL}/${user.thumbnail}`}
+              src={
+                user.provider !== "local"
+                  ? user.thumbnail
+                  : `${SERVER_URL}/${user.thumbnail}`
+              }
               alt=""
               className="userProfile"
             />
