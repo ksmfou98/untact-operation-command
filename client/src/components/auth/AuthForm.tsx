@@ -1,14 +1,13 @@
 import Button from "components/common/Button";
 import React from "react";
 import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import LabelInput from "./LabelInput";
-import { FcGoogle } from "react-icons/fc";
-import { RiKakaoTalkFill } from "react-icons/ri";
 import { palette } from "lib/styles/palette";
 import useAuth from "hooks/auth/useAuth";
 import GoogleLogin from "react-google-login";
-import useGoogleLogin from "hooks/auth/useGoogleLogin";
+import useGoogleAuth from "hooks/auth/useGoogleAuth";
+import { GOOGLE_CLIENT_ID } from "lib/config";
 
 interface AuthFormProps {
   AuthType: "login" | "register";
@@ -16,7 +15,12 @@ interface AuthFormProps {
 
 const AuthForm = ({ AuthType }: AuthFormProps) => {
   const { form, onChange, onRegister, onLogin } = useAuth();
-  const { clientId, onFailure, onSuccess } = useGoogleLogin();
+  const {
+    onRegisterFailure,
+    onRegisterSuccess,
+    onLoginSuccess,
+    onLoginFailure,
+  } = useGoogleAuth();
 
   const { email, password, passwordConfirm, name } = form;
   return (
@@ -76,9 +80,9 @@ const AuthForm = ({ AuthType }: AuthFormProps) => {
           <hr />
 
           <GoogleButton
-            clientId={clientId}
-            onSuccess={onSuccess}
-            onFailure={onFailure}
+            clientId={GOOGLE_CLIENT_ID}
+            onSuccess={onLoginSuccess}
+            onFailure={onLoginFailure}
           >
             Google로 로그인
           </GoogleButton>
@@ -90,9 +94,9 @@ const AuthForm = ({ AuthType }: AuthFormProps) => {
           </StyledButton>
           <hr />
           <GoogleButton
-            clientId={clientId}
-            onSuccess={onSuccess}
-            onFailure={onFailure}
+            clientId={GOOGLE_CLIENT_ID}
+            onSuccess={onRegisterSuccess}
+            onFailure={onRegisterFailure}
           >
             Google로 회원가입
           </GoogleButton>

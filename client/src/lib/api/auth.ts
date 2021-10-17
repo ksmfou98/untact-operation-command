@@ -20,3 +20,15 @@ export const logoutAPI = async () => {
   const response = await client.post(`/user/logout`);
   return response.data;
 };
+
+export const googleRegisterAPI = async (accessToken: string) => {
+  const body = { accessToken };
+  const response = await client.post(`/user/googleRegister`, body);
+  return response.data.user;
+};
+
+export const googleLoginAPI = async (accessToken: string) => {
+  const body = { accessToken };
+  const response = await client.post(`/user/googleLogin`, body);
+  return response.data.user;
+};

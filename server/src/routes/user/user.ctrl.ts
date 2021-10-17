@@ -309,3 +309,45 @@ export const googleRegister = async (req: Request, res: Response) => {
     });
   }
 };
+
+// 구글 로그인
+export const googleLogin = async (req: Request, res: Response) => {
+  const { accessToken } = req.body;
+
+  const people = google.people("v1");
+
+  try {
+    const profile = await people.people.get({
+      access_token: accessToken,
+      resourceName: "people/me",
+      personFields: "emailAddresses,names,photos",
+    });
+
+    const { data } = profile;
+
+    const user = await User.findOne({
+      email: data.emailAddresses[0].value,
+      provider: "google",
+      snsId: data.names[0].metadata.source.id,
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "계정이 존재하지 않습니다 !",
+      });
+    }
+
+    const token = await user.generateToken();
+
+    return res.cookie("user", token).status(200).json({
+      success: true,
+      user,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      e,
+    });
+  }
+};
