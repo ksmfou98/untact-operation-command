@@ -270,22 +270,37 @@ export const searchFriendEmail = async (req: Request, res: Response) => {
   }
 };
 
-// 구글 로그인
-export const googleLogin = async (req: Request, res: Response) => {
+// 구글 회원가입
+export const googleRegister = async (req: Request, res: Response) => {
   const { accessToken } = req.body;
 
   const people = google.people("v1");
 
   try {
-    const auth = await people.people.get({
+    const profile = await people.people.get({
       access_token: accessToken,
       resourceName: "people/me",
       personFields: "emailAddresses,names,photos",
     });
 
-    return res.status(200).json({
+    const { data } = profile;
+
+    const socialProfile = {
+      email: data.emailAddresses[0].value,
+      name: data.names[0].displayName,
+      thumbnail: data.photos[0].url,
+      snsId: data.names[0].metadata.source.id,
+      provider: "google",
+    };
+
+    const user = new User(socialProfile);
+    await user.save();
+
+    const token = await user.generateToken();
+
+    return res.cookie("user", token).status(200).json({
       success: true,
-      auth,
+      user,
     });
   } catch (e) {
     return res.status(500).json({

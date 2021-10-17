@@ -50,7 +50,6 @@ const UserSchema: Schema<IUserMethod> = new Schema(
     },
     password: {
       type: String,
-      required: true,
       trim: true,
       minLength: 6,
       validate(value: string) {
