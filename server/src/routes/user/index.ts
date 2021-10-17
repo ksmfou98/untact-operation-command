@@ -17,5 +17,6 @@ router.get(
   checkLoggedIn,
   userCtrl.searchFriendEmail
 );
+router.post("/googleLogin", userCtrl.googleLogin);
 
 export default router;

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import multer from "multer";
 import User from "../../models/user";
 import fs from "fs";
+import { google } from "googleapis";
 
 // multer 유저 프로필 사진 저장
 const storage = multer.diskStorage({
@@ -130,7 +131,7 @@ export const updateUserInfo = async (req: Request, res: Response) => {
 
     //입력받은 password 와 DB의 password를 비교
     const valid = await user.checkPassword(oldPassword);
-    console.log(oldPassword)
+    console.log(oldPassword);
     if (!valid) {
       return res.status(401).json({
         success: false,
@@ -265,6 +266,31 @@ export const searchFriendEmail = async (req: Request, res: Response) => {
   } catch (e) {
     res.status(500).json({
       error: e,
+    });
+  }
+};
+
+// 구글 로그인
+export const googleLogin = async (req: Request, res: Response) => {
+  const { accessToken } = req.body;
+
+  const people = google.people("v1");
+
+  try {
+    const auth = await people.people.get({
+      access_token: accessToken,
+      resourceName: "people/me",
+      personFields: "emailAddresses,names,photos",
+    });
+
+    return res.status(200).json({
+      success: true,
+      auth,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      success: false,
+      e,
     });
   }
 };
