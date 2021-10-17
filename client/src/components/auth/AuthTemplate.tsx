@@ -1,3 +1,4 @@
+import media from "lib/styles/media";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -39,10 +40,17 @@ const AuthTemplateBlock = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+  margin: 15px;
+  ${media.small} {
+    height: auto;
+  }
 `;
 
 const AuthWrapper = styled.div`
   width: 350px;
+  ${media.small} {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h1`

@@ -74,22 +74,14 @@ const AuthForm = ({ AuthType }: AuthFormProps) => {
             로그인
           </StyledButton>
           <hr />
-          <SocialButton socialType="google" color="false">
-            <FcGoogle size="24" />
-            <span>Google로 로그인</span>
-            <div></div>
-            <GoogleLogin
-              clientId={clientId}
-              onSuccess={onSuccess}
-              onFailure={onFailure}
-            />
-          </SocialButton>
 
-          <SocialButton socialType="kakao" color="false">
-            <RiKakaoTalkFill size="24" />
-            <span>카카오계정으로 로그인</span>
-            <div></div>
-          </SocialButton>
+          <GoogleButton
+            clientId={clientId}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+          >
+            Google로 로그인
+          </GoogleButton>
         </>
       ) : (
         <>
@@ -97,16 +89,13 @@ const AuthForm = ({ AuthType }: AuthFormProps) => {
             회원가입
           </StyledButton>
           <hr />
-          <SocialButton socialType="google" color="false">
-            <FcGoogle size="24" />
-            <span>Google로 회원가입</span>
-            <div></div>
-          </SocialButton>
-          <SocialButton socialType="kakao" color="false">
-            <RiKakaoTalkFill size="24" />
-            <span>카카오계정으로 회원가입</span>
-            <div></div>
-          </SocialButton>
+          <GoogleButton
+            clientId={clientId}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+          >
+            Google로 회원가입
+          </GoogleButton>
         </>
       )}
     </AuthFormBlock>
@@ -129,36 +118,15 @@ const StyledButton = styled(Button)`
   margin: 20px 0 8px;
 `;
 
-const SocialButton = styled(Button)<{ socialType: "kakao" | "google" }>`
-  display: flex;
+const GoogleButton = styled(GoogleLogin)`
   width: 100%;
-  height: 45px;
-  padding: 10px;
-  margin-top: 15px;
+  display: flex;
   align-items: center;
-  justify-content: space-between;
-  border: 1px solid ${palette.border};
-  color: rgba(0, 0, 0, 0.85);
-  div {
-    width: 24px;
-  }
-  &:hover {
-    background-color: #fff;
-    color: rgba(0, 0, 0, 0.85);
-  }
-
-  ${(props) =>
-    props.socialType === "kakao" &&
-    css`
-      background-color: #fee500;
-      border: none;
-      svg {
-        color: #000;
-      }
-      &:hover {
-        background-color: #fee500;
-      }
-    `}
+  justify-content: center;
+  border: 1px solid ${palette.border} !important;
+  border-radius: 4px !important;
+  font-size: 16px !important;
+  font-family: "Noto Sans KR", sans-serif !important;
 `;
 
 export default AuthForm;
