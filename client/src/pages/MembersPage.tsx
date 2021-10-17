@@ -1,5 +1,5 @@
-import MembersList from "components/members/MembersList";
-import MembersNav from "components/members/MembersNav";
+import MembersList from "components/member/MembersList";
+import MembersNav from "components/member/MembersNav";
 import media from "lib/styles/media";
 import React from "react";
 import styled from "styled-components";
