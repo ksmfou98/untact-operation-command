@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { IUserState } from "atoms/userState";
+import { initialUserState, IUserState } from "atoms/userState";
 
 export interface IScheduleState {
   _id: string;
@@ -16,14 +16,7 @@ export const initialScheduleState: IScheduleState = {
   date: new Date(),
   start: "",
   end: "",
-  user: {
-    _id: "",
-    email: "",
-    name: "",
-    role: "",
-    thumbnail: "",
-    friends: [],
-  },
+  user: initialUserState,
 };
 
 export const scheduleState = atom({

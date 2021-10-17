@@ -16,7 +16,6 @@ const Aside = () => {
     <AsideBlock>
       <AsideTitle>
         <div className="profile-img">
-          {/* <BsPeopleCircle size="40" /> */}
           {user.thumbnail ? (
             <img
               src={`${SERVER_URL}/${user.thumbnail}`}
