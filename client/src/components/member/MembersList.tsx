@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
 import useMemberListEffect from "hooks/member/useMemberListEffect";
 import media from "lib/styles/media";
