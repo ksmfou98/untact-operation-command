@@ -2,9 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import mongoose, { Document, Model, Schema } from "mongoose";
 import validator from "validator";
-import { resourceLimits } from "worker_threads";
 
-const saltRounds: number = 10;
+const saltRounds = 10;
 
 export interface IUser {
   email: string;
@@ -13,6 +12,8 @@ export interface IUser {
   role: string;
   thumbnail: string;
   friends: string[];
+  snsId: string;
+  provider: string;
   token: string;
 }
 
@@ -73,6 +74,14 @@ const UserSchema: Schema<IUserMethod> = new Schema(
         ref: "User",
       },
     ],
+    snsId: {
+      type: String,
+      default: null,
+    },
+    provider: {
+      type: String,
+      default: "local",
+    },
     token: {
       type: String,
     },
