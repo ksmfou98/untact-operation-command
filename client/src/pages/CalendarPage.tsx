@@ -46,11 +46,19 @@ const CalendarPage = () => {
             window.innerWidth > 1500 ? 780 : window.innerWidth > 768 ? 600 : 550
           }
           initialView="dayGridMonth"
-          headerToolbar={{
-            left: "prev,next today createSchedule",
-            center: "title",
-            right: "dayGridMonth,listWeek",
-          }}
+          headerToolbar={
+            user.role === "admin"
+              ? {
+                  left: "prev,next today createSchedule",
+                  center: "title",
+                  right: "dayGridMonth,listWeek",
+                }
+              : {
+                  left: "prev,next today",
+                  center: "title",
+                  right: "dayGridMonth,listWeek",
+                }
+          }
           plugins={[
             dayGridPlugin,
             timeGridPlugin,
@@ -58,11 +66,21 @@ const CalendarPage = () => {
             listPlugin,
           ]}
           events={schedules}
-          eventClick={(e) => {
-            onEventClick(e);
-            onToggleModal();
-            setIsEdit(true);
-          }}
+          eventClick={
+            user.role === "admin"
+              ? (e) => {
+                  onEventClick(e);
+                  onToggleModal();
+                  setIsEdit(true);
+                }
+              : (e) => {
+                  alert(
+                    `${
+                      e.event._def.title
+                    } : ${e.event._instance?.range.start.getHours()}시 ${e.event._instance?.range.start.getMinutes()}분에 시작합니다.`
+                  );
+                }
+          }
         />
       </Calendar>
       <CalendarModal

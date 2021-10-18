@@ -25,7 +25,6 @@ export default function useSetting() {
       try {
         const image = await userProfileAPI(fd);
         setImgURL(image);
-        history.push("/");
       } catch (e) {
         alert("이미지 업로드에 실패했습니다.");
       }
@@ -49,7 +48,7 @@ export default function useSetting() {
       );
       setUser(user);
       userStorage.set(user);
-
+      history.push("/");
       alert("유저 정보가 수정되었습니다.");
     } catch (e) {
       alert("유저 정보 수정에 실패했습니다");
