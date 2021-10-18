@@ -16,12 +16,14 @@ import SearchPage from "pages/SearchPage";
 import MobileHeader from "components/base/MobileHeader";
 import { useRecoilValue } from "recoil";
 import { sideBarState } from "atoms/sideBarState";
+import LandingPage from "pages/LangingPage";
 const App = () => {
   useChannelPluginEffect();
   const sideBar = useRecoilValue(sideBarState);
   return (
     <>
       <Switch>
+        <Route path="/landing" exact component={LandingPage} />
         <Route path="/meet/:meetId" component={MeetPage} />
         <Route path="/register" exact component={RegisterPage} />
         <Route path="/login" exact component={LoginPage} />
