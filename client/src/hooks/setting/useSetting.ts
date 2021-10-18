@@ -25,6 +25,7 @@ export default function useSetting() {
       try {
         const image = await userProfileAPI(fd);
         setImgURL(image);
+        history.push("/");
       } catch (e) {
         alert("이미지 업로드에 실패했습니다.");
       }

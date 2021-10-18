@@ -6,12 +6,13 @@ import media from "lib/styles/media";
 import useMemberHandleEffect from "hooks/member/useMemberHandleEffect";
 import useModal from "hooks/common/useModal";
 import MemberSearchModal from "./MemberSearchModal";
+import Loading from "components/common/Loading";
 
 const MembersList = () => {
   const { isModal, onToggleModal } = useModal();
-  const { friends } = useMemberListEffect();
+  const { friends, loading } = useMemberListEffect();
   const { onDeleteFriend } = useMemberHandleEffect();
-
+  if (loading) return <Loading />;
   return (
     <MenberListBlock>
       {friends?.map((friend, index) => (

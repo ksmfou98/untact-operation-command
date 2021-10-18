@@ -17,12 +17,11 @@ import AuthError from "components/auth/AuthError";
 
 const CalendarPage = () => {
   const user = useRecoilValue(userState);
-  if (!user._id) return <AuthError />;
   const { schedules, loading } = useCalendarEffect();
   const { isModal, onToggleModal } = useModal();
   const [isEdit, setIsEdit] = useState(false);
   const { onEventClick } = useHandleCalendar();
-
+  if (!user._id) return <AuthError />;
   if (loading) return <Loading />;
   const onToggle = () => {
     onToggleModal();
