@@ -48,7 +48,7 @@
 ## DataBase
 
 <div>
-<img src="/docs/images/DataBase.png" align="left" height="450" width="100%" />    
+<img src="/docs/images/DataBase.png" align="left"  width="100%" />    
 </div>
 
 <br />
