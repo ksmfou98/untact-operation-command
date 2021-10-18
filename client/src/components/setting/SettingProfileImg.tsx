@@ -71,7 +71,7 @@ const SettingProfileImg = () => {
         <div className="nameDescrip">현재 비밀번호</div>
         <div>
           <input
-            type="text"
+            type="password"
             className="inputEle"
             value={oldPassword}
             onChange={onChangeOldPassword}
@@ -80,7 +80,7 @@ const SettingProfileImg = () => {
         <div className="nameDescrip">변경할 비밀번호</div>
         <div>
           <input
-            type="text"
+            type="password"
             className="inputEle"
             value={newPassword}
             onChange={onChangeNewPassword}
@@ -89,7 +89,7 @@ const SettingProfileImg = () => {
         <div className="nameDescrip">비밀번호 확인</div>
         <div>
           <input
-            type="text"
+            type="password"
             className="inputEle"
             value={newPasswordCheck}
             onChange={onChangeNewPasswordCheck}
