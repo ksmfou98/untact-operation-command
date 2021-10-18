@@ -11,8 +11,13 @@ import useCalendarEffect from "hooks/calendar/useCalendarEffect";
 import Loading from "components/common/Loading";
 import useHandleCalendar from "hooks/calendar/useHandleCalendar";
 import useModal from "hooks/common/useModal";
+import { useRecoilValue } from "recoil";
+import { userState } from "atoms/userState";
+import AuthError from "components/auth/AuthError";
 
 const CalendarPage = () => {
+  const user = useRecoilValue(userState);
+  if (!user._id) return <AuthError />;
   const { schedules, loading } = useCalendarEffect();
   const { isModal, onToggleModal } = useModal();
   const [isEdit, setIsEdit] = useState(false);
