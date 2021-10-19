@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsFillPersonFill, BsTrash } from "react-icons/bs";
 import useMemberListEffect from "hooks/member/useMemberListEffect";
@@ -6,13 +6,32 @@ import media from "lib/styles/media";
 import useMemberHandleEffect from "hooks/member/useMemberHandleEffect";
 import useModal from "hooks/common/useModal";
 import MemberSearchModal from "./MemberSearchModal";
-import Loading from "components/common/Loading";
+import MeetRequestModal from "./MeetRequestModal";
+import { useRecoilState } from "recoil";
+import { meetState } from "atoms/meetState";
 
 const MembersList = () => {
   const { isModal, onToggleModal } = useModal();
   const { friends, loading } = useMemberListEffect();
   const { onDeleteFriend } = useMemberHandleEffect();
-  if (loading) return <Loading />;
+
+  const [requestUser, setRequestUser] = useState<string>("");
+  const [meetForm, setMeetForm] = useRecoilState(meetState);
+  const [isOpen, setIsOpen] = useState(false);
+  const onToggleMeetModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const onRequestMeet = (name: string) => {
+    setRequestUser(name);
+    onToggleMeetModal();
+    const nextForm = {
+      title: `${requestUser} 1:1 대화`,
+      description: `${requestUser}  1:1 대화`,
+    };
+    setMeetForm((prev) => ({ ...prev, ...nextForm }));
+  };
+
   return (
     <MenberListBlock>
       {friends?.map((friend, index) => (
@@ -21,12 +40,13 @@ const MembersList = () => {
             <ListEle>
               <div className="profile">
                 <BsFillPersonFill />
-                {/* 여기에 프로필사진 */}
               </div>
               <div className="friendName">{friend.name}</div>
             </ListEle>
             <ListEle>
-              <div className="call">1:1 채팅신청</div>
+              <div className="call" onClick={() => onRequestMeet(friend.name)}>
+                1:1 채팅신청
+              </div>
               <div
                 className="delFriend"
                 onClick={() => onDeleteFriend(friend._id)}
@@ -46,6 +66,14 @@ const MembersList = () => {
 
       {isModal && (
         <MemberSearchModal isModal={isModal} onToggleModal={onToggleModal} />
+      )}
+
+      {isOpen && (
+        <MeetRequestModal
+          isModal={isOpen}
+          onToggleModal={onToggleMeetModal}
+          name={requestUser}
+        />
       )}
     </MenberListBlock>
   );

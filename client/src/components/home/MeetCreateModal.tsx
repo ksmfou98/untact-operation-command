@@ -90,26 +90,6 @@ const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
               placeholder="비밀번호 입력"
             />
           </div>
-
-          <div className="form-option">
-            <input
-              type="checkbox"
-              checked={muted}
-              onChange={onToggleMuted}
-              name="muted"
-            />
-            <span>입장 시 참가자 음소거</span>
-          </div>
-
-          <div className="form-option">
-            <input
-              type="checkbox"
-              checked={videoOff}
-              name="videoOff"
-              onChange={onToggleVideoOff}
-            />
-            <span>입장 시 참가자 비디오 끄기</span>
-          </div>
         </div>
       </MeetCreateModalBlock>
     </Modal>
