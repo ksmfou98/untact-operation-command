@@ -131,7 +131,7 @@ export const updateUserInfo = async (req: Request, res: Response) => {
 
     //입력받은 password 와 DB의 password를 비교
     const valid = await user.checkPassword(oldPassword);
-    console.log(oldPassword);
+
     if (!valid) {
       return res.status(401).json({
         success: false,
@@ -140,7 +140,7 @@ export const updateUserInfo = async (req: Request, res: Response) => {
     }
     const updatePassword = await user.returnHashPassword(newPassword);
 
-    user = await User.findByIdAndUpdate(
+    await User.updateOne(
       { _id: userId },
       { thumbnail, name, password: updatePassword },
       { new: true }
