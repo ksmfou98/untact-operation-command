@@ -1,4 +1,4 @@
-import useSetting from "hooks/setting/useSetting";
+import useHandleSetting from "hooks/setting/useHandleSetting";
 import { SERVER_URL } from "lib/config";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import NoIMG from "assets/image/notExistMeet.png";
@@ -21,7 +21,7 @@ const SettingProfileImg = () => {
     onChangeOldPassword,
     newPasswordCheck,
     onChangeNewPasswordCheck,
-  } = useSetting();
+  } = useHandleSetting();
   const user = useRecoilValue(userState);
   return (
     <ProfileBlock>
