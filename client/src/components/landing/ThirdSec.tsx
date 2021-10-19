@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import transitions from "lib/styles/transitions";
 import media from "lib/styles/media";
+import { remoteMeeting } from "assets/image";
 
 const ThirdSec = () => {
   return (
@@ -10,7 +11,7 @@ const ThirdSec = () => {
         함께
       </h1>
       <FirstExplanation>
-        <img src="remoteMeeting.jpg" />
+        <img src={remoteMeeting} />
         <div>
           <h2>군내의</h2>
           <h3>행사, 종교, 강의, 상담, 업무까지 한번에</h3>
@@ -25,19 +26,19 @@ const ThirdSec = () => {
 
       <SecondExplanation>
         <div className="left">
-          <img src="remoteMeeting.jpg"></img>
+          <img src={remoteMeeting}></img>
           <div>
             <h2>rtars</h2>
             <h3>arasraas</h3>
           </div>
         </div>
         <div className="right">
-          <img src="remoteMeeting.jpg"></img>
+          <img src={remoteMeeting}></img>
           <p>asdsadasdasfasfasfafsfafasfas</p>
         </div>
       </SecondExplanation>
       <ThirdExplanation>
-        <img src="remoteMeeting.jpg"></img>
+        <img src={remoteMeeting}></img>
         <div>
           <div>
             <h2>가나다람다만</h2>

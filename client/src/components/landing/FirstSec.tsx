@@ -1,7 +1,6 @@
 import { colorLogo } from "assets/image";
 import media from "lib/styles/media";
 import styled from "styled-components";
-
 const FirstSec = () => {
   return (
     <FirstSecBlock>
@@ -18,7 +17,7 @@ const FirstSec = () => {
 
       <FirstDiv>
         <Video autoPlay muted>
-          <source src="Bungee.mp4" type="video/mp4" />
+          <source src="video/Bungee.mp4" type="video/mp4" />
         </Video>
 
         <H1Div>
