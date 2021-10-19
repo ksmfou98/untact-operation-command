@@ -6,16 +6,30 @@ import media from "lib/styles/media";
 import useMemberHandleEffect from "hooks/member/useMemberHandleEffect";
 import useModal from "hooks/common/useModal";
 import MemberSearchModal from "./MemberSearchModal";
-import MeetCreateModal from "components/home/MeetCreateModal";
+import MeetRequestModal from "./MeetRequestModal";
+import { useRecoilState } from "recoil";
+import { meetState } from "atoms/meetState";
 
 const MembersList = () => {
   const { isModal, onToggleModal } = useModal();
   const { friends } = useMemberListEffect();
   const { onDeleteFriend } = useMemberHandleEffect();
 
+  const [requestUser, setRequestUser] = useState<string>("");
+  const [meetForm, setMeetForm] = useRecoilState(meetState);
   const [isOpen, setIsOpen] = useState(false);
   const onToggleMeetModal = () => {
     setIsOpen(!isOpen);
+  };
+
+  const onRequestMeet = (name: string) => {
+    setRequestUser(name);
+    onToggleMeetModal();
+    const nextForm = {
+      title: `${requestUser} 1:1 대화`,
+      description: `${requestUser}  1:1 대화`,
+    };
+    setMeetForm((prev) => ({ ...prev, ...nextForm }));
   };
 
   return (
@@ -30,7 +44,7 @@ const MembersList = () => {
               <div className="friendName">{friend.name}</div>
             </ListEle>
             <ListEle>
-              <div className="call" onClick={onToggleMeetModal}>
+              <div className="call" onClick={() => onRequestMeet(friend.name)}>
                 1:1 채팅신청
               </div>
               <div
@@ -55,7 +69,11 @@ const MembersList = () => {
       )}
 
       {isOpen && (
-        <MeetCreateModal isModal={isOpen} onToggleModal={onToggleMeetModal} />
+        <MeetRequestModal
+          isModal={isOpen}
+          onToggleModal={onToggleMeetModal}
+          name={requestUser}
+        />
       )}
     </MenberListBlock>
   );

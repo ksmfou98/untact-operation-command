@@ -36,9 +36,7 @@ const MeetListItem = ({ meet }: MeetListItemProps) => {
             <b>{host.name}</b>
           </span>
         </div>
-        <div className="members">
-          <BsFillPeopleFill size="15" /> 3
-        </div>
+        <div className="members"></div>
       </MeetInfo>
     </MeetListItemBlock>
   );
