@@ -1,7 +1,7 @@
 import { palette } from "lib/styles/palette";
 import React from "react";
 import styled from "styled-components";
-import { BsPeopleCircle } from "react-icons/bs";
+import { BsFillPersonFill } from "react-icons/bs";
 import AsideMenu from "./AsideMenu";
 import media from "lib/styles/media";
 import { useRecoilValue } from "recoil";
@@ -26,7 +26,7 @@ const Aside = () => {
               className="userProfile"
             />
           ) : (
-            <BsPeopleCircle size="40" />
+            <BsFillPersonFill size="40" />
           )}
         </div>
         {user?.name ? (
