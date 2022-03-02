@@ -43,7 +43,7 @@
 
 ## 프로젝트 시연
 
-프로젝트 완성 후 공개 🤣
+[링크](https://www.youtube.com/watch?v=VDFuBfKD27Q)
 
 <br />
 
