@@ -12,16 +12,9 @@ interface MeetCreateModalProps {
 }
 
 const MeetCreateModal = ({ isModal, onToggleModal }: MeetCreateModalProps) => {
-  const {
-    meetForm,
-    onChange,
-    onToggleMuted,
-    onToggleVideoOff,
-    onCreateMeet,
-    onThumbnailUpload,
-  } = useHandleMeet();
-  const { title, description, thumbnail, password, menu, muted, videoOff } =
-    meetForm;
+  const { meetForm, onChange, onCreateMeet, onThumbnailUpload } =
+    useHandleMeet();
+  const { title, description, thumbnail, password, menu } = meetForm;
 
   return (
     <Modal

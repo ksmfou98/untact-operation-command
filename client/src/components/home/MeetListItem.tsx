@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { BsFillPeopleFill } from "react-icons/bs";
 import media from "lib/styles/media";
 import { IMeetState } from "atoms/meetState";
 import { SERVER_URL } from "lib/config";

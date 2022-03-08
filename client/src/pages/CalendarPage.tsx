@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import media, { mediaQuery } from "lib/styles/media";
+import media from "lib/styles/media";
 import CalendarModal from "components/calendar/CalendarModal";
 import useCalendarEffect from "hooks/calendar/useCalendarEffect";
 import Loading from "components/common/Loading";

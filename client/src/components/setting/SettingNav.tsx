@@ -1,6 +1,5 @@
 import React from "react";
 import { AiFillSetting } from "react-icons/ai";
-import { IoPeopleOutline } from "react-icons/io5";
 import styled from "styled-components";
 
 const SettingNav = () => {

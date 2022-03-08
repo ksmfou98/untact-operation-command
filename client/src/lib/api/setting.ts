@@ -1,4 +1,3 @@
-import { StringMappingType } from "typescript";
 import client from "./client";
 
 export const userProfileAPI = async (fd: FormData) => {
@@ -9,15 +8,15 @@ export const userProfileAPI = async (fd: FormData) => {
 export const updateUserInfoAPI = async (
   thumbnail: string,
   name: string,
-  oldPassword:string,
-  newPassword: string,
+  oldPassword: string,
+  newPassword: string
 ) => {
   const body = {
     thumbnail,
     name,
     oldPassword,
-    newPassword
+    newPassword,
   };
-  const response = await client.patch("/user/updateUserInfo", body);
+const response = await client.patch("/user/updateUserInfo", body);
   return response.data.user;
 };

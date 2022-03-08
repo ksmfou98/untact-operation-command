@@ -1,7 +1,7 @@
 import { IUserState } from "atoms/userState";
 import useInput from "hooks/common/useInput";
 import { friendSearchAPI } from "lib/api/friend";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useMemberSearchEffect() {
   const [members, setMembers] = useState<IUserState[]>([]);

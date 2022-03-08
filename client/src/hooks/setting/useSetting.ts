@@ -3,14 +3,12 @@ import useInput from "hooks/common/useInput";
 import { updateUserInfoAPI, userProfileAPI } from "lib/api/setting";
 import userStorage from "lib/userStorage";
 import { useState } from "react";
-import { useHistory } from "react-router";
 import { useRecoilState } from "recoil";
 
 export default function useSetting() {
   const [user, setUser] = useRecoilState(userState);
   const { thumbnail, name } = user;
   const [imgURL, setImgURL] = useState(thumbnail);
-  const history = useHistory();
 
   //이미지 업로드
   const imgUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -7,7 +7,7 @@ import useMemberHandleEffect from "hooks/member/useMemberHandleEffect";
 import useModal from "hooks/common/useModal";
 import MemberSearchModal from "./MemberSearchModal";
 import MeetRequestModal from "./MeetRequestModal";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { meetState } from "atoms/meetState";
 
 const MembersList = () => {
@@ -16,7 +16,7 @@ const MembersList = () => {
   const { onDeleteFriend } = useMemberHandleEffect();
 
   const [requestUser, setRequestUser] = useState<string>("");
-  const [meetForm, setMeetForm] = useRecoilState(meetState);
+  const setMeetForm = useSetRecoilState(meetState);
   const [isOpen, setIsOpen] = useState(false);
   const onToggleMeetModal = () => {
     setIsOpen(!isOpen);

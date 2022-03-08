@@ -1,4 +1,4 @@
-import { friendsState, IUserState } from "atoms/userState";
+import { friendsState } from "atoms/userState";
 import { friendAddAPI, friendDeleteAPI } from "lib/api/friend";
 import { useRecoilState } from "recoil";
 
